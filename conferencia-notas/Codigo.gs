@@ -540,7 +540,7 @@ function escreverResumo_(ss, linhas, porLinha, emails, porEmail, cfg, consulta) 
 // ============================================================================
 function normalizar(s) {
   return String(s == null ? '' : s)
-    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .toUpperCase()
     .replace(/[^A-Z0-9]+/g, ' ')
     .trim();
