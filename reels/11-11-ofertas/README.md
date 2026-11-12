@@ -6,7 +6,7 @@ Reel vertical 1080×1920, 30 s, 30 fps → `reel-11-11-ofertas.mp4`
 |---|---|
 | 0–2,8 s | Gancho: "Clientes que aproveitaram as ofertas imperdíveis de hoje" |
 | 2,6–24,6 s | 8 fotos de clientes (2,75 s cada) com legenda, contador e barra de progresso |
-| 24,6–30 s | Encerramento: logo, "Chegou o 11.11 · Dia de Ofertas Imperdíveis!" |
+| 24,6–30 s | Encerramento: logo + "Venha até uma das nossas lojas e aproveite as ofertas!" |
 
 ## Como editar / renderizar
 - Textos, legendas e tempos: `index.html` (arrays `HOOK`, `SHOTS` e constantes da timeline).

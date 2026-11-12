@@ -65,21 +65,11 @@
 
   /* ---------- CTA ---------- */
   #cta { left: 0; right: 0; top: 0; bottom: 0; }
-  #ctaLogo { left: 50%; top: 250px; width: 860px; margin-left: -430px; }
-  #ctaKicker { left: 0; right: 0; top: 640px; text-align: center; font-weight: 800; font-size: 64px; letter-spacing: -0.02em; }
-  #ctaNum { left: 0; right: 0; top: 700px; text-align: center; font-weight: 900; font-size: 380px; letter-spacing: -0.06em; line-height: 1;
-    color: var(--red);
-    background: linear-gradient(180deg, #FF2A2A 0%, var(--red) 45%, var(--red-deep) 100%);
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 26px 30px rgba(184,0,0,.28)); }
-  #ctaDia { left: 0; right: 0; top: 1110px; text-align: center; font-weight: 900; font-size: 112px; letter-spacing: -0.035em; }
-  #ctaPill { left: 0; right: 0; top: 1262px; text-align: center; transform-origin: 50% 50%; }
-  #ctaPill .p { display: inline-block; background: var(--red); color: #fff; font-weight: 900; font-size: 104px;
-    letter-spacing: -0.03em; padding: 18px 64px 26px; border-radius: 999px; box-shadow: 0 30px 60px -24px rgba(184,0,0,.6); white-space: nowrap; }
-  #ctaFoot { left: 0; right: 0; top: 1530px; text-align: center; }
-  #ctaFoot .a { font-weight: 800; font-size: 52px; letter-spacing: -0.01em; }
-  #ctaFoot .b { font-weight: 600; font-size: 36px; color: #6b5d59; margin-top: 16px; letter-spacing: .02em; }
-  #shine { left: -400px; top: 1262px; width: 160px; height: 150px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.55), rgba(255,255,255,0)); transform: skewX(-20deg); mix-blend-mode: screen; }
+  #ctaLogo { left: 50%; top: 600px; width: 920px; margin-left: -460px; }
+  #ctaRule { left: 50%; top: 1030px; width: 160px; height: 12px; margin-left: -80px; border-radius: 6px; background: var(--red); transform-origin: 50% 50%; }
+  #ctaMsg { left: 72px; right: 72px; top: 1110px; text-align: center; font-weight: 900; font-size: 92px; line-height: 1.08; letter-spacing: -0.03em; }
+  #ctaMsg .l { display: block; }
+  #ctaMsg .r { color: var(--red); }
 
   #flash { inset: 0; background: var(--red); }
 </style>
@@ -110,15 +100,12 @@
 
   <!-- CTA -->
   <div id="cta" class="abs">
-    <img id="ctaLogo" class="abs" src="assets/logo-caldas.png" alt="">
-    <div id="ctaKicker" class="abs">Chegou o</div>
-    <div id="ctaNum" class="abs">11.11</div>
-    <div id="ctaDia" class="abs">Dia de Ofertas</div>
-    <div id="ctaPill" class="abs"><span class="p">Imperdíveis!</span></div>
-    <div id="shine" class="abs"></div>
-    <div id="ctaFoot" class="abs">
-      <div class="a">Aproveite você também!</div>
-      <div class="b">Venha para uma loja Caldas Celulares</div>
+    <img id="ctaLogo" class="abs" src="assets/logo-caldas.png" alt="Grupo Caldas Celulares">
+    <div id="ctaRule" class="abs"></div>
+    <div id="ctaMsg" class="abs">
+      <span class="l">Venha até uma das</span>
+      <span class="l">nossas lojas e</span>
+      <span class="l r">aproveite as ofertas!</span>
     </div>
   </div>
 
@@ -279,21 +266,15 @@ window.render = function (t) {
     const show = t >= T - 0.01;
     $("#cta").style.visibility = show ? "visible" : "hidden";
     if (show) {
-      const lg = easeOutCubic(prog(t, T + 0.1, T + 0.6));
-      set($("#ctaLogo"), lg, `translateY(${lerp(-40, 0, lg)}px) scale(${lerp(.94, 1, lg)})`);
-      const k = easeOutCubic(prog(t, T + 0.25, T + 0.6));
-      set($("#ctaKicker"), k, `translateY(${lerp(30, 0, k)}px)`);
-      const n = easeOutBack(prog(t, T + 0.3, T + 0.9), 1.5);
-      const pulse = 1 + 0.025 * Math.sin(Math.max(0, t - (T + 1.2)) * 4.2);
-      set($("#ctaNum"), clamp(n * 1.5), `scale(${lerp(.6, 1, n) * pulse})`);
-      const d = easeOutCubic(prog(t, T + 0.65, T + 1.05));
-      set($("#ctaDia"), d, `translateY(${lerp(50, 0, d)}px)`);
-      const p = easeOutBack(prog(t, T + 0.85, T + 1.3), 1.8);
-      set($("#ctaPill"), clamp(p * 1.4), `scale(${lerp(.5, 1, p)}) rotate(${lerp(-6, -2, p)}deg)`);
-      const sh = prog(t, T + 1.5, T + 2.2);
-      set($("#shine"), sh > 0 && sh < 1 ? 1 : 0, `translateX(${lerp(0, 1800, easeInOut(sh))}px) skewX(-20deg)`);
-      const ft = easeOutCubic(prog(t, T + 1.15, T + 1.55));
-      set($("#ctaFoot"), ft, `translateY(${lerp(30, 0, ft)}px)`);
+      const lg = easeOutBack(prog(t, T + 0.1, T + 0.75), 1.2);
+      const breathe = 1 + 0.012 * Math.sin(Math.max(0, t - (T + 1)) * 2.4);
+      set($("#ctaLogo"), clamp(lg * 1.3), `translateY(${lerp(-50, 0, lg)}px) scale(${lerp(.9, 1, lg) * breathe})`);
+      const ru = easeOutExpo(prog(t, T + 0.55, T + 1.05));
+      set($("#ctaRule"), ru, `scaleX(${ru})`);
+      document.querySelectorAll("#ctaMsg .l").forEach((l, i) => {
+        const x = easeOutCubic(prog(t, T + 0.75 + i * 0.18, T + 1.2 + i * 0.18));
+        set(l, x, `translateY(${lerp(40, 0, x)}px)`);
+      });
     }
   }
 };
