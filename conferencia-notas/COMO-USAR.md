@@ -1,13 +1,13 @@
-# Conferência automática de Notas Fiscais — ING + Angiocardis
+# Conferência automática de Notas Fiscais — ING, Angiocardis, Encore e CCRI
 
 A planilha lê os e-mails da caixa **repassesmedicos** e marca, em cada linha do controle,
 se a nota fiscal da competência chegou:
 
 | Status | Significado |
 |---|---|
-| 🟩 **RECEBIDA** | Achei e-mail com nota desse médico/empresa, no hospital e serviço certos |
-| 🟨 **VERIFICAR** | Achei e-mail do médico, mas falta nota de algum serviço (ex.: mandou plantão e não mandou repasse) ou o e-mail não deixou claro o tipo |
-| 🟥 **PENDENTE** | Não achei nenhum e-mail desse médico/empresa na competência |
+| **RECEBIDA** (verde) | Achei e-mail com nota desse médico/empresa, no hospital e serviço certos |
+| **VERIFICAR** (amarelo) | Achei e-mail do médico, mas falta nota de algum serviço (ex.: mandou plantão e não mandou repasse) ou o e-mail não deixou claro o tipo |
+| **PENDENTE** (vermelho) | Não achei nenhum e-mail desse médico/empresa na competência |
 
 Também cria:
 - aba **Resumo**: totais por hospital e a lista de quem está PENDENTE ou VERIFICAR;
@@ -38,9 +38,11 @@ Faça tudo **logada na conta repassesmedicos@neurologico.com.br** no navegador.
 ## 2. Conferir uma competência
 
 1. Na aba **Config**, confira a **Competência** (ex.: `11/2026`).
-2. Importe a planilha do mês: **Arquivo → Importar → Upload →** escolha o **ING 11-2026.xlsx** →
+2. Importe as planilhas do mês, **uma de cada vez**: **Arquivo → Importar → Upload →** escolha o **ING 11-2026.xlsx** →
    em *Local de importação* escolha **"Inserir nova(s) página(s)"** → **Importar dados**.
-   As abas **ING** e **ANGIOCARDIS** aparecem na planilha.
+   Repita com o **ENCORE 11-2026.xlsx**.
+   Aparecem as abas **ING**, **ANGIOCARDIS**, **ENCORE**, **CCRI VLB** e **CCRI CERES**. A aba *legenda* é ignorada.
+   Se quiser conferir só um hospital, importe só a planilha dele.
 3. **Conferência de Notas → ▶ Conferir agora**.
 
 Em cada aba de controle surgem duas colunas no fim: **STATUS NOTA (E-MAIL)** e **E-MAIL ENCONTRADO**
@@ -56,7 +58,7 @@ Basta abrir e olhar a aba **Resumo**.
 
 1. **Conferência de Notas → Preparar novo mês**. Apaga as abas do mês anterior e mantém Config, Resumo e E-mails.
 2. Atualize a **Competência** na aba Config (ex.: `12/2026`).
-3. Importe a planilha do novo mês (passo 2.2) e clique em **Conferir agora**.
+3. Importe as planilhas do novo mês (passo 2.2) e clique em **Conferir agora**.
 
 ---
 
@@ -70,13 +72,13 @@ Para cada e-mail recebido na competência, ele compara com cada linha do control
 
 Quando dois médicos dividem a mesma empresa (ex.: Cleber e Ezio na LIFE), o nome do médico tem prioridade.
 
-- **Hospital:** se o assunto ou o anexo diz "ING" ou "ANGIOCARDIS", ele só vincula às linhas daquele hospital.
+- **Hospital:** cada aba é um hospital (ING, ANGIOCARDIS, ENCORE, CCRI VILA BRASÍLIA, CCRI CERES). Se o assunto ou o anexo cita o hospital ("ING", "ANGIOCARDIS", "ENCORE", "CCRI", "CERES"...), ele só vincula às linhas daquele hospital. Se não cita, procura em todos.
 - **Tipo de serviço:** se o assunto ou o anexo diz *plantão*, *repasse/HM* ou *sobreaviso/coordenação/demais*, ele vincula à linha do mesmo tipo. Se o e-mail não diz o tipo e o médico tem várias linhas, ele confere se a quantidade de e-mails cobre as linhas. Se não cobrir, marca **VERIFICAR**.
 
 ## Dicas para acertar mais
 
 - O ideal é que os médicos mandem o assunto no padrão
-  **`NF - COMPETÊNCIA 11/2026 - ING - NOME DO MÉDICO - PLANTÃO`** (ou REPASSE / DEMAIS SERVIÇOS).
+  **`NF - COMPETÊNCIA 11/2026 - HOSPITAL - NOME DO MÉDICO - PLANTÃO`** (ou REPASSE / DEMAIS SERVIÇOS). Ex.: `NF - COMPETÊNCIA 11/2026 - ENCORE - BRENDA RODOVALHO - DEMAIS SERVIÇOS`.
 - Se a busca estiver trazendo e-mails demais ou de menos, preencha **Busca personalizada no Gmail** na aba Config.
   Ela usa a mesma sintaxe da busca do Gmail. Exemplo: `subject:(11/2026) has:attachment`.
 - Sempre que um e-mail aparecer como **NÃO ENCONTRADO NA PLANILHA**, olhe se o médico está com outro nome no controle.

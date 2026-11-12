@@ -1,9 +1,9 @@
 /**
- * CONFERÊNCIA DE NOTAS FISCAIS — Repasses Médicos (ING + ANGIOCARDIS)
+ * CONFERÊNCIA DE NOTAS FISCAIS — Repasses Médicos (ING, ANGIOCARDIS, ENCORE, CCRI)
  *
  * Lê os e-mails da caixa onde o script é instalado (Gmail),
  * procura as notas da competência configurada e marca, em cada linha
- * das abas de controle (ING / ANGIOCARDIS), se a nota foi recebida.
+ * das abas de controle (ING, ANGIOCARDIS, ENCORE, CCRI...), se a nota foi recebida.
  *
  * Instale este código na planilha usando a conta repassesmedicos.
  * Veja o arquivo COMO-USAR.md para o passo a passo.
@@ -194,7 +194,7 @@ function lerLinhasControle(dados, nomeAba) {
   var linhas = [];
   if (cab < 0) return { cabecalho: -1, colunas: col, linhas: linhas };
 
-  var hospitalAba = /ANGIO/.test(normalizar(nomeAba)) ? 'ANGIOCARDIS' : 'ING';
+  var hospitalAba = hospitalDaAba(nomeAba);
   for (var r = cab + 1; r < dados.length; r++) {
     var row = dados[r];
     var medico = limpo_(row[col.medico]);
@@ -203,11 +203,13 @@ function lerLinhasControle(dados, nomeAba) {
     if (/^(TOTAL|ING|ANGIO)\b/.test(normalizar(medico)) && !empresa) continue;
     // Se houver um novo cabeçalho no meio da aba (ex.: bloco ANGIOCARDIS abaixo do ING)
     if (normalizar(medico) === 'MEDICO') {
-      hospitalAba = /ANGIO/.test(normalizar(row.join(' ') + ' ' + (dados[r - 1] || []).join(' '))) ? 'ANGIOCARDIS' : hospitalAba;
+      var novo = detectarHospitais(normalizar((dados[r - 1] || []).join(' ') + ' ' + row.join(' ')));
+      if (novo.length === 1) hospitalAba = novo[0];
       continue;
     }
     var local = col.local >= 0 ? normalizar(row[col.local]) : '';
-    var hospital = /ANGIO/.test(local) ? 'ANGIOCARDIS' : (/\bING\b/.test(local) ? 'ING' : hospitalAba);
+    var doLocal = detectarHospitais(local);
+    var hospital = doLocal.length === 1 ? doLocal[0] : hospitalAba;
     var item = col.item >= 0 ? row[col.item] : '';
     var servico = col.servico >= 0 ? row[col.servico] : '';
     linhas.push({
@@ -285,7 +287,7 @@ function cruzar(linhas, emails) {
   prepEmails.forEach(function (pe, ie) {
     var cands = [];
     prepLinhas.forEach(function (pl, il) {
-      if (pe.hospital && pe.hospital !== pl.hospital) return;
+      if (pe.hospitais.length && pe.hospitais.indexOf(pl.hospital) < 0) return;
       var s = pontuar_(pl, pe);
       if (s > 0) cands.push({ il: il, s: s });
     });
@@ -352,13 +354,11 @@ function prepararEmail_(e) {
   var cabecalho = [e.assunto, nomeRemetente, localEndereco].concat(e.anexos || []).join(' ');
   var cabNorm = normalizar(cabecalho);
   var hospText = normalizar([e.assunto].concat(e.anexos || []).join(' '));
-  var temAngio = /\bANGIOCARDIS\b|\bANGIO\b|\bANGIOCARDIO\b/.test(hospText);
-  var temIng = /\bING\b|\bNEUROLOGICO\b|INSTITUTO DE NEUROLOGIA/.test(hospText);
   return {
     palavrasCab: conjunto_(cabNorm),
     palavrasCorpo: conjunto_(normalizar(e.corpo || '')),
     digitos: so_digitos_(cabecalho + ' ' + (e.corpo || '')),
-    hospital: temAngio && !temIng ? 'ANGIOCARDIS' : (temIng && !temAngio ? 'ING' : ''),
+    hospitais: hospitaisDoEmail(hospText),
     tipo: tipoEmail(normalizar([e.assunto].concat(e.anexos || []).join(' ')))
   };
 }
@@ -383,6 +383,38 @@ function pontuar_(pl, pe) {
 }
 
 // ============================================================================
+// HOSPITAIS
+// ============================================================================
+// Para incluir outro hospital, acrescente uma linha: [NOME, expressão que o identifica]
+var HOSPITAIS = [
+  ['ANGIOCARDIS', /\bANGIOCARDIS\b|\bANGIO\b|\bANGIOCARDIO\b/],
+  ['ENCORE', /\bH?ENCORE\b/],
+  ['CCRI VILA BRASILIA', /\bCCRI\b.*\b(VLB|VILA|BRASILIA)\b|\bVILA BRASILIA\b/],
+  ['CCRI CERES', /\bCERES\b/],
+  ['ING', /\bING\b|\bNEUROLOGICO\b|INSTITUTO DE NEUROLOGIA/]
+];
+
+/** Hospitais citados num texto já normalizado. */
+function detectarHospitais(textoNorm) {
+  return HOSPITAIS.filter(function (h) { return h[1].test(textoNorm); }).map(function (h) { return h[0]; });
+}
+
+/** Hospital de uma aba de controle, pelo nome da aba (ex.: ING, ANGIOCARDIS, ENCORE, CCRI VLB). */
+function hospitalDaAba(nomeAba) {
+  var n = normalizar(nomeAba);
+  var h = detectarHospitais(n);
+  return h.length === 1 ? h[0] : (n || 'SEM NOME');
+}
+
+/** Hospitais citados no assunto/anexos do e-mail. Vazio = não restringe. */
+function hospitaisDoEmail(textoNorm) {
+  var h = detectarHospitais(textoNorm);
+  // "CCRI" sozinho vale para as duas unidades CCRI
+  if (!h.length && /\bCCRI\b/.test(textoNorm)) h = ['CCRI VILA BRASILIA', 'CCRI CERES'];
+  return h;
+}
+
+// ============================================================================
 // CLASSIFICAÇÃO DO TIPO DE SERVIÇO
 // ============================================================================
 function tipoServico(texto) {
@@ -395,7 +427,7 @@ function tipoServico(texto) {
 function tipoEmail(t) {
   var tipos = [];
   if (/PLANT/.test(t)) tipos.push('PLANTAO');
-  if (/REPASSE|\bHM\b|HONORARIO|BONUS|HEMODINAMICA/.test(t)) tipos.push('REPASSE');
+  if (/REPASSE|\bHM\b|HONORARIO|BONUS/.test(t)) tipos.push('REPASSE');
   if (/DEMAIS|SOBREAVISO|COORDENA|ACIONAMENTO|EVOLUC|DIRETOR|GERENTE|AUDITOR|ALUGUEL|FISIOTERAPIA|FONO|CONSULTORIA|SERVICO MEDICO CONTRATADO/.test(t)) tipos.push('DEMAIS');
   return tipos.length === 1 ? tipos[0] : ''; // ambíguo ou sem indicação = sem tipo
 }
