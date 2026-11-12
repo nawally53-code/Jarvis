@@ -332,7 +332,8 @@ function cruzar(linhas, emails) {
 }
 
 function prepararLinha_(l) {
-  var tokNome = tokens_(l.medico, IGNORAR_NOME).filter(function (t) { return t.length >= 3; });
+  // primeiro nome com 3+ letras; sobrenomes curtos (ex.: SÁ) também contam
+  var tokNome = tokens_(l.medico, IGNORAR_NOME).filter(function (t, i) { return t.length >= (i === 0 ? 3 : 2); });
   var tokEmp = tokens_(l.empresa, IGNORAR_EMPRESA).filter(function (t) { return t.length >= 2; });
   return {
     hospital: l.hospital,
