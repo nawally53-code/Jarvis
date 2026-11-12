@@ -8,7 +8,7 @@ const args = process.argv.slice(2);
 const out = args.find(a => a.endsWith('.mp4')) || 'reel-11-11-ofertas.mp4';
 const fps = Number((args[args.indexOf('--fps') + 1]) || 30) || 30;
 const previewIdx = args.indexOf('--preview');
-const DUR = 15, W = 1080, H = 1920;
+const DUR = 30, W = 1080, H = 1920;
 
 (async () => {
   const browser = await chromium.launch();
