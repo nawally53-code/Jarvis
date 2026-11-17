@@ -157,15 +157,15 @@
 const HOOK = "Clientes aproveitando as ofertas imperdíveis de Black Friday";
 const RED_WORDS = new Set(["ofertas", "imperdíveis", "Black", "Friday"]);
 const SHOTS = [
-  { src: "assets/cliente-1.jpg", chip: "Plano fechado",     title: "Plano novo com condições especiais", pos: "50% 45%" },
-  { src: "assets/cliente-2.jpg", chip: "Smartwatch",        title: "Ultra Watch para a família", pos: "50% 45%" },
-  { src: "assets/cliente-3.jpg", chip: "Combo",             title: "Plano + acessórios em oferta", pos: "50% 40%" },
-  { src: "assets/cliente-4.jpg", chip: "Smartphone + TV",   title: "Moto g37 e Claro tv+ Box", pos: "50% 45%" },
-  { src: "assets/cliente-5.jpg", chip: "Cliente feliz",     title: "Mais uma cliente Multi Friday", pos: "50% 35%" },
-  { src: "assets/cliente-6.jpg", chip: "Esse é o meu novo", title: "Galaxy A17 5G + acessório", pos: "50% 35%" },
-  { src: "assets/cliente-7.jpg", chip: "Galaxy 5G",         title: "Galaxy A57 5G + fone", pos: "50% 45%" },
-  { src: "assets/cliente-8.jpg", chip: "Kit completo",      title: "Moto g, power bank e caixa de som", pos: "50% 35%" },
-  { src: "assets/cliente-9.jpg", chip: "Top de linha",      title: "Galaxy S26 FE + smartwatch + película", pos: "50% 45%" },
+  { src: "assets/cliente-1.jpg", chip: "Plano fechado e troca de aparelho", title: "Samsung A07 5G com brindes", pos: "50% 45%" },
+  { src: "assets/cliente-2.jpg", chip: "Ofertas de aparelhos", title: "Samsung A17 5G + UltraWatch", pos: "50% 45%" },
+  { src: "assets/cliente-3.jpg", chip: "Ofertas de aparelhos", title: "Samsung A17 5G e brindes garantidos", pos: "50% 40%" },
+  { src: "assets/cliente-4.jpg", chip: "Smartphone + TV", title: "Motorola G37 e Claro Box TV", pos: "50% 45%" },
+  { src: "assets/cliente-5.jpg", chip: "Ofertas de aparelhos", title: "Mais uma cliente satisfeita com o Samsung A17 5G + Brindes", pos: "50% 35%" },
+  { src: "assets/cliente-6.jpg", chip: "Esse é o meu novo", title: "Galaxy A17 5G + acessórios", pos: "50% 35%" },
+  { src: "assets/cliente-7.jpg", chip: "Ofertas de aparelhos", title: "Galaxy A57 5G com acessórios", pos: "50% 45%" },
+  { src: "assets/cliente-8.jpg", chip: "Kit completo", title: "Motorola G37, power bank e caixa de som", pos: "50% 35%" },
+  { src: "assets/cliente-9.jpg", chip: "Oferta imperdível", title: "Galaxy S26 FE + smartwatch + película", pos: "50% 45%" },
 ];
 
 /* ---------------- timeline (seconds) ---------------- */
@@ -216,7 +216,7 @@ const cards = SHOTS.map(s => {
   const c = document.createElement("div");
   c.className = "card abs";
   c.innerHTML = `<img src="${s.src}" style="object-position:${s.pos}"><div class="shade"></div>
-    <div class="cap"><span class="chip"><b>✓</b>${s.chip}</span><h3>${s.title}</h3></div>`;
+    <div class="cap"><span class="chip" style="${s.chip.length > 22 ? "font-size:28px;letter-spacing:.04em" : ""}"><b>✓</b>${s.chip}</span><h3>${s.title}</h3></div>`;
   cardsEl.appendChild(c);
   return { el: c, img: c.querySelector("img"), chip: c.querySelector(".chip"), h3: c.querySelector("h3") };
 });
