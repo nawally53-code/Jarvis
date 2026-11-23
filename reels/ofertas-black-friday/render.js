@@ -26,12 +26,21 @@ let DUR = 30; const W = 1080, H = 1920;
     return;
   }
 
+  if (args.includes('--events')) {
+    const ev = await page.evaluate(() => ({ duration: DUR, events: window.SFX_EVENTS || [] }));
+    require('fs').writeFileSync(path.join(__dirname, 'sfx-events.json'), JSON.stringify(ev, null, 1));
+    console.log(`${ev.events.length} cues -> sfx-events.json`);
+    await browser.close();
+    return;
+  }
+  const sfx = path.join(__dirname, 'sfx.wav');
+  const audioIn = require('fs').existsSync(sfx) ? ['-i', sfx] : ['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=48000'];
   const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error',
     '-f', 'image2pipe', '-framerate', String(fps), '-i', '-',
-    '-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=48000',
+    ...audioIn,
     '-map', '0:v', '-map', '1:a', '-shortest',
     '-c:v', 'libx264', '-preset', 'slow', '-crf', '17', '-pix_fmt', 'yuv420p', '-profile:v', 'high',
-    '-r', String(fps), '-c:a', 'aac', '-b:a', '128k', '-movflags', '+faststart', out], { stdio: ['pipe', 'inherit', 'inherit'] });
+    '-r', String(fps), '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out], { stdio: ['pipe', 'inherit', 'inherit'] });
 
   const total = DUR * fps;
   for (let f = 0; f < total; f++) {

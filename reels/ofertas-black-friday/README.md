@@ -23,4 +23,14 @@ Parcelas em 12x calculadas a partir do preço total de cada oferta (total ÷ 12)
 - Slides, preços e textos: `index.html` (cada `.slide`; `data-click` = o que o cursor clica, `data-reveal` = o que aparece no clique).
 - Prévia de quadros: `node render.js --preview 1,5,13 <pasta>`
 - Render final: `node render.js reel-ofertas-black-friday.mp4` (precisa de Playwright + ffmpeg).
-- Fotos dos aparelhos: `python3 crop_products.py` (recorta das artes em `assets/referencia/`).
+- Fotos dos aparelhos:
+  - Galaxy A57, Galaxy S26 Ultra e iPhone 16: imagens oficiais com fundo transparente (sites da Samsung e da Apple) em `assets/oficial/`; `python3 prep_official.py` monta as versões usadas nos slides.
+  - Moto Edge 70 Fusion, Moto G37 e Motorola Signature: recortes das artes de referência (`python3 crop_products.py`), clareados e ampliados pelo `prep_official.py`. Substitua por fotos oficiais quando disponíveis.
+
+## Efeitos sonoros
+Todos sintetizados (sem áudio de terceiros), sincronizados com as animações:
+teclado digitando, "pop" da mensagem, clique do mouse, whoosh nas transições, chime ao revelar cada oferta,
+contador subindo no bônus de 50GB, zumbido do neon do slogan e impacto no encerramento.
+1. `node render.js --events` → gera `sfx-events.json` com o momento exato de cada som.
+2. `python3 gen_sfx.py` → gera `sfx.wav`.
+3. `node render.js reel-ofertas-black-friday.mp4` → usa o `sfx.wav` automaticamente.
