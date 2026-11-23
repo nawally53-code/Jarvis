@@ -8,13 +8,14 @@ const args = process.argv.slice(2);
 const out = args.find(a => a.endsWith('.mp4')) || 'reel-ofertas-black-friday.mp4';
 const fps = Number((args[args.indexOf('--fps') + 1]) || 30) || 30;
 const previewIdx = args.indexOf('--preview');
-const DUR = 30, W = 1080, H = 1920;
+let DUR = 30; const W = 1080, H = 1920;
 
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
   await page.goto('file://' + path.resolve(__dirname, 'index.html'));
   await page.evaluate(() => window.ready);
+  DUR = await page.evaluate(() => DUR);
 
   if (previewIdx >= 0) {
     for (const t of args[previewIdx + 1].split(',').map(Number)) {

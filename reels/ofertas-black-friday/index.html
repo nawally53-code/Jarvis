@@ -175,7 +175,7 @@
   <div id="slides">
 
     <!-- 1. Compre um, leve outro igual -->
-    <div class="slide abs" data-dur="3.3">
+    <div class="slide abs" data-dur="5.6">
       <div class="eb">Oferta Multi Friday</div>
       <h2 style="font-size:56px">Comprou um smartphone, <em>leva outro igual!</em></h2>
       <div class="sub" style="top:232px">Pelo <b>mesmo preço</b>, o cliente escolhe um dos dois.</div>
@@ -201,7 +201,7 @@
     </div>
 
     <!-- 2. iPhone 16 -->
-    <div class="slide abs" data-dur="2.7">
+    <div class="slide abs" data-dur="4.8">
       <div class="eb">Smartphones com as melhores ofertas</div>
       <h2>Apple <em>iPhone 16</em></h2>
       <img class="prod" src="assets/iphone16.png" style="left:248px;top:200px;width:480px;height:570px" data-click="1">
@@ -215,7 +215,7 @@
     </div>
 
     <!-- 3. Galaxy S26 Ultra -->
-    <div class="slide abs" data-dur="2.7">
+    <div class="slide abs" data-dur="4.8">
       <div class="eb">Smartphones com as melhores ofertas</div>
       <h2 style="font-size:56px;top:112px">Samsung Galaxy <em>S26 Ultra</em></h2>
       <img class="prod" src="assets/s26ultra.png" style="left:218px;top:200px;width:540px;height:540px" data-click="1">
@@ -229,7 +229,7 @@
     </div>
 
     <!-- 4. Moto G37 + Motorola Signature -->
-    <div class="slide abs" data-dur="3.3">
+    <div class="slide abs" data-dur="5.6">
       <div class="eb">Smartphones com as melhores ofertas</div>
       <h2>Claro que <em>tem!</em></h2>
       <div class="name" style="left:0;width:488px;top:200px">Moto G37</div>
@@ -253,7 +253,7 @@
     </div>
 
     <!-- 5. Bônus de internet -->
-    <div class="slide abs" data-dur="2.6">
+    <div class="slide abs" data-dur="4.5">
       <div class="eb">Bônus Multi Friday</div>
       <h2>Mais internet <em>no plano pós</em></h2>
       <div class="btn" style="top:470px" data-click="1" data-hide="1">Ver bônus <i>›</i></div>
@@ -263,7 +263,7 @@
     </div>
 
     <!-- 6. Claro tv+ -->
-    <div class="slide abs" data-dur="3.0">
+    <div class="slide abs" data-dur="5.4">
       <div class="eb">Na Multi Friday</div>
       <h2 style="font-size:66px">Claro tv+ também é <em>protagonista</em></h2>
       <img class="prod" src="assets/tv.png" style="left:118px;top:250px;width:740px;height:518px">
@@ -278,7 +278,7 @@
     </div>
 
     <!-- 7. Cupom Amazon -->
-    <div class="slide abs" data-dur="2.6">
+    <div class="slide abs" data-dur="4.45">
       <div class="eb">Ofertas Multi Friday</div>
       <h2>Cupom exclusivo <em>nesta Multi Friday!</em></h2>
       <div class="ticket" style="top:290px" data-click="1">
@@ -326,11 +326,11 @@ const HOOK = "Vamos conferir as nossas ofertas especiais para essa Black Friday?
 const RED_WORDS = new Set(["ofertas", "especiais", "Black", "Friday?"]);
 
 /* ---------------- timeline ---------------- */
-const DUR = 30;
+const DUR = 45;
 const HOOK_END = 2.8;
 const INTRO_START = 2.7, INTRO_END = 4.95;
 const S0 = 4.8;                    // first slide fully on screen
-const CTA_START = 24.95;
+let CTA_START = 0;               // set from slide durations below
 
 /* ---------------- helpers ---------------- */
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -403,7 +403,8 @@ const wavePath = (c, t) => {
 const slides = [...document.querySelectorAll(".slide")].map(el => ({ el, dur: Number(el.dataset.dur) }));
 let acc = S0;
 slides.forEach(s => { s.start = acc; s.end = acc + s.dur; acc += s.dur; });
-const MONT_END = acc;   // = CTA_START (+/-)
+const MONT_END = acc;
+CTA_START = MONT_END - 0.05;
 
 // measure click targets at rest (called once fonts/images are ready, before any transform)
 const clicks = [];   // {t, x, y, el, slide, n}
@@ -415,7 +416,7 @@ slides.forEach((s, si) => {
   s.el.querySelectorAll("[data-click]").forEach(el => {
     const n = Number(el.dataset.click);
     const r = el.getBoundingClientRect();
-    const rel = n === 1 ? 0.95 : s.dur * 0.62;
+    const rel = n === 1 ? 1.0 : Math.max(2.0, s.dur * 0.46);   // price shows early and stays readable
     const c = { t: s.start + rel, x: r.left - stageRect.left + r.width * 0.55, y: r.top - stageRect.top + r.height * 0.55, el, slide: si, n };
     s.clickEls[n] = c;
     clicks.push(c);
