@@ -5,8 +5,8 @@ com um cursor de mouse que clica e revela cada novidade.
 
 | Tempo | Cena |
 |---|---|
-| 0–2,8 s | Gancho: "Vamos conferir as nossas ofertas especiais para essa Black Friday?" |
-| 2,7–4,9 s | Slogan "MULTI Friday · Claro que tem" acendendo em neon |
+| 0–2,8 s | Gancho em formato de mensagem de chat: "Vamos conferir as nossas ofertas especiais para essa Black Friday?" + botão "Bora conferir!" clicado pelo cursor |
+| 2,85–4,9 s | Slogan "MULTI Friday · Claro que tem" acendendo em neon |
 | 4,8–10,4 s | Comprou um smartphone, leva outro igual (Moto Edge 70 Fusion ou Galaxy A57) — 12x R$ 173,25 |
 | 10,4–15,2 s | iPhone 16 — 12x R$ 173,25 |
 | 15,2–20 s | Galaxy S26 Ultra — 12x R$ 155,75 |

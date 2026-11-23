@@ -44,15 +44,28 @@
 
   #topLogo { left: 50%; top: 84px; width: 500px; margin-left: -250px; }
 
-  /* ---------- HOOK ---------- */
-  #hook { left: 72px; right: 72px; top: 500px; }
-  #hook .eyebrow { display: inline-flex; align-items: center; gap: 16px; font-weight: 800; font-size: 38px; letter-spacing: .14em;
-    color: var(--neon); text-transform: uppercase; margin-bottom: 44px; text-shadow: 0 0 18px var(--glow); }
-  #hook .eyebrow i { width: 64px; height: 8px; background: var(--neon); border-radius: 4px; display: block; box-shadow: 0 0 14px var(--glow); }
-  #hook h1 { font-weight: 900; font-size: 122px; line-height: 1.0; letter-spacing: -0.035em; }
-  #hook h1 .w { display: inline-block; margin-right: .22em; }
-  #hook h1 .r { color: var(--neon); text-shadow: 0 0 26px rgba(255,20,20,.7); }
-  #hook .underline { height: 14px; background: var(--neon); border-radius: 7px; margin-top: 40px; transform-origin: 0 50%; width: 520px; box-shadow: 0 0 20px var(--glow); }
+  /* ---------- HOOK (chat message style) ---------- */
+  #hookBg { inset: 0; overflow: hidden; }
+  #hookBg .row { position: absolute; left: -400px; white-space: nowrap; font-weight: 900; font-style: italic; font-size: 150px; letter-spacing: -0.02em;
+    color: transparent; -webkit-text-stroke: 3px rgba(255,38,38,.38); transform-origin: 50% 50%; }
+  #hookBg .row.solid { color: rgba(255,38,38,.10); -webkit-text-stroke: 0; }
+  #hook { left: 60px; right: 60px; top: 470px; }
+  #hook .who { display: flex; align-items: center; gap: 18px; margin: 0 0 22px 18px; font-weight: 700; font-size: 32px; color: var(--muted); }
+  #hook .who .av { width: 64px; height: 64px; border-radius: 50%; background: var(--red); display: grid; place-items: center;
+    box-shadow: 0 0 20px var(--glow); font-weight: 900; font-size: 30px; color: #fff; font-style: italic; }
+  #hook .who b { color: #fff; font-weight: 800; }
+  #hook .bubble { position: relative; background: #fff; color: #111; border-radius: 56px 56px 56px 14px; padding: 54px 56px 60px;
+    box-shadow: 0 0 0 6px rgba(255,38,38,.9), 0 0 60px rgba(255,20,20,.55), 0 40px 80px -30px rgba(0,0,0,.9); transform-origin: 0% 100%; }
+  #hook .bubble::after { content: ""; position: absolute; left: -2px; bottom: -34px; width: 70px; height: 50px; background: #fff;
+    clip-path: polygon(0 0, 100% 0, 0 100%); }
+  #hook h1 { font-weight: 900; font-size: 104px; line-height: 1.0; letter-spacing: -0.04em; }
+  #hook h1 .w { display: inline-block; margin-right: .2em; }
+  #hook h1 .r { color: var(--red); }
+  #hook .dots { position: absolute; left: 56px; top: 50%; margin-top: -18px; display: flex; gap: 18px; }
+  #hook .dots i { width: 36px; height: 36px; border-radius: 50%; background: #c9c1c1; display: block; }
+  #hook .reply { position: absolute; right: 0; top: calc(100% + 60px); display: inline-flex; align-items: center; gap: 14px; background: var(--red); color: #fff;
+    font-weight: 900; font-size: 52px; padding: 26px 50px; border-radius: 56px 56px 14px 56px; transform-origin: 100% 100%;
+    box-shadow: 0 0 0 4px rgba(255,255,255,.15), 0 0 40px rgba(255,20,20,.75); }
 
   #intro { left: 30px; top: 680px; }
 
@@ -161,10 +174,11 @@
   <div id="rays"></div>
   <img id="topLogo" class="abs" src="assets/logo-caldas-branca.png" alt="Grupo Caldas Celulares">
 
+  <div id="hookBg" class="abs"></div>
   <div id="hook" class="abs">
-    <div class="eyebrow"><i></i>Multi Friday</div>
-    <h1 id="hookText"></h1>
-    <div class="underline"></div>
+    <div class="who"><span class="av">CC</span><span><b>Grupo Caldas Celulares</b> · agora</span></div>
+    <div class="bubble"><div class="dots"><i></i><i></i><i></i></div><h1 id="hookText"></h1></div>
+    <div class="reply" id="reply">Bora conferir! <span>›</span></div>
   </div>
 
   <div id="intro" class="slogan"></div>
@@ -328,7 +342,7 @@ const RED_WORDS = new Set(["ofertas", "especiais", "Black", "Friday?"]);
 /* ---------------- timeline ---------------- */
 const DUR = 45;
 const HOOK_END = 2.8;
-const INTRO_START = 2.7, INTRO_END = 4.95;
+const INTRO_START = 2.85, INTRO_END = 4.95;
 const S0 = 4.8;                    // first slide fully on screen
 let CTA_START = 0;               // set from slide durations below
 
@@ -363,6 +377,19 @@ const words = HOOK.split(" ").map(w => {
   $("#hookText").appendChild(s);
   return s;
 });
+
+const BG_ROWS = [
+  { y: 150, dir: 1, solid: false }, { y: 420, dir: -1, solid: true }, { y: 1380, dir: 1, solid: true }, { y: 1650, dir: -1, solid: false },
+];
+const bgRows = BG_ROWS.map(r => {
+  const d = document.createElement("div");
+  d.className = "row" + (r.solid ? " solid" : "");
+  d.style.top = r.y + "px";
+  d.textContent = "BLACK FRIDAY · MULTI FRIDAY · BLACK FRIDAY · MULTI FRIDAY · ";
+  $("#hookBg").appendChild(d);
+  return { el: d, ...r };
+});
+const HOOK_CLICK = 2.2;   // cursor taps "Bora conferir!"
 
 const RAYS = [
   [950, 90, 30, 110, 38, 0.05], [1015, 170, 30, 80, 70, 0.12], [895, 60, 30, 70, 8, 0.0],
@@ -428,8 +455,14 @@ slides.forEach((s, si) => {
 clicks.sort((a, b) => a.t - b.t);
 
 // cursor keyframes
+// hook tap on the reply chip, then park off-screen during the slogan
+const rr = $("#reply").getBoundingClientRect();
+const hc = { t: HOOK_CLICK, x: rr.left - stageRect.left + rr.width * 0.55, y: rr.top - stageRect.top + rr.height * 0.55, el: $("#reply") };
+KF.push({ t: 1.45, x: 1180, y: 1900 }, { t: hc.t - 0.1, x: hc.x, y: hc.y }, { t: hc.t + 0.2, x: hc.x, y: hc.y }, { t: 2.75, x: 1180, y: 2000 });
+clicks.unshift(hc);
 KF.push({ t: S0 - 0.3, x: 1180, y: 1850 });
 clicks.forEach((c, i) => {
+  if (c === hc) return;
   KF.push({ t: c.t - 0.1, x: c.x, y: c.y }); KF.push({ t: c.t + 0.18, x: c.x, y: c.y });
   // step aside after the click so the cursor never sits on top of a price
   const next = clicks[i + 1];
@@ -475,18 +508,34 @@ window.render = function (t) {
     set($("#topLogo"), i * o, `translateY(${lerp(-30, 0, i)}px)`);
   }
 
-  /* hook */
+  /* hook: chat message */
   {
-    const h = $("#hook");
     const out = easeInOut(prog(t, HOOK_END - 0.3, HOOK_END + 0.05));
-    set(h, 1 - out, `translateY(${-120 * out}px) scale(${1 - 0.06 * out})`);
-    const eb = easeOutCubic(prog(t, 0, 0.35));
-    set(h.querySelector(".eyebrow"), eb, `translateX(${lerp(-40, 0, eb)}px)`);
-    words.forEach((w, i) => {
-      const x = easeOutExpo(prog(t, 0.08 + i * 0.07, 0.5 + i * 0.07));
-      set(w, x, `translateY(${lerp(70, 0, x)}px) scale(${lerp(.9, 1, x)})`);
+    const bgIn = easeOutCubic(prog(t, 0, 0.4));
+    $("#hookBg").style.opacity = bgIn * (1 - out);
+    bgRows.forEach((r, i) => { r.el.style.transform = `rotate(-10deg) translateX(${r.dir * (t * 140 + i * 90) - (r.dir > 0 ? 300 : 0)}px)`; });
+
+    const h = $("#hook");
+    set(h, 1 - out, `translateY(${-90 * out}px) scale(${1 + 0.05 * out})`);
+    const who = easeOutCubic(prog(t, 0, 0.3));
+    set(h.querySelector(".who"), who, `translateY(${lerp(20, 0, who)}px)`);
+    const b = easeOutBack(prog(t, 0.05, 0.4), 1.4);
+    set(h.querySelector(".bubble"), clamp(b * 1.5), `scale(${lerp(.5, 1, b)})`);
+    // typing dots, then the words drop in
+    const typing = t < 0.42;
+    h.querySelectorAll(".dots i").forEach((d, i) => {
+      d.style.opacity = typing ? 0.4 + 0.6 * Math.max(0, Math.sin(t * 16 - i * 0.9)) : 0;
+      d.style.transform = `translateY(${typing ? -10 * Math.max(0, Math.sin(t * 16 - i * 0.9)) : 0}px)`;
     });
-    $("#hook .underline").style.transform = `scaleX(${easeOutExpo(prog(t, 0.9, 1.5))})`;
+    words.forEach((w, i) => {
+      const x = easeOutExpo(prog(t, 0.42 + i * 0.055, 0.75 + i * 0.055));
+      set(w, x, `translateY(${lerp(40, 0, x)}px)`);
+    });
+    // reply chip pops, cursor taps it
+    const rp = easeOutBack(prog(t, 1.35, 1.7), 1.8);
+    const tap = Math.sin(Math.PI * prog(t, HOOK_CLICK - 0.02, HOOK_CLICK + 0.25));
+    set($("#reply"), clamp(rp * 1.4), `scale(${lerp(.4, 1, rp) * (1 - 0.08 * tap)})`);
+    $("#reply").style.filter = `drop-shadow(0 0 ${36 * Math.sin(Math.PI * prog(t, HOOK_CLICK, HOOK_CLICK + 0.5))}px rgba(255,60,60,.95))`;
   }
 
   /* slogan intro */
@@ -548,7 +597,7 @@ window.render = function (t) {
   /* cursor + ripple */
   {
     const p = cursorPos(t);
-    const show = t > S0 - 0.3 && t < CTA_START;
+    const show = (t > 1.45 && t < 2.75) || (t > S0 - 0.3 && t < CTA_START);
     const near = clicks.find(c => t >= c.t - 0.06 && t <= c.t + 0.6);
     const press = near ? Math.sin(Math.PI * prog(t, near.t - 0.06, near.t + 0.14)) : 0;
     const cur = $("#cursor");
