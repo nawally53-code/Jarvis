@@ -47,7 +47,8 @@
   .pol { position: absolute; width: 560px; height: 688px; background: #FBFAF7; border-radius: 10px; padding: 24px 24px 0;
     box-shadow: 0 30px 60px -18px rgba(0,0,0,.85), 0 6px 14px rgba(0,0,0,.35); transform-origin: 50% 50%; }
   .pol .ph { position: relative; width: 512px; height: 564px; overflow: hidden; background: #222; border-radius: 3px; }
-  .pol .ph img { width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 45%; }
+  .pol .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 45%; }
+  .pol .ph img.fill { filter: blur(22px) brightness(.75); transform: scale(1.2); }
   .pol .dev { position: absolute; inset: 0; background: #fff; }
   .pol .stamp { position: absolute; right: 16px; top: 16px; background: var(--red); color: #fff; font-weight: 900; font-size: 24px; letter-spacing: .14em;
     padding: 8px 16px; border-radius: 8px; transform: rotate(4deg); box-shadow: 0 6px 16px rgba(0,0,0,.4); }
@@ -135,13 +136,15 @@
 const HEADLINE = ["As", "ofertas", "de", "Black", "Friday", "estão", "um", "*sucesso!"];   // * = red marker
 // two photos per slide (the last one is a single wide photo)
 const SLIDES = [
-  [{ f: "cliente-01", cap: "Plano novo fechado", pos: "50% 40%" }, { f: "cliente-02", cap: "Galaxy A17 5G", pos: "50% 40%" }],
-  [{ f: "cliente-03", cap: "Galaxy A16 5G + acessórios", pos: "50% 30%" }, { f: "cliente-04", cap: "Galaxy A07 5G", pos: "50% 45%" }],
-  [{ f: "cliente-05", cap: "Smartphone novo", pos: "50% 50%" }, { f: "cliente-06", cap: "Moto G37 + acessórios", pos: "50% 50%" }],
-  [{ f: "cliente-07", cap: "Smartphone + acessórios", pos: "50% 40%" }, { f: "cliente-08", cap: "Moto G67 + smartwatch", pos: "50% 28%" }],
-  [{ f: "cliente-09", cap: "Galaxy A17 5G + fone", pos: "50% 55%" }, { f: "cliente-10", cap: "Galaxy A07 5G + fones", pos: "50% 45%" }],
-  [{ f: "cliente-12", cap: "Ultra Watch + plano", pos: "50% 50%" }, { f: "cliente-13", cap: "Moto G47", pos: "50% 32%" }],
-  [{ f: "cliente-14", cap: "Motorola + Ultra Watch", pos: "50% 42%" }, { f: "cliente-15", cap: "Cliente satisfeita", pos: "50% 45%" }],
+  [{ f: "cliente-01", cap: "Motorola G47 + acessórios", pos: "50% 40%" }, { f: "cliente-02", cap: "Samsung Galaxy A17 5G + brindes", pos: "50% 40%" }],
+  [{ f: "cliente-03", cap: "Galaxy A57 + acessórios", pos: "50% 30%" }, { f: "cliente-04", cap: "Galaxy A07 5G", pos: "50% 45%" }],
+  [{ f: "cliente-05", cap: "Smartphone novo + Claro Box TV", pos: "50% 50%" }, { f: "cliente-06", cap: "Moto G37 + acessórios", pos: "50% 50%" }],
+  [{ f: "cliente-07", cap: "iPhone 18 Pro Max + acessórios", pos: "50% 40%" }, { f: "cliente-08", cap: "Moto G67 + smartwatch", pos: "50% 28%" }],
+  // fit: "contain" shows the whole photo (no face cropped); the sides are filled with a blurred copy
+  [{ f: "cliente-09", cap: "Galaxy A17 5G + brindes", fit: "contain" }, { f: "cliente-10", cap: "Galaxy A07 5G + brindes", pos: "50% 45%" }],
+  [{ f: "cliente-12", cap: "Smartphone + Ultra Watch", pos: "50% 50%" }, { f: "cliente-13", cap: "Moto G47 + brindes", pos: "50% 32%" }],
+  // zoom: tighter framing (cuts the empty sides), centred on the people
+  [{ f: "cliente-14", cap: "Motorola G37 + Ultra Watch", pos: "50% 42%" }, { f: "cliente-15", cap: "Samsung Galaxy A57 + acessórios", pos: "60% 58%", zoom: 1.75 }],
   [{ f: "cliente-11", cap: "iPhone 16 + acessórios", pos: "50% 40%", wide: true }],
 ];
 // polaroid placement: [left, top, rotation]
@@ -199,10 +202,11 @@ const slides = SLIDES.map((photos, si) => {
     d.className = "pol" + (p.wide ? " wide" : "");
     const [x, y, r] = p.wide ? SPOT_WIDE : SPOTS2[k];
     Object.assign(d.style, { left: x + "px", top: y + "px" });
-    d.innerHTML = `<div class="tape"></div><div class="ph"><img src="assets/fotos/${p.f}.jpg" style="object-position:${p.pos}"><div class="dev"></div></div>
+    const fill = p.fit === "contain" ? `<img class="fill" src="assets/fotos/${p.f}.jpg">` : "";
+    d.innerHTML = `<div class="tape"></div><div class="ph">${fill}<img class="main" src="assets/fotos/${p.f}.jpg" style="object-position:${p.pos || "50% 50%"};${p.fit === "contain" ? "object-fit:contain" : ""};transform-origin:${p.pos || "50% 50%"}"><div class="dev"></div></div>
       <div class="cap"><span><b>✓</b>${p.cap}</span></div>`;
     el.appendChild(d);
-    return { el: d, img: d.querySelector("img"), dev: d.querySelector(".dev"), cap: d.querySelector(".cap"), rot: r, k };
+    return { el: d, img: d.querySelector("img.main"), zoom: p.zoom || 1, dev: d.querySelector(".dev"), cap: d.querySelector(".cap"), rot: r, k };
   });
   $("#slides").appendChild(el);
   const s = { el, pols, start: acc, dur, end: acc + dur };
@@ -300,7 +304,7 @@ window.render = function (t) {
       const dev = prog(t, t0 + 0.3, t0 + 1.0);
       p.dev.style.opacity = 1 - easeOutCubic(dev);
       p.img.style.filter = `brightness(${lerp(1.5, 1, easeOutCubic(dev))}) saturate(${lerp(.4, 1, dev)})`;
-      p.img.style.transform = `scale(${lerp(1.08, 1.0, prog(t, t0, s.end))})`;
+      p.img.style.transform = `scale(${p.zoom * lerp(1.08, 1.0, prog(t, t0, s.end))})`;
       const cp = easeOutCubic(prog(t, t0 + 0.5, t0 + 0.85));
       set(p.cap, cp, `translateX(${lerp(-24, 0, cp)}px)`);
     });

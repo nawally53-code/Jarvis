@@ -9,7 +9,7 @@ Reel vertical 1080×1920, ~32 s, 30 fps → `reel-clientes-black-friday.mp4`.
 | 27,7–32,5 s | Encerramento: logo + slogan Multi Friday + "Venha até uma das nossas lojas e aproveite as ofertas!" |
 
 ## Como editar / renderizar
-- Fotos, ordem e legendas: array `SLIDES` em `index.html` (`cap` = legenda, `pos` = enquadramento da foto).
+- Fotos, ordem e legendas: array `SLIDES` em `index.html` (`cap` = legenda, `pos` = enquadramento, `zoom` = aproximar, `fit: "contain"` = mostrar a foto inteira sem cortar).
 - Melhoria das fotos: `python3 enhance_photos.py` (originais em `assets/originais/` → `assets/fotos/`): redução de ruído,
   equilíbrio de luz (CLAHE), clareamento das fotos escuras, cor e nitidez, ampliação das fotos pequenas. Requer `opencv-python-headless`.
 - Sons (sintetizados, sem áudio de terceiros): `node render.js --events` → `python3 gen_sfx.py` → `node render.js reel-clientes-black-friday.mp4`.
