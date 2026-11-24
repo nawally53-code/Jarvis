@@ -100,7 +100,7 @@
   <div id="hook" class="abs" style="inset:0">
     <div id="hookBg" class="abs"></div>
     <div id="hookShade" class="abs"></div>
-    <div id="badge" class="abs"><i></i>ONTEM NAS NOSSAS LOJAS</div>
+    <div id="badge" class="abs"><i></i>NAS NOSSAS LOJAS</div>
     <div id="headline" class="abs"></div>
     <div id="band" class="abs"><img src="assets/fotos/loja-cheia.jpg" alt=""><div class="live"><i></i>LOJA CHEIA</div></div>
     <div id="sub" class="abs">Olha só quem aproveitou <b>↓</b></div>
@@ -132,7 +132,7 @@
 
 <script>
 /* ---------------- content ---------------- */
-const HEADLINE = ["A", "Black", "Friday", "*lotou", "nossas", "lojas!"];   // * = red marker
+const HEADLINE = ["As", "ofertas", "de", "Black", "Friday", "estão", "um", "*sucesso!"];   // * = red marker
 // two photos per slide (the last one is a single wide photo)
 const SLIDES = [
   [{ f: "cliente-01", cap: "Plano novo fechado", pos: "50% 40%" }, { f: "cliente-02", cap: "Galaxy A17 5G", pos: "50% 40%" }],
@@ -199,10 +199,10 @@ const slides = SLIDES.map((photos, si) => {
     d.className = "pol" + (p.wide ? " wide" : "");
     const [x, y, r] = p.wide ? SPOT_WIDE : SPOTS2[k];
     Object.assign(d.style, { left: x + "px", top: y + "px" });
-    d.innerHTML = `<div class="tape"></div><div class="ph"><img src="assets/fotos/${p.f}.jpg" style="object-position:${p.pos}"><div class="dev"></div><div class="stamp">ONTEM</div></div>
+    d.innerHTML = `<div class="tape"></div><div class="ph"><img src="assets/fotos/${p.f}.jpg" style="object-position:${p.pos}"><div class="dev"></div></div>
       <div class="cap"><span><b>✓</b>${p.cap}</span></div>`;
     el.appendChild(d);
-    return { el: d, img: d.querySelector("img"), dev: d.querySelector(".dev"), stamp: d.querySelector(".stamp"), cap: d.querySelector(".cap"), rot: r, k };
+    return { el: d, img: d.querySelector("img"), dev: d.querySelector(".dev"), cap: d.querySelector(".cap"), rot: r, k };
   });
   $("#slides").appendChild(el);
   const s = { el, pols, start: acc, dur, end: acc + dur };
@@ -236,7 +236,7 @@ const dropT = (s, k) => s.start + 0.05 + k * 0.5;
 const ev = [];
 ev.push({ type: "impact", t: 0.0 }, { type: "pop", t: 0.12 });
 HEADLINE.forEach((w, i) => ev.push({ type: "key", t: 0.25 + i * 0.09 }));
-ev.push({ type: "whoosh", t: 0.2 }, { type: "marker", t: 0.95 }, { type: "pop2", t: 1.5 }, { type: "whoosh", t: HOOK_END - 0.45 });
+ev.push({ type: "whoosh", t: 0.2 }, { type: "marker", t: 1.05 }, { type: "pop2", t: 1.5 }, { type: "whoosh", t: HOOK_END - 0.45 });
 slides.forEach((s, i) => {
   s.pols.forEach(p => { ev.push({ type: "shutter", t: dropT(s, p.k) }); ev.push({ type: "land", t: dropT(s, p.k) + 0.36 }); });
   if (i < slides.length - 1) ev.push({ type: "whoosh", t: s.end - 0.45 });
@@ -268,7 +268,7 @@ window.render = function (t) {
     words.forEach((w, i) => {
       const x = easeOutBack(prog(t, 0.25 + i * 0.09, 0.6 + i * 0.09), 1.4);
       set(w.el, clamp(x * 1.5), `translateY(${lerp(-90, 0, x)}px) scale(${lerp(1.3, 1, x)})`);
-      if (w.mk) w.mk.style.transform = `skewX(-8deg) scaleX(${easeOutExpo(prog(t, 0.95, 1.35))})`;
+      if (w.mk) w.mk.style.transform = `skewX(-8deg) scaleX(${easeOutExpo(prog(t, 1.05, 1.45))})`;
     });
     const bn = easeOutBack(prog(t, 0.3, 0.8), 1.3);
     set($("#band"), clamp(bn * 1.4), `translateY(${lerp(260, 0, bn) + 120 * out}px) rotate(${lerp(6, -2, bn)}deg) scale(${lerp(.8, 1, bn)})`);
@@ -301,8 +301,6 @@ window.render = function (t) {
       p.dev.style.opacity = 1 - easeOutCubic(dev);
       p.img.style.filter = `brightness(${lerp(1.5, 1, easeOutCubic(dev))}) saturate(${lerp(.4, 1, dev)})`;
       p.img.style.transform = `scale(${lerp(1.08, 1.0, prog(t, t0, s.end))})`;
-      const st = easeOutBack(prog(t, t0 + 0.75, t0 + 1.05), 2);
-      set(p.stamp, clamp(st * 1.5), `rotate(4deg) scale(${lerp(1.8, 1, st)})`);
       const cp = easeOutCubic(prog(t, t0 + 0.5, t0 + 0.85));
       set(p.cap, cp, `translateX(${lerp(-24, 0, cp)}px)`);
     });
