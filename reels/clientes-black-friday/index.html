@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Reel Clientes Black Friday — Grupo Caldas Celulares</title>
+<style>
+  @font-face { font-family: "ID"; font-weight: 600; src: url(assets/fonts/InterDisplay-SemiBold.otf); }
+  @font-face { font-family: "ID"; font-weight: 700; src: url(assets/fonts/InterDisplay-Bold.otf); }
+  @font-face { font-family: "ID"; font-weight: 800; src: url(assets/fonts/InterDisplay-ExtraBold.otf); }
+  @font-face { font-family: "ID"; font-weight: 900; src: url(assets/fonts/InterDisplay-Black.otf); }
+  @font-face { font-family: "ID"; font-weight: 800; font-style: italic; src: url(assets/fonts/InterDisplay-ExtraBoldItalic.otf); }
+  @font-face { font-family: "ID"; font-weight: 900; font-style: italic; src: url(assets/fonts/InterDisplay-BlackItalic.otf); }
+
+  :root { --red: #EF0000; --neon: #FF2626; --glow: rgba(255,30,30,.85); --ink: #121214; --muted: #B5A9A9; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
+  body { font-family: "ID", sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
+  #stage { position: absolute; inset: 0; overflow: hidden;
+    background: radial-gradient(1100px 900px at 50% 45%, #1d1a1c 0%, var(--ink) 70%); }
+  .abs { position: absolute; will-change: transform, opacity; }
+  #grain { inset: 0; opacity: .07; mix-blend-mode: overlay; pointer-events: none; z-index: 90; }
+  .bokeh { position: absolute; border-radius: 50%; filter: blur(30px); }
+
+  #topLogo { left: 50%; top: 80px; width: 480px; margin-left: -240px; z-index: 60; }
+
+  /* ---------- HOOK: news-flash headline over the packed store ---------- */
+  #hookBg { inset: -60px; background: url(assets/fotos/loja-cheia.jpg) center/cover; filter: blur(26px) brightness(.38) saturate(1.2); }
+  #hookShade { inset: 0; background: linear-gradient(180deg, rgba(18,18,20,.55), rgba(18,18,20,.15) 45%, rgba(18,18,20,.75)); }
+  #badge { left: 64px; top: 292px; display: inline-flex; align-items: center; gap: 16px; background: var(--red); padding: 16px 30px 16px 24px;
+    border-radius: 999px; font-weight: 900; font-size: 34px; letter-spacing: .12em; box-shadow: 0 0 30px rgba(255,20,20,.6); transform-origin: 0 50%; }
+  #badge i { width: 22px; height: 22px; border-radius: 50%; background: #fff; display: block; }
+  #headline { left: 64px; right: 50px; top: 384px; font-weight: 900; font-size: 128px; line-height: .98; letter-spacing: -0.045em; }
+  #headline .w { display: inline-block; margin-right: .2em; position: relative; }
+  #headline .mk { position: absolute; left: -10px; right: -14px; top: 18%; bottom: 4%; background: var(--red); transform-origin: 0 50%;
+    transform: skewX(-8deg); z-index: -1; border-radius: 6px; }
+  #band { left: 50px; top: 1010px; width: 980px; height: 560px; border: 12px solid #fff; border-radius: 14px; overflow: hidden;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,.8); transform-origin: 50% 50%; background: #333; }
+  #band img { width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 50%; }
+  #band .live { position: absolute; left: 22px; top: 22px; display: inline-flex; align-items: center; gap: 12px; background: rgba(0,0,0,.6);
+    padding: 10px 20px; border-radius: 999px; font-weight: 900; font-size: 28px; letter-spacing: .1em; }
+  #band .live i { width: 16px; height: 16px; border-radius: 50%; background: var(--neon); display: block; box-shadow: 0 0 10px var(--glow); }
+  #sub { left: 0; right: 0; top: 1640px; text-align: center; font-weight: 800; font-size: 58px; letter-spacing: -0.02em; }
+  #sub b { color: var(--neon); display: inline-block; }
+
+  /* ---------- POLAROIDS ---------- */
+  .slide { inset: 0; }
+  .pol { position: absolute; width: 560px; height: 688px; background: #FBFAF7; border-radius: 10px; padding: 24px 24px 0;
+    box-shadow: 0 30px 60px -18px rgba(0,0,0,.85), 0 6px 14px rgba(0,0,0,.35); transform-origin: 50% 50%; }
+  .pol .ph { position: relative; width: 512px; height: 564px; overflow: hidden; background: #222; border-radius: 3px; }
+  .pol .ph img { width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 45%; }
+  .pol .dev { position: absolute; inset: 0; background: #fff; }
+  .pol .stamp { position: absolute; right: 16px; top: 16px; background: var(--red); color: #fff; font-weight: 900; font-size: 24px; letter-spacing: .14em;
+    padding: 8px 16px; border-radius: 8px; transform: rotate(4deg); box-shadow: 0 6px 16px rgba(0,0,0,.4); }
+  .pol .cap { height: 100px; display: flex; align-items: center; color: #1B1B1D; font-weight: 800; font-style: italic; font-size: 36px;
+    letter-spacing: -0.02em; line-height: 1.02; padding: 0 4px; }
+  .pol .cap b { color: var(--red); margin-right: 10px; font-style: normal; }
+  .pol.wide { width: 980px; height: 650px; }
+  .pol.wide .ph { width: 932px; height: 526px; }
+  .pol.wide .cap { font-size: 44px; }
+  .tape { position: absolute; left: 50%; top: -22px; width: 150px; height: 46px; margin-left: -75px; background: rgba(255,255,255,.55);
+    box-shadow: 0 2px 6px rgba(0,0,0,.15); transform: rotate(-3deg); }
+
+  /* ---------- bottom bar ---------- */
+  #bottomBar { left: 64px; right: 64px; top: 1680px; z-index: 50; display: flex; justify-content: space-between; align-items: center; }
+  #bottomBar .l { font-weight: 800; font-size: 36px; display: flex; align-items: center; gap: 14px; }
+  #bottomBar .l i { width: 18px; height: 18px; border-radius: 50%; background: var(--neon); display: block; box-shadow: 0 0 12px var(--glow); }
+  #bottomBar .r { font-weight: 900; font-style: italic; font-size: 44px; letter-spacing: -0.02em; }
+  #bottomBar .r .o { color: transparent; -webkit-text-stroke: 2.5px var(--neon); filter: drop-shadow(0 0 6px var(--glow)); margin-right: 8px; }
+  #dots { left: 0; right: 0; top: 1770px; display: flex; justify-content: center; gap: 14px; z-index: 50; }
+  #dots i { width: 14px; height: 14px; border-radius: 7px; background: rgba(255,255,255,.25); display: block; }
+
+  /* ---------- slogan (CTA) ---------- */
+  .slogan { position: absolute; width: 1000px; height: 560px; transform-origin: 50% 50%; }
+  .slogan .multi { position: absolute; left: 40px; top: 0; font-weight: 900; font-style: italic; font-size: 236px; line-height: 1; letter-spacing: -0.02em;
+    color: transparent; -webkit-text-stroke: 7px var(--neon); filter: drop-shadow(0 0 10px var(--glow)) drop-shadow(0 0 28px rgba(255,0,0,.6)); }
+  .slogan .friday { position: absolute; left: 20px; top: 205px; font-weight: 900; font-style: italic; font-size: 214px; line-height: 1; letter-spacing: -0.035em;
+    color: #fff; filter: drop-shadow(0 0 16px rgba(255,255,255,.35)); }
+  .slogan .ring { position: absolute; left: 700px; top: 285px; width: 150px; height: 150px; border-radius: 50%; border: 18px solid var(--neon);
+    box-shadow: 0 0 22px var(--glow), inset 0 0 18px var(--glow); }
+  .slogan .s1, .slogan .s2 { position: absolute; border: 7px solid var(--neon); border-radius: 12px; box-shadow: 0 0 20px var(--glow), inset 0 0 12px var(--glow); }
+  .slogan .s1 { left: 862px; top: 90px; width: 50px; height: 200px; transform: rotate(40deg); }
+  .slogan .s2 { left: 880px; top: 337px; width: 175px; height: 50px; }
+  .slogan .pill { position: absolute; left: 30px; top: 432px; padding: 10px 56px 18px; border-radius: 999px; border: 7px solid var(--neon); background: rgba(10,10,12,.55);
+    box-shadow: 0 0 24px var(--glow), inset 0 0 16px rgba(255,30,30,.6); font-weight: 800; font-size: 82px; letter-spacing: -0.02em; color: #fff; white-space: nowrap; }
+  #cta { inset: 0; }
+  #ctaLogo { left: 50%; top: 250px; width: 860px; margin-left: -430px; }
+  #ctaSlogan { left: 30px; top: 630px; }
+  #ctaRule { left: 50%; top: 1290px; width: 160px; height: 12px; margin-left: -80px; border-radius: 6px; background: var(--neon); box-shadow: 0 0 18px var(--glow); }
+  #ctaMsg { left: 72px; right: 72px; top: 1360px; text-align: center; font-weight: 900; font-size: 86px; line-height: 1.08; letter-spacing: -0.03em; }
+  #ctaMsg .l { display: block; }
+  #ctaMsg .r { color: var(--neon); text-shadow: 0 0 24px rgba(255,20,20,.65); }
+  #flash { inset: 0; background: var(--red); z-index: 95; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="bokeh"></div>
+
+  <!-- HOOK -->
+  <div id="hook" class="abs" style="inset:0">
+    <div id="hookBg" class="abs"></div>
+    <div id="hookShade" class="abs"></div>
+    <div id="badge" class="abs"><i></i>ONTEM NAS NOSSAS LOJAS</div>
+    <div id="headline" class="abs"></div>
+    <div id="band" class="abs"><img src="assets/fotos/loja-cheia.jpg" alt=""><div class="live"><i></i>LOJA CHEIA</div></div>
+    <div id="sub" class="abs">Olha só quem aproveitou <b>↓</b></div>
+  </div>
+
+  <img id="topLogo" class="abs" src="assets/logo-caldas-branca.png" alt="Grupo Caldas Celulares">
+  <div id="slides"></div>
+
+  <div id="bottomBar" class="abs">
+    <div class="l"><i></i>Clientes de ontem</div>
+    <div class="r"><span class="o">MULTI</span>Friday</div>
+  </div>
+  <div id="dots" class="abs"></div>
+
+  <div id="cta" class="abs">
+    <img id="ctaLogo" class="abs" src="assets/logo-caldas-branca.png" alt="Grupo Caldas Celulares">
+    <div id="ctaSlogan" class="slogan"></div>
+    <div id="ctaRule" class="abs"></div>
+    <div id="ctaMsg" class="abs">
+      <span class="l">Venha até uma das</span>
+      <span class="l">nossas lojas e</span>
+      <span class="l r">aproveite as ofertas!</span>
+    </div>
+  </div>
+
+  <div id="flash" class="abs"></div>
+  <svg id="grain" class="abs" width="1080" height="1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+</div>
+
+<script>
+/* ---------------- content ---------------- */
+const HEADLINE = ["A", "Black", "Friday", "*lotou", "nossas", "lojas!"];   // * = red marker
+// two photos per slide (the last one is a single wide photo)
+const SLIDES = [
+  [{ f: "cliente-01", cap: "Plano novo fechado", pos: "50% 40%" }, { f: "cliente-02", cap: "Galaxy A17 5G", pos: "50% 40%" }],
+  [{ f: "cliente-03", cap: "Galaxy A16 5G + acessórios", pos: "50% 30%" }, { f: "cliente-04", cap: "Galaxy A07 5G", pos: "50% 45%" }],
+  [{ f: "cliente-05", cap: "Smartphone novo", pos: "50% 50%" }, { f: "cliente-06", cap: "Moto G37 + acessórios", pos: "50% 50%" }],
+  [{ f: "cliente-07", cap: "Smartphone + acessórios", pos: "50% 40%" }, { f: "cliente-08", cap: "Moto G67 + smartwatch", pos: "50% 28%" }],
+  [{ f: "cliente-09", cap: "Galaxy A17 5G + fone", pos: "50% 55%" }, { f: "cliente-10", cap: "Galaxy A07 5G + fones", pos: "50% 45%" }],
+  [{ f: "cliente-12", cap: "Ultra Watch + plano", pos: "50% 50%" }, { f: "cliente-13", cap: "Moto G47", pos: "50% 32%" }],
+  [{ f: "cliente-14", cap: "Motorola + Ultra Watch", pos: "50% 42%" }, { f: "cliente-15", cap: "Cliente satisfeita", pos: "50% 45%" }],
+  [{ f: "cliente-11", cap: "iPhone 16 + acessórios", pos: "50% 40%", wide: true }],
+];
+// polaroid placement: [left, top, rotation]
+const SPOTS2 = [[44, 224, -4.5], [478, 948, 3.5]];
+const SPOT_WIDE = [50, 600, -2];
+
+/* ---------------- timeline ---------------- */
+const HOOK_END = 3.0;
+const S0 = 3.0;
+const SLIDE_DUR = 3.1, WIDE_DUR = 3.0;
+let CTA_START = 0, DUR = 0;
+
+/* ---------------- helpers ---------------- */
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const easeOutCubic = x => 1 - Math.pow(1 - x, 3);
+const easeOutExpo = x => x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+const easeInOut = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const easeOutBack = (x, s = 1.6) => 1 + (s + 1) * Math.pow(x - 1, 3) + s * Math.pow(x - 1, 2);
+const lerp = (a, b, x) => a + (b - a) * x;
+const $ = s => document.querySelector(s);
+const set = (el, o, tf) => { el.style.opacity = o; if (tf !== undefined) el.style.transform = tf; };
+const flicker = (t, t0, len = 0.45) => {
+  if (t < t0) return 0;
+  const x = (t - t0) / len;
+  return x >= 1 ? 1 : [1, 0.15, 1, 0.3, 0.9, 0.2, 1, 1][Math.floor(x * 8)];
+};
+
+/* ---------------- build ---------------- */
+const words = HEADLINE.map(w => {
+  const s = document.createElement("span");
+  s.className = "w";
+  const marked = w.startsWith("*");
+  s.innerHTML = (marked ? '<span class="mk"></span>' : "") + (marked ? w.slice(1) : w);
+  $("#headline").appendChild(s);
+  return { el: s, mk: s.querySelector(".mk") };
+});
+
+const BOKEH = [[120, 420, 260, .16], [900, 300, 320, .12], [760, 1500, 280, .14], [160, 1380, 220, .1], [560, 820, 380, .06], [980, 1100, 200, .1]];
+const bokeh = BOKEH.map(([x, y, r, o], i) => {
+  const b = document.createElement("div");
+  b.className = "bokeh";
+  Object.assign(b.style, { left: x - r / 2 + "px", top: y - r / 2 + "px", width: r + "px", height: r + "px", background: i % 3 === 2 ? "rgba(255,255,255,1)" : "rgba(255,40,40,1)" });
+  $("#bokeh").appendChild(b);
+  return { el: b, o, i };
+});
+
+let acc = S0;
+const slides = SLIDES.map((photos, si) => {
+  const el = document.createElement("div");
+  el.className = "slide abs";
+  const dur = photos[0].wide ? WIDE_DUR : SLIDE_DUR;
+  const pols = photos.map((p, k) => {
+    const d = document.createElement("div");
+    d.className = "pol" + (p.wide ? " wide" : "");
+    const [x, y, r] = p.wide ? SPOT_WIDE : SPOTS2[k];
+    Object.assign(d.style, { left: x + "px", top: y + "px" });
+    d.innerHTML = `<div class="tape"></div><div class="ph"><img src="assets/fotos/${p.f}.jpg" style="object-position:${p.pos}"><div class="dev"></div><div class="stamp">ONTEM</div></div>
+      <div class="cap"><span><b>✓</b>${p.cap}</span></div>`;
+    el.appendChild(d);
+    return { el: d, img: d.querySelector("img"), dev: d.querySelector(".dev"), stamp: d.querySelector(".stamp"), cap: d.querySelector(".cap"), rot: r, k };
+  });
+  $("#slides").appendChild(el);
+  const s = { el, pols, start: acc, dur, end: acc + dur };
+  acc += dur;
+  return s;
+});
+CTA_START = acc - 0.05;
+DUR = +(CTA_START + 4.9).toFixed(2);
+
+slides.forEach(() => $("#dots").appendChild(document.createElement("i")));
+const dots = [...document.querySelectorAll("#dots i")];
+
+const SLOGAN_HTML = `<div class="multi">MULTI</div><div class="s1"></div><div class="friday">Friday</div><div class="ring"></div><div class="s2"></div><div class="pill">Claro que tem</div>`;
+$("#ctaSlogan").innerHTML = SLOGAN_HTML;
+const ctaParts = ["multi", "s1", "friday", "ring", "s2", "pill"].map(c => $("#ctaSlogan ." + c));
+function animSlogan(parts, t, t0, scale) {
+  const [multi, s1, friday, ring, s2, pill] = parts;
+  const fr = easeOutExpo(prog(t, t0 + 0.25, t0 + 0.7));
+  const pl = easeOutBack(prog(t, t0 + 0.55, t0 + 0.95), 1.6);
+  multi.style.opacity = flicker(t, t0, 0.5);
+  set(friday, fr, `translateX(${lerp(-80, 0, fr)}px) skewX(${lerp(-8, 0, fr)}deg)`);
+  [ring, s1, s2].forEach((el, i) => { el.style.opacity = flicker(t, t0 + 0.45 + i * 0.12, 0.35); });
+  set(pill, clamp(pl * 1.3), `scale(${lerp(.6, 1, pl)})`);
+  return `scale(${scale * (1 + 0.012 * Math.sin(Math.max(0, t - t0) * 2.6))})`;
+}
+
+// polaroid drop times inside a slide
+const dropT = (s, k) => s.start + 0.05 + k * 0.5;
+
+/* ---------------- sound cues ---------------- */
+const ev = [];
+ev.push({ type: "impact", t: 0.0 }, { type: "pop", t: 0.12 });
+HEADLINE.forEach((w, i) => ev.push({ type: "key", t: 0.25 + i * 0.09 }));
+ev.push({ type: "whoosh", t: 0.2 }, { type: "marker", t: 0.95 }, { type: "pop2", t: 1.5 }, { type: "whoosh", t: HOOK_END - 0.45 });
+slides.forEach((s, i) => {
+  s.pols.forEach(p => { ev.push({ type: "shutter", t: dropT(s, p.k) }); ev.push({ type: "land", t: dropT(s, p.k) + 0.36 }); });
+  if (i < slides.length - 1) ev.push({ type: "whoosh", t: s.end - 0.45 });
+});
+ev.push({ type: "impact", t: CTA_START - 0.12 }, { type: "neon", t: CTA_START + 0.55 }, { type: "chime", t: CTA_START + 1.65 });
+window.SFX_EVENTS = ev.sort((a, b) => a.t - b.t);
+
+/* ---------------- render(t) ---------------- */
+window.render = function (t) {
+  bokeh.forEach(({ el, o, i }) => {
+    el.style.opacity = o * (0.7 + 0.3 * Math.sin(t * 0.9 + i));
+    el.style.transform = `translate(${30 * Math.sin(t * 0.35 + i * 1.7)}px, ${24 * Math.cos(t * 0.3 + i)}px)`;
+  });
+  const logoOut = 1 - prog(t, CTA_START - 0.1, CTA_START + 0.2);
+  set($("#topLogo"), easeOutCubic(prog(t, 0, 0.4)) * logoOut);
+
+  /* hook */
+  {
+    const out = easeInOut(prog(t, HOOK_END - 0.35, HOOK_END + 0.05));
+    const h = $("#hook");
+    h.style.visibility = t < HOOK_END + 0.1 ? "visible" : "hidden";
+    h.style.opacity = 1 - out;
+    $("#hookBg").style.transform = `scale(${1.15 + 0.05 * t})`;
+    const content = `translateY(${-140 * out}px)`;
+    const bd = easeOutBack(prog(t, 0.1, 0.4), 1.8);
+    set($("#badge"), clamp(bd * 1.5), `${content} scale(${lerp(.5, 1, bd)})`);
+    $("#badge i").style.opacity = 0.35 + 0.65 * (Math.sin(t * 9) > 0 ? 1 : 0);
+    $("#headline").style.transform = content;
+    words.forEach((w, i) => {
+      const x = easeOutBack(prog(t, 0.25 + i * 0.09, 0.6 + i * 0.09), 1.4);
+      set(w.el, clamp(x * 1.5), `translateY(${lerp(-90, 0, x)}px) scale(${lerp(1.3, 1, x)})`);
+      if (w.mk) w.mk.style.transform = `skewX(-8deg) scaleX(${easeOutExpo(prog(t, 0.95, 1.35))})`;
+    });
+    const bn = easeOutBack(prog(t, 0.3, 0.8), 1.3);
+    set($("#band"), clamp(bn * 1.4), `translateY(${lerp(260, 0, bn) + 120 * out}px) rotate(${lerp(6, -2, bn)}deg) scale(${lerp(.8, 1, bn)})`);
+    $("#band img").style.transform = `scale(${1.04 + 0.05 * prog(t, 0, HOOK_END)})`;
+    $("#band .live i").style.opacity = Math.sin(t * 8) > 0 ? 1 : 0.3;
+    const sb = easeOutCubic(prog(t, 1.5, 1.85));
+    set($("#sub"), sb, `translateY(${lerp(40, 0, sb) + 140 * out}px)`);
+    $("#sub b").style.transform = `translateY(${10 * Math.abs(Math.sin(t * 6))}px)`;
+  }
+
+  /* polaroid slides */
+  slides.forEach((s, si) => {
+    const last = si === slides.length - 1;
+    const leave = last ? 0 : easeInOut(prog(t, s.end - 0.4, s.end + 0.02));
+    const visible = t > s.start - 0.01 && t < (last ? CTA_START + 0.3 : s.end + 0.05);
+    s.el.style.visibility = visible ? "visible" : "hidden";
+    if (!visible) return;
+    const fade = last ? 1 - prog(t, CTA_START - 0.05, CTA_START + 0.25) : 1 - leave;
+    s.el.style.opacity = fade;
+    s.el.style.transform = `translateX(${-1150 * leave}px) rotate(${-6 * leave}deg)`;
+    s.pols.forEach(p => {
+      const t0 = dropT(s, p.k);
+      const d = easeOutBack(prog(t, t0, t0 + 0.42), 1.25);
+      const shown = t >= t0;
+      p.el.style.visibility = shown ? "inherit" : "hidden";   // inherit, so a hidden slide hides its photos
+      const settle = p.rot + (1 - d) * (p.k ? 14 : -14);
+      p.el.style.transform = `translateY(${lerp(-1300, 0, d)}px) rotate(${settle}deg) scale(${lerp(1.18, 1, d)})`;
+      // instant-photo "developing": white → full image, slight over-exposure fading out
+      const dev = prog(t, t0 + 0.3, t0 + 1.0);
+      p.dev.style.opacity = 1 - easeOutCubic(dev);
+      p.img.style.filter = `brightness(${lerp(1.5, 1, easeOutCubic(dev))}) saturate(${lerp(.4, 1, dev)})`;
+      p.img.style.transform = `scale(${lerp(1.08, 1.0, prog(t, t0, s.end))})`;
+      const st = easeOutBack(prog(t, t0 + 0.75, t0 + 1.05), 2);
+      set(p.stamp, clamp(st * 1.5), `rotate(4deg) scale(${lerp(1.8, 1, st)})`);
+      const cp = easeOutCubic(prog(t, t0 + 0.5, t0 + 0.85));
+      set(p.cap, cp, `translateX(${lerp(-24, 0, cp)}px)`);
+    });
+  });
+
+  /* bottom bar + progress dots */
+  {
+    const i = easeOutCubic(prog(t, S0 - 0.2, S0 + 0.3)) * (1 - prog(t, CTA_START - 0.1, CTA_START + 0.2));
+    set($("#bottomBar"), i);
+    $("#dots").style.opacity = i;
+    const idx = slides.findIndex(s => t < s.end - 0.2);
+    dots.forEach((d, k) => {
+      const on = k === (idx < 0 ? slides.length - 1 : idx);
+      d.style.width = on ? "46px" : "14px";
+      d.style.background = on ? "#FF2626" : (k < idx ? "rgba(255,255,255,.6)" : "rgba(255,255,255,.25)");
+    });
+  }
+
+  /* red wipe into CTA */
+  {
+    const a = prog(t, CTA_START - 0.15, CTA_START + 0.1), b = prog(t, CTA_START + 0.1, CTA_START + 0.45);
+    const f = $("#flash");
+    f.style.transform = `translateY(${a < 1 ? lerp(100, 0, easeInOut(a)) : lerp(0, -100, easeInOut(b))}%)`;
+    f.style.visibility = (a > 0 && b < 1) ? "visible" : "hidden";
+  }
+
+  /* CTA */
+  {
+    const T = CTA_START + 0.15;
+    const show = t >= T - 0.01;
+    $("#cta").style.visibility = show ? "visible" : "hidden";
+    if (show) {
+      const lg = easeOutBack(prog(t, T + 0.1, T + 0.7), 1.2);
+      set($("#ctaLogo"), clamp(lg * 1.3), `translateY(${lerp(-50, 0, lg)}px) scale(${lerp(.9, 1, lg)})`);
+      set($("#ctaSlogan"), 1, animSlogan(ctaParts, t, T + 0.4, 0.8));
+      const ru = easeOutExpo(prog(t, T + 1.3, T + 1.8));
+      set($("#ctaRule"), ru, `scaleX(${ru})`);
+      document.querySelectorAll("#ctaMsg .l").forEach((l, i) => {
+        const x = easeOutCubic(prog(t, T + 1.5 + i * 0.18, T + 1.95 + i * 0.18));
+        set(l, x, `translateY(${lerp(40, 0, x)}px)`);
+      });
+    }
+  }
+};
+
+window.ready = Promise.all([
+  document.fonts.ready,
+  ...[...document.images].map(im => im.complete ? 0 : new Promise(r => { im.onload = im.onerror = r; })),
+]).then(() => Promise.all([document.fonts.load('900 100px "ID"'), document.fonts.load('italic 900 100px "ID"'), document.fonts.load('italic 800 100px "ID"')]))
+  .then(() => Promise.all([...document.images].map(im => im.decode ? im.decode().catch(() => 0) : 0)))
+  .then(() => render(0));
+</script>
+</body>
+</html>
