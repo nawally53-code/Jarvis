@@ -1,0 +1,78 @@
+{
+ "duration": 21.2,
+ "events": [
+  {
+   "type": "impact",
+   "t": 0.15
+  },
+  {
+   "type": "impact",
+   "t": 0.75
+  },
+  {
+   "type": "pop",
+   "t": 1.35
+  },
+  {
+   "type": "whoosh",
+   "t": 2.2
+  },
+  {
+   "type": "neon",
+   "t": 2.65
+  },
+  {
+   "type": "whoosh",
+   "t": 2.85
+  },
+  {
+   "type": "chime",
+   "t": 3.6
+  },
+  {
+   "type": "whoosh",
+   "t": 6.5
+  },
+  {
+   "type": "pop",
+   "t": 7.05
+  },
+  {
+   "type": "chime",
+   "t": 7.1499999999999995
+  },
+  {
+   "type": "pop2",
+   "t": 7.55
+  },
+  {
+   "type": "whoosh",
+   "t": 10.4
+  },
+  {
+   "type": "ticks",
+   "t": 10.9,
+   "dur": 1.4
+  },
+  {
+   "type": "chime",
+   "t": 12.35
+  },
+  {
+   "type": "pop2",
+   "t": 12.8
+  },
+  {
+   "type": "impact",
+   "t": 16.18
+  },
+  {
+   "type": "neon",
+   "t": 16.85
+  },
+  {
+   "type": "chime",
+   "t": 17.95
+  }
+ ]
+}

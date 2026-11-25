@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Reel Galaxy A57 Compre e Leve Outro — Grupo Caldas Celulares</title>
+<style>
+  @font-face { font-family: "ID"; font-weight: 600; src: url(assets/fonts/InterDisplay-SemiBold.otf); }
+  @font-face { font-family: "ID"; font-weight: 700; src: url(assets/fonts/InterDisplay-Bold.otf); }
+  @font-face { font-family: "ID"; font-weight: 800; src: url(assets/fonts/InterDisplay-ExtraBold.otf); }
+  @font-face { font-family: "ID"; font-weight: 900; src: url(assets/fonts/InterDisplay-Black.otf); }
+  @font-face { font-family: "ID"; font-weight: 800; font-style: italic; src: url(assets/fonts/InterDisplay-ExtraBoldItalic.otf); }
+  @font-face { font-family: "ID"; font-weight: 900; font-style: italic; src: url(assets/fonts/InterDisplay-BlackItalic.otf); }
+
+  :root { --red: #EF0000; --neon: #FF2626; --glow: rgba(255,30,30,.85); --ink: #0A0A0C; --muted: #B0A4A4; --gold: #FFD76A; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
+  body { font-family: "ID", sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
+  #stage { position: absolute; inset: 0; overflow: hidden;
+    background: radial-gradient(900px 700px at 50% -8%, rgba(239,0,0,.28), transparent 70%),
+                radial-gradient(1000px 800px at 50% 112%, rgba(239,0,0,.26), transparent 70%), var(--ink); }
+  .abs { position: absolute; will-change: transform, opacity; }
+  #waves { position: absolute; left: -100px; width: 1280px; height: 1920px; top: 0; }
+  #waves path { fill: none; stroke: var(--neon); stroke-linecap: round; }
+  #shake { inset: 0; }
+
+  #topLogo { left: 50%; top: 80px; width: 480px; margin-left: -240px; }
+
+  /* ---------- HOOK: kinetic slam type ---------- */
+  #h1 { left: 0; right: 0; top: 580px; text-align: center; white-space: nowrap; font-weight: 900; font-style: italic; font-size: 138px; letter-spacing: -0.04em; line-height: 1; }
+  #h2 { left: 0; right: 0; top: 730px; text-align: center; white-space: nowrap; font-weight: 900; font-style: italic; font-size: 285px; letter-spacing: -0.06em; line-height: 1;
+    color: var(--neon); text-shadow: 0 0 40px rgba(255,20,20,.75), 0 0 90px rgba(255,0,0,.45); }
+  #h3 { left: 0; right: 0; top: 1080px; text-align: center; font-weight: 800; font-size: 60px; letter-spacing: -0.01em; }
+  #h3 span { color: var(--neon); }
+  #hookFlash { inset: 0; background: #fff; }
+
+  /* ---------- stage ---------- */
+  #eyebrow { left: 0; right: 0; top: 268px; text-align: center; font-weight: 800; font-size: 32px; letter-spacing: .18em; color: var(--neon); text-shadow: 0 0 14px var(--glow); }
+  .title { left: 40px; right: 40px; top: 318px; text-align: center; font-weight: 900; font-style: italic; font-size: 86px; line-height: 1.02; letter-spacing: -0.035em; text-transform: uppercase; }
+  .title em { color: var(--neon); font-style: italic; text-shadow: 0 0 22px rgba(255,20,20,.6); }
+  #podium { left: 140px; top: 1300px; width: 800px; height: 170px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(255,60,60,.55), rgba(255,20,20,.18) 60%, transparent 100%); }
+  #podiumRing { left: 190px; top: 1330px; width: 700px; height: 110px; border-radius: 50%; border: 6px solid var(--neon);
+    box-shadow: 0 0 30px var(--glow), inset 0 0 24px var(--glow); }
+  #beam { left: 240px; top: 420px; width: 600px; height: 980px;
+    background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,220,220,.08) 50%, rgba(255,60,60,.22));
+    clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%); }
+  .phone { width: 560px; height: 674px; transform-origin: 50% 100%; }
+  .phone img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 40px rgba(255,255,255,.18)) drop-shadow(0 30px 40px rgba(0,0,0,.7)); }
+  .phone .sweep { position: absolute; inset: 0; -webkit-mask: url(assets/a57.png) center/contain no-repeat; mask: url(assets/a57.png) center/contain no-repeat;
+    background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.55) 50%, transparent 65%); background-size: 300% 100%; mix-blend-mode: screen; }
+  .lbl { font-weight: 900; font-size: 36px; letter-spacing: .08em; text-transform: uppercase; padding: 12px 28px; border-radius: 999px; white-space: nowrap; transform-origin: 50% 50%; }
+  .lbl.buy { color: var(--neon); border: 4px solid var(--neon); }
+  .lbl.gift { color: #fff; background: var(--red); box-shadow: 0 0 26px rgba(255,20,20,.75); }
+  #plus { left: 0; right: 0; top: 920px; text-align: center; font-weight: 900; font-size: 200px; line-height: 1; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,.4); }
+  #burst { left: 540px; top: 1000px; width: 10px; height: 10px; }
+  #burst i { position: absolute; left: 0; top: 0; width: 10px; height: 34px; margin: -17px 0 0 -5px; border-radius: 5px; background: var(--gold); transform-origin: 50% 50%; }
+
+  /* ---------- price ---------- */
+  #price { left: 0; right: 0; top: 1010px; text-align: center; }
+  #price .row { display: flex; justify-content: center; align-items: flex-start; gap: 12px; line-height: 1; }
+  #price .x { font-weight: 900; font-size: 72px; color: #fff; margin-top: 46px; }
+  .slot { display: inline-block; height: 250px; overflow: hidden; font-weight: 900; font-size: 250px; letter-spacing: -0.05em; color: var(--neon);
+    text-shadow: 0 0 40px rgba(255,20,20,.55); vertical-align: top; }
+  .slot .strip { display: flex; flex-direction: column; }
+  .slot .strip span { height: 250px; line-height: 250px; display: block; text-align: center; }
+  .cents { font-weight: 900; font-size: 96px; color: var(--neon); margin-top: 30px; letter-spacing: -0.02em; text-shadow: 0 0 24px rgba(255,20,20,.5); }
+  #price .sj { font-weight: 800; font-size: 46px; margin-top: 6px; }
+  #price .tot { font-weight: 700; font-size: 42px; color: #ddd; margin-top: 14px; }
+  #price .tot b { color: var(--gold); font-weight: 900; }
+  #bonus { left: 0; right: 0; margin: 0 auto; width: max-content; top: 1500px; text-align: center; border: 3px solid rgba(255,38,38,.85); border-radius: 30px;
+    padding: 18px 46px; background: rgba(255,20,20,.08); box-shadow: 0 0 24px rgba(255,20,20,.35); transform-origin: 50% 50%; }
+  #bonus small { display: block; font-weight: 600; font-size: 30px; color: #cfc6c6; }
+  #bonus strong { font-weight: 900; font-size: 64px; letter-spacing: -0.02em; }
+  #bonus strong em { color: var(--neon); font-style: normal; }
+  #bonus .b { display: block; font-weight: 600; font-size: 26px; color: #a99c9c; margin-top: 2px; }
+  #fine { left: 0; right: 0; top: 1735px; text-align: center; font-weight: 600; font-size: 26px; color: #8f8686; }
+
+  #tag { left: 0; right: 0; top: 1800px; text-align: center; font-weight: 900; font-style: italic; font-size: 46px; letter-spacing: -0.02em; }
+  #tag .o { color: transparent; -webkit-text-stroke: 2.5px var(--neon); filter: drop-shadow(0 0 6px var(--glow)); margin-right: 10px; }
+  #tag .c { font-style: normal; font-weight: 700; font-size: 32px; color: var(--muted); margin-left: 12px; }
+
+  /* ---------- slogan + CTA ---------- */
+  .slogan { position: absolute; width: 1000px; height: 560px; transform-origin: 50% 50%; }
+  .slogan .multi { position: absolute; left: 40px; top: 0; font-weight: 900; font-style: italic; font-size: 236px; line-height: 1; letter-spacing: -0.02em;
+    color: transparent; -webkit-text-stroke: 7px var(--neon); filter: drop-shadow(0 0 10px var(--glow)) drop-shadow(0 0 28px rgba(255,0,0,.6)); }
+  .slogan .friday { position: absolute; left: 20px; top: 205px; font-weight: 900; font-style: italic; font-size: 214px; line-height: 1; letter-spacing: -0.035em;
+    color: #fff; filter: drop-shadow(0 0 16px rgba(255,255,255,.35)); }
+  .slogan .ring { position: absolute; left: 700px; top: 285px; width: 150px; height: 150px; border-radius: 50%; border: 18px solid var(--neon);
+    box-shadow: 0 0 22px var(--glow), inset 0 0 18px var(--glow); }
+  .slogan .s1, .slogan .s2 { position: absolute; border: 7px solid var(--neon); border-radius: 12px; box-shadow: 0 0 20px var(--glow), inset 0 0 12px var(--glow); }
+  .slogan .s1 { left: 862px; top: 90px; width: 50px; height: 200px; transform: rotate(40deg); }
+  .slogan .s2 { left: 880px; top: 337px; width: 175px; height: 50px; }
+  .slogan .pill { position: absolute; left: 30px; top: 432px; padding: 10px 56px 18px; border-radius: 999px; border: 7px solid var(--neon); background: rgba(10,10,12,.55);
+    box-shadow: 0 0 24px var(--glow), inset 0 0 16px rgba(255,30,30,.6); font-weight: 800; font-size: 82px; letter-spacing: -0.02em; color: #fff; white-space: nowrap; }
+  #cta { inset: 0; }
+  #ctaLogo { left: 50%; top: 250px; width: 860px; margin-left: -430px; }
+  #ctaSlogan { left: 30px; top: 630px; }
+  #ctaRule { left: 50%; top: 1290px; width: 160px; height: 12px; margin-left: -80px; border-radius: 6px; background: var(--neon); box-shadow: 0 0 18px var(--glow); }
+  #ctaMsg { left: 72px; right: 72px; top: 1360px; text-align: center; font-weight: 900; font-size: 86px; line-height: 1.08; letter-spacing: -0.03em; }
+  #ctaMsg .l { display: block; }
+  #ctaMsg .r { color: var(--neon); text-shadow: 0 0 24px rgba(255,20,20,.65); }
+  #flash { inset: 0; background: var(--red); z-index: 95; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg id="waves" viewBox="0 0 1280 1920"></svg>
+  <div id="shake" class="abs">
+    <img id="topLogo" class="abs" src="assets/logo-caldas-branca.png" alt="Grupo Caldas Celulares">
+
+    <!-- HOOK -->
+    <div id="h1" class="abs">COMPROU 1…</div>
+    <div id="h2" class="abs">LEVA 2!</div>
+    <div id="h3" class="abs">Samsung Galaxy A57 <span>na Multi Friday</span></div>
+
+    <!-- STAGE -->
+    <div id="eyebrow" class="abs">OFERTA MULTI FRIDAY</div>
+    <div id="t1" class="title abs">Samsung <em>Galaxy A57</em></div>
+    <div id="t2" class="title abs">Comprou um, <em>leva outro igual!</em></div>
+    <div id="beam" class="abs"></div>
+    <div id="podium" class="abs"></div>
+    <div id="podiumRing" class="abs"></div>
+    <div id="p1" class="phone abs"><img src="assets/a57.png" alt="Samsung Galaxy A57"><div class="sweep"></div></div>
+    <div id="p2" class="phone abs"><img src="assets/a57.png" alt="Samsung Galaxy A57"><div class="sweep"></div></div>
+    <div id="lblBuy" class="lbl buy abs">Compre</div>
+    <div id="lblGift" class="lbl gift abs">Leve outro igual</div>
+    <div id="plus" class="abs">+</div>
+    <div id="burst" class="abs"></div>
+
+    <!-- PRICE -->
+    <div id="price" class="abs">
+      <div class="row"><span class="x">12x R$</span><span id="slots"></span><span class="cents" id="cents">,58</span></div>
+      <div class="sj">sem juros</div>
+      <div class="tot">Total <b>R$ 3.079</b></div>
+    </div>
+    <div id="bonus" class="abs"><small>No Claro Multi</small><strong>200GB <em>+ 50GB</em></strong><span class="b">Bônus Multi Friday</span></div>
+    <div id="fine" class="abs">Consulte as condições da oferta em uma de nossas lojas.</div>
+    <div id="tag" class="abs"><span class="o">MULTI</span>Friday<span class="c">Claro que tem</span></div>
+  </div>
+
+  <div id="cta" class="abs">
+    <img id="ctaLogo" class="abs" src="assets/logo-caldas-branca.png" alt="Grupo Caldas Celulares">
+    <div id="ctaSlogan" class="slogan"></div>
+    <div id="ctaRule" class="abs"></div>
+    <div id="ctaMsg" class="abs">
+      <span class="l">Venha até uma das</span>
+      <span class="l">nossas lojas e</span>
+      <span class="l r">aproveite as ofertas!</span>
+    </div>
+  </div>
+  <div id="hookFlash" class="abs"></div>
+  <div id="flash" class="abs"></div>
+</div>
+
+<script>
+/* ---------------- timeline (seconds) ---------------- */
+const T_SLAM1 = 0.15, T_SLAM2 = 0.75, HOOK_END = 2.6;
+const T_STAGE = 2.6;          // phone rises on the podium
+const T_DUP = 6.6;            // second phone joins ("leve outro igual")
+const T_PRICE = 10.6;         // installments roll in
+const CTA_START = 16.3;
+const DUR = 21.2;
+const PRICE_INT = "256";      // 3.079 ÷ 12 = 256,58
+
+/* ---------------- helpers ---------------- */
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const easeOutCubic = x => 1 - Math.pow(1 - x, 3);
+const easeOutExpo = x => x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+const easeInOut = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const easeOutBack = (x, s = 1.6) => 1 + (s + 1) * Math.pow(x - 1, 3) + s * Math.pow(x - 1, 2);
+const lerp = (a, b, x) => a + (b - a) * x;
+const $ = s => document.querySelector(s);
+const set = (el, o, tf) => { el.style.opacity = o; if (tf !== undefined) el.style.transform = tf; };
+const vis = (el, on) => { el.style.visibility = on ? "visible" : "hidden"; };
+const flicker = (t, t0, len = 0.45) => {
+  if (t < t0) return 0;
+  const x = (t - t0) / len;
+  return x >= 1 ? 1 : [1, 0.15, 1, 0.3, 0.9, 0.2, 1, 1][Math.floor(x * 8)];
+};
+
+/* ---------------- build ---------------- */
+const SVGNS = "http://www.w3.org/2000/svg";
+const WAVES = [
+  { y: 1830, amp: 40, len: 900, w: 4, o: .9, sp: .25 }, { y: 1875, amp: 30, len: 1100, w: 2, o: .6, sp: -.18 },
+  { y: 160, amp: 60, len: 1000, w: 3, o: .5, sp: -.2 }, { y: 220, amp: 40, len: 1200, w: 1.5, o: .35, sp: .15 },
+];
+const waves = WAVES.map(c => {
+  const p = document.createElementNS(SVGNS, "path");
+  p.setAttribute("stroke-width", c.w); p.style.opacity = c.o;
+  p.style.filter = `drop-shadow(0 0 ${6 + c.w * 3}px rgba(255,20,20,.9))`;
+  $("#waves").appendChild(p);
+  return { p, ...c };
+});
+const wavePath = (c, t) => {
+  let d = "";
+  for (let x = 0; x <= 1280; x += 20) {
+    const y = c.y + c.amp * Math.sin((x / c.len) * Math.PI * 2 + t * c.sp * 6) + c.amp * .35 * Math.sin((x / c.len) * Math.PI * 5 - t * c.sp * 4);
+    d += (x ? " L" : "M") + x + " " + y.toFixed(1);
+  }
+  return d;
+};
+
+// slot-machine digits
+const slots = PRICE_INT.split("").map(dig => {
+  const s = document.createElement("span");
+  s.className = "slot";
+  const strip = document.createElement("span");
+  strip.className = "strip";
+  for (let k = 0; k < 30; k++) { const n = document.createElement("span"); n.textContent = k % 10; strip.appendChild(n); }
+  s.appendChild(strip);
+  $("#slots").appendChild(s);
+  return { strip, final: 20 + Number(dig) };   // land on the 3rd lap
+});
+
+// gift burst rays
+const RAYS = 14;
+const rays = Array.from({ length: RAYS }, (_, i) => { const r = document.createElement("i"); $("#burst").appendChild(r); return { el: r, a: (360 / RAYS) * i }; });
+
+$("#ctaSlogan").innerHTML = `<div class="multi">MULTI</div><div class="s1"></div><div class="friday">Friday</div><div class="ring"></div><div class="s2"></div><div class="pill">Claro que tem</div>`;
+const ctaParts = ["multi", "s1", "friday", "ring", "s2", "pill"].map(c => $("#ctaSlogan ." + c));
+function animSlogan(parts, t, t0, scale) {
+  const [multi, s1, friday, ring, s2, pill] = parts;
+  const fr = easeOutExpo(prog(t, t0 + 0.25, t0 + 0.7));
+  const pl = easeOutBack(prog(t, t0 + 0.55, t0 + 0.95), 1.6);
+  multi.style.opacity = flicker(t, t0, 0.5);
+  set(friday, fr, `translateX(${lerp(-80, 0, fr)}px) skewX(${lerp(-8, 0, fr)}deg)`);
+  [ring, s1, s2].forEach((el, i) => { el.style.opacity = flicker(t, t0 + 0.45 + i * 0.12, 0.35); });
+  set(pill, clamp(pl * 1.3), `scale(${lerp(.6, 1, pl)})`);
+  return `scale(${scale * (1 + 0.012 * Math.sin(Math.max(0, t - t0) * 2.6))})`;
+}
+
+// phone placement: [centreX, bottomY, width]
+const PH_H = 674 / 560;
+function placePhone(el, cx, bottom, w, extra = "", o = 1) {
+  el.style.left = cx - w / 2 + "px";
+  el.style.top = bottom - w * PH_H + "px";
+  el.style.width = w + "px";
+  el.style.height = w * PH_H + "px";
+  set(el, o, extra);
+}
+
+/* ---------------- sound cues ---------------- */
+window.SFX_EVENTS = [
+  { type: "impact", t: T_SLAM1 }, { type: "impact", t: T_SLAM2 }, { type: "pop", t: 1.35 },
+  { type: "whoosh", t: HOOK_END - 0.4 }, { type: "neon", t: T_STAGE + 0.05 }, { type: "whoosh", t: T_STAGE + 0.25 }, { type: "chime", t: T_STAGE + 1.0 },
+  { type: "whoosh", t: T_DUP - 0.1 }, { type: "pop", t: T_DUP + 0.45 }, { type: "chime", t: T_DUP + 0.55 }, { type: "pop2", t: T_DUP + 0.95 },
+  { type: "whoosh", t: T_PRICE - 0.2 }, { type: "ticks", t: T_PRICE + 0.3, dur: 1.4 }, { type: "chime", t: T_PRICE + 1.75 }, { type: "pop2", t: T_PRICE + 2.2 },
+  { type: "impact", t: CTA_START - 0.12 }, { type: "neon", t: CTA_START + 0.55 }, { type: "chime", t: CTA_START + 1.65 },
+].sort((a, b) => a.t - b.t);
+
+/* ---------------- render(t) ---------------- */
+window.render = function (t) {
+  waves.forEach(w => w.p.setAttribute("d", wavePath(w, t)));
+
+  // impact shake on the hook slams
+  const sh = Math.max(0, 1 - (t - T_SLAM2) / 0.35) * (t >= T_SLAM2 ? 1 : 0) + Math.max(0, 1 - (t - T_SLAM1) / 0.25) * (t >= T_SLAM1 && t < T_SLAM2 ? 0.5 : 0);
+  $("#shake").style.transform = `translate(${sh * 18 * Math.sin(t * 90)}px, ${sh * 12 * Math.cos(t * 77)}px)`;
+
+  const ctaOut = 1 - prog(t, CTA_START - 0.1, CTA_START + 0.2);
+  set($("#topLogo"), easeOutCubic(prog(t, 0, 0.4)) * ctaOut);
+
+  /* hook */
+  {
+    const out = easeInOut(prog(t, HOOK_END - 0.35, HOOK_END + 0.05));
+    const a = prog(t, T_SLAM1, T_SLAM1 + 0.22), b = prog(t, T_SLAM2, T_SLAM2 + 0.25);
+    vis($("#h1"), t < HOOK_END + 0.1); vis($("#h2"), t < HOOK_END + 0.1); vis($("#h3"), t < HOOK_END + 0.1);
+    set($("#h1"), clamp(a * 3) * (1 - out), `scale(${lerp(2.6, 1, easeOutCubic(a))}) translateY(${-80 * out}px)`);
+    set($("#h2"), clamp(b * 3) * (1 - out), `scale(${lerp(3.2, 1, easeOutBack(b, 1.2))}) rotate(${lerp(-8, -3, b)}deg) translateY(${-80 * out}px)`);
+    const c = easeOutCubic(prog(t, 1.35, 1.7));
+    set($("#h3"), c * (1 - out), `translateY(${lerp(40, -80 * out, c)}px)`);
+    const fl = Math.max(0, 1 - (t - T_SLAM2) / 0.18);
+    $("#hookFlash").style.opacity = t >= T_SLAM2 ? fl * 0.55 : 0;
+  }
+
+  /* stage elements */
+  const stageOn = t >= T_STAGE - 0.05 && t < CTA_START + 0.3;
+  ["#eyebrow", "#t1", "#t2", "#beam", "#podium", "#podiumRing", "#p1", "#p2", "#lblBuy", "#lblGift", "#plus", "#burst", "#price", "#bonus", "#fine", "#tag"].forEach(s => vis($(s), stageOn));
+  if (stageOn) {
+    const fadeAll = ctaOut;
+    const st = easeOutCubic(prog(t, T_STAGE, T_STAGE + 0.5));
+    set($("#eyebrow"), st * fadeAll);
+    set($("#tag"), st * fadeAll);
+    // title swap
+    const sw = easeInOut(prog(t, T_DUP - 0.1, T_DUP + 0.3));
+    set($("#t1"), st * (1 - sw) * fadeAll, `translateY(${lerp(30, 0, st) - 40 * sw}px)`);
+    set($("#t2"), sw * fadeAll, `translateY(${lerp(40, 0, sw)}px)`);
+    $("#t2").style.top = "318px";
+
+    // podium & beam: centred stage, fade when the price takes over
+    const pr = easeInOut(prog(t, T_PRICE - 0.2, T_PRICE + 0.4));
+    const pod = easeOutExpo(prog(t, T_STAGE + 0.05, T_STAGE + 0.6));
+    const podOut = 1 - prog(t, T_DUP - 0.2, T_DUP + 0.2);
+    set($("#podium"), pod * podOut * fadeAll, `scaleX(${pod})`);
+    set($("#podiumRing"), flicker(t, T_STAGE + 0.05, 0.4) * podOut * fadeAll, `scaleX(${lerp(.4, 1, pod)})`);
+    set($("#beam"), 0.9 * pod * podOut * fadeAll);
+
+    // phone 1: rises on podium → moves left → shrinks up for the price
+    const rise = easeOutBack(prog(t, T_STAGE + 0.2, T_STAGE + 0.85), 1.2);
+    const dup = easeInOut(prog(t, T_DUP - 0.1, T_DUP + 0.45));
+    const bob = 6 * Math.sin(t * 2.4);
+    let cx = lerp(540, 300, dup), bottom = lerp(1390, 1330, dup), w = lerp(600, 440, dup);
+    cx = lerp(cx, 350, pr); bottom = lerp(bottom, 960, pr); w = lerp(w, 330, pr);
+    placePhone($("#p1"), cx, bottom + lerp(500, 0, rise) + bob * (1 - pr), w, `rotate(${lerp(-8, 0, rise) - 4 * dup}deg)`, clamp(rise * 1.5) * fadeAll);
+    // phone 2: flies in from the right
+    const d2 = easeOutBack(prog(t, T_DUP + 0.15, T_DUP + 0.75), 1.3);
+    let cx2 = lerp(1400, 780, d2), b2 = 1330, w2 = 440;
+    cx2 = lerp(cx2, 730, pr); b2 = lerp(b2, 960, pr); w2 = lerp(w2, 330, pr);
+    placePhone($("#p2"), cx2, b2 + bob * (1 - pr) * -1, w2, `rotate(${lerp(25, 4, d2) * (1 - pr)}deg)`, (t >= T_DUP + 0.15 ? 1 : 0) * fadeAll);
+    // light sweep across the phones
+    const sw1 = prog(t, T_STAGE + 1.0, T_STAGE + 1.9), sw2 = prog(t, T_DUP + 0.9, T_DUP + 1.8);
+    $("#p1 .sweep").style.backgroundPosition = `${lerp(120, -20, sw1 > 0 && sw1 < 1 ? sw1 : (sw2 > 0 && sw2 < 1 ? sw2 : 0))}% 0`;
+    $("#p2 .sweep").style.backgroundPosition = `${lerp(120, -20, sw2 > 0 && sw2 < 1 ? sw2 : 0)}% 0`;
+
+    // labels, plus and gift burst (duplicate scene)
+    const l1 = easeOutBack(prog(t, T_DUP + 0.3, T_DUP + 0.6), 1.8), l2 = easeOutBack(prog(t, T_DUP + 0.85, T_DUP + 1.15), 1.8);
+    const lblOut = 1 - pr;
+    $("#lblBuy").style.left = (300 - 105) + "px"; $("#lblBuy").style.top = "600px";
+    $("#lblGift").style.left = (780 - 185) + "px"; $("#lblGift").style.top = "600px";
+    set($("#lblBuy"), clamp(l1 * 1.4) * lblOut * fadeAll, `scale(${lerp(.5, 1, l1)})`);
+    set($("#lblGift"), clamp(l2 * 1.4) * lblOut * fadeAll, `scale(${lerp(.5, 1, l2) * (1 + 0.04 * Math.sin(t * 6))}) rotate(-3deg)`);
+    const pl = easeOutBack(prog(t, T_DUP + 0.45, T_DUP + 0.75), 2);
+    set($("#plus"), clamp(pl * 1.4) * lblOut * fadeAll, `scale(${lerp(.3, 1, pl)}) rotate(${lerp(-90, 0, pl)}deg)`);
+    const bx = prog(t, T_DUP + 0.5, T_DUP + 1.1);
+    rays.forEach(r => {
+      const d = lerp(40, 330, easeOutCubic(bx));
+      r.el.style.opacity = bx > 0 && bx < 1 ? 1 - bx : 0;
+      r.el.style.transform = `rotate(${r.a}deg) translateY(${-d}px) scaleY(${1 - 0.6 * bx})`;
+    });
+    $("#burst").style.left = "780px"; $("#burst").style.top = "1000px";
+
+    // price: slot machine
+    const pin = easeOutCubic(prog(t, T_PRICE + 0.1, T_PRICE + 0.5));
+    set($("#price"), pin * fadeAll, `translateY(${lerp(60, 0, pin)}px)`);
+    slots.forEach((s, i) => {
+      const x = easeOutCubic(prog(t, T_PRICE + 0.3, T_PRICE + 1.0 + i * 0.35));
+      s.strip.style.transform = `translateY(${-250 * lerp(0, s.final, x)}px)`;
+    });
+    const ce = easeOutBack(prog(t, T_PRICE + 1.75, T_PRICE + 2.05), 2);
+    set($("#cents"), clamp(ce * 1.4), `scale(${lerp(.4, 1, ce)})`);
+    const bn = easeOutBack(prog(t, T_PRICE + 2.2, T_PRICE + 2.6), 1.5);
+    set($("#bonus"), clamp(bn * 1.4) * fadeAll, `scale(${lerp(.6, 1, bn)})`);
+    set($("#fine"), prog(t, T_PRICE + 2.5, T_PRICE + 2.9) * fadeAll);
+  }
+
+  /* wipe into CTA */
+  {
+    const a = prog(t, CTA_START - 0.15, CTA_START + 0.1), b = prog(t, CTA_START + 0.1, CTA_START + 0.45);
+    const f = $("#flash");
+    f.style.transform = `translateY(${a < 1 ? lerp(100, 0, easeInOut(a)) : lerp(0, -100, easeInOut(b))}%)`;
+    vis(f, a > 0 && b < 1);
+  }
+
+  /* CTA */
+  {
+    const T = CTA_START + 0.15;
+    const show = t >= T - 0.01;
+    vis($("#cta"), show);
+    if (show) {
+      const lg = easeOutBack(prog(t, T + 0.1, T + 0.7), 1.2);
+      set($("#ctaLogo"), clamp(lg * 1.3), `translateY(${lerp(-50, 0, lg)}px) scale(${lerp(.9, 1, lg)})`);
+      set($("#ctaSlogan"), 1, animSlogan(ctaParts, t, T + 0.4, 0.8));
+      const ru = easeOutExpo(prog(t, T + 1.3, T + 1.8));
+      set($("#ctaRule"), ru, `scaleX(${ru})`);
+      document.querySelectorAll("#ctaMsg .l").forEach((l, i) => {
+        const x = easeOutCubic(prog(t, T + 1.5 + i * 0.18, T + 1.95 + i * 0.18));
+        set(l, x, `translateY(${lerp(40, 0, x)}px)`);
+      });
+    }
+  }
+};
+
+window.ready = Promise.all([
+  document.fonts.ready,
+  ...[...document.images].map(im => im.complete ? 0 : new Promise(r => { im.onload = im.onerror = r; })),
+]).then(() => Promise.all([document.fonts.load('900 100px "ID"'), document.fonts.load('italic 900 100px "ID"'), document.fonts.load('italic 800 100px "ID"')]))
+  .then(() => render(0));
+</script>
+</body>
+</html>
