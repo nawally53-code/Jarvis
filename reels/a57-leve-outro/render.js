@@ -33,7 +33,8 @@ let DUR = 30; const W = 1080, H = 1920;
     await browser.close();
     return;
   }
-  const sfx = path.join(__dirname, 'sfx.wav');
+  const fs_ = require('fs');
+  const sfx = fs_.existsSync(path.join(__dirname, 'audio.wav')) ? path.join(__dirname, 'audio.wav') : path.join(__dirname, 'sfx.wav');
   const audioIn = require('fs').existsSync(sfx) ? ['-i', sfx] : ['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=48000'];
   const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error',
     '-f', 'image2pipe', '-framerate', String(fps), '-i', '-',

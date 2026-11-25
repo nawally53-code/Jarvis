@@ -15,3 +15,8 @@ Parcela: R$ 3.079 ÷ 12 = R$ 256,58. Valor da parcela em `PRICE_INT` e `#cents` 
 Sons (sintetizados): `node render.js --events` → `python3 gen_sfx.py` → `node render.js reel-a57-leve-outro.mp4`.
 
 Imagem do aparelho: `assets/a57-branco.png`, recortada de `assets/referencia/galaxy-a57-branco.jpg` com `python3 cutout_white.py <entrada> <saída>`.
+
+## Música de fundo
+Trilha original sintetizada (sem direitos autorais), eletrônica a 120 BPM em Lá menor, sincronizada com as cenas
+(as trocas de cena caem no início dos compassos). `python3 gen_music.py` gera `music.wav` e mixa baixinho sob os efeitos em `audio.wav`
+(com leve redução da música quando um efeito toca). O `render.js` usa `audio.wav` automaticamente. Volume da música: `MUSIC_GAIN`.
