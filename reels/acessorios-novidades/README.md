@@ -5,7 +5,7 @@ com os vídeos reais da loja em um card grande e etiquetas de funções sincroni
 
 | Tempo | Cena |
 |---|---|
-| 0–2,6 s | Gancho: "Novidades em acessórios" |
+| 0–2,6 s | Gancho: selo "NOVIDADES EM ACESSÓRIOS" + "Olha o que temos disponível nas nossas lojas" + mosaico 2×2 com os vídeos rodando |
 | 2,9–11,9 s | DEVIA Sound Lite 3 (grudando no celular + vitrine) com etiquetas |
 | 11,9 s | Troca suave para o segundo produto |
 | 11,9–23,5 s | DEVIA Ultra Watch: unboxing + funções (atividade/freq. cardíaca, sono, música, chamadas) |
