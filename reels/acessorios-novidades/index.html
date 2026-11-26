@@ -21,15 +21,11 @@
 
   #topLogo { left: 50%; top: 70px; width: 420px; margin-left: -210px; z-index: 40; }
 
-  /* ---------- HOOK: live mosaic ---------- */
-  #chip { left: 0; right: 0; margin: 0 auto; width: max-content; top: 238px; background: var(--red); color: #fff; font-weight: 900; font-size: 32px;
-    letter-spacing: .14em; padding: 14px 30px; border-radius: 999px; box-shadow: 0 12px 30px -10px rgba(227,6,19,.6); }
-  #headline { left: 50px; right: 50px; top: 318px; text-align: center; font-weight: 900; font-size: 100px; line-height: 1.0; letter-spacing: -0.045em; }
-  #headline .w { display: inline-block; margin-right: .2em; }
-  #headline .r { color: var(--red); }
-  .tile { width: 470px; height: 500px; border-radius: 36px; overflow: hidden; background: #ddd;
-    box-shadow: 0 30px 60px -24px rgba(60,20,20,.45), 0 0 0 6px #fff; transform-origin: 50% 50%; }
-  .tile img { width: 100%; height: 100%; object-fit: cover; }
+  /* ---------- HOOK: clean title ---------- */
+  #hTitle { left: 0; right: 0; top: 740px; text-align: center; font-weight: 900; font-size: 150px; line-height: .98; letter-spacing: -0.05em; }
+  #hTitle .l { display: block; }
+  #hTitle .r { color: var(--red); }
+  #hRule { left: 50%; top: 1080px; width: 180px; height: 12px; margin-left: -90px; border-radius: 6px; background: var(--red); transform-origin: 50% 50%; }
 
   /* ---------- PRODUCT SCENES ---------- */
   #card { left: 130px; top: 228px; width: 820px; height: 1458px; border-radius: 56px; overflow: hidden; background: #222;
@@ -68,9 +64,6 @@
   #ctaMsg { left: 60px; right: 60px; top: 1000px; text-align: center; font-weight: 900; font-size: 96px; line-height: 1.04; letter-spacing: -0.04em; }
   #ctaMsg .l { display: block; }
   #ctaMsg .r { color: var(--red); }
-  #ctaChips { left: 0; right: 0; top: 1380px; display: flex; justify-content: center; gap: 22px; }
-  #ctaChips span { font-weight: 800; font-size: 38px; padding: 16px 32px; border-radius: 999px; background: #fff; box-shadow: 0 16px 34px -14px rgba(40,10,10,.4); }
-  #ctaChips span b { color: var(--red); }
 </style>
 </head>
 <body>
@@ -80,12 +73,8 @@
 
   <!-- HOOK -->
   <div id="hook" class="abs" style="inset:0">
-    <div id="chip" class="abs">NOVIDADES EM ACESSÓRIOS</div>
-    <div id="headline" class="abs"></div>
-    <div class="tile abs" id="t1" style="left:55px;top:690px"><img></div>
-    <div class="tile abs" id="t2" style="left:555px;top:690px"><img></div>
-    <div class="tile abs" id="t3" style="left:55px;top:1240px"><img></div>
-    <div class="tile abs" id="t4" style="left:555px;top:1240px"><img></div>
+    <div id="hTitle" class="abs"><span class="l">Novidades em</span><span class="l r">acessórios</span></div>
+    <div id="hRule" class="abs"></div>
   </div>
 
   <!-- PRODUCT SCENES -->
@@ -96,44 +85,35 @@
     <div id="tags"></div>
   </div>
 
-  <!-- CHAPTER CARDS -->
-  <div id="ch1" class="chapter abs"><div class="num">01</div><div class="lbl">NOVIDADE EM ACESSÓRIOS</div>
-    <div class="nm">DEVIA<br>Sound Lite 3</div><div class="sb">Caixa de som magnética</div></div>
-  <div id="ch2" class="chapter abs"><div class="num">02</div><div class="lbl">NOVIDADE EM ACESSÓRIOS</div>
-    <div class="nm">DEVIA<br>Ultra Watch</div><div class="sb">Smartwatch</div></div>
-
   <!-- CTA -->
   <div id="cta" class="abs">
     <img id="ctaLogo" class="abs" src="assets/logo-caldas.png" alt="Grupo Caldas Celulares">
     <div id="ctaRule" class="abs"></div>
     <div id="ctaKick" class="abs">NOVIDADES EM ACESSÓRIOS</div>
     <div id="ctaMsg" class="abs"><span class="l">Venha até uma de</span><span class="l">nossas lojas</span><span class="l r">e confira!</span></div>
-    <div id="ctaChips" class="abs"><span><b>●</b> Sound Lite 3</span><span><b>●</b> Ultra Watch</span></div>
   </div>
 </div>
 
 <script>
 /* ---------------- content & timeline (seconds) ---------------- */
-const HEADLINE = [["Olha", 0], ["o", 0], ["que", 0], ["acabou", 1], ["de", 1], ["chegar", 1], ["nas", 0], ["nossas", 0], ["lojas", 0]];
 const FPS = 30;
 const CLIP_FRAMES = { h1: 84, h2: 84, h3: 84, h4: 84, a1: 180, a2: 90, b1: 107, b2: 242 };
-const HOOK_END = 2.9;
-const CH = [{ el: "#ch1", t: 2.9 }, { el: "#ch2", t: 12.9 }];   // red chapter cards, 1.0 s each
+const HOOK_END = 2.6;
+const SWITCH = 11.9;                                               // soft change from product 1 to product 2
 const SCENES = [                                                   // clips shown in the big card
-  { clip: "a1", start: 3.9, prod: 0 }, { clip: "a2", start: 9.9, prod: 0 },
-  { clip: "b1", start: 13.9, prod: 1 }, { clip: "b2", start: 13.9 + 107 / FPS, prod: 1 },
+  { clip: "a1", start: 2.9, prod: 0 }, { clip: "a2", start: 8.9, prod: 0 },
+  { clip: "b1", start: SWITCH, prod: 1 }, { clip: "b2", start: SWITCH + 107 / FPS, prod: 1 },
 ];
 const PRODUCTS = [
-  { n: 'DEVIA <span>Sound Lite 3</span>', s: "Caixa de som magnética", from: 3.9, to: 12.9 },
-  { n: 'DEVIA <span>Ultra Watch</span>', s: "Smartwatch", from: 13.9, to: 0 },
+  { n: 'DEVIA <span>Sound Lite 3</span>', s: "Caixa de som magnética", from: 2.9, to: SWITCH },
+  { n: 'DEVIA <span>Ultra Watch</span>', s: "Smartwatch", from: SWITCH, to: 0 },
 ];
 const B2 = SCENES[3].start;
 const TAGS = [            // [time, text, side, y]
-  [4.4, "Magnética: gruda no celular", "L", 420],
-  [6.4, "Som de alto desempenho", "R", 980],
-  [8.2, "Design compacto", "L", 1300],
-  [10.3, "Disponível nas nossas lojas", "R", 1420],
-  [14.3, "Acabou de chegar!", "L", 420],
+  [3.4, "Magnética: gruda no celular", "L", 420],
+  [5.4, "Som de alto desempenho", "R", 980],
+  [7.2, "Design compacto", "L", 1300],
+  [9.3, "Disponível nas nossas lojas", "R", 1420],
   [B2 + 0.5, "Atividade e frequência cardíaca", "R", 380],
   [B2 + 2.5, "Monitor de sono", "L", 1180],
   [B2 + 4.8, "Controle de música", "R", 1320],
@@ -167,13 +147,6 @@ function showFrame(img, clip, n) {
 const frameAt = (t, start) => Math.floor((t - start) * FPS) + 1;
 
 /* ---------------- build ---------------- */
-const words = HEADLINE.map(([w, red]) => {
-  const s = document.createElement("span");
-  s.className = "w" + (red ? " r" : ""); s.textContent = w;
-  $("#headline").appendChild(s);
-  return s;
-});
-const tiles = ["#t1", "#t2", "#t3", "#t4"].map((id, i) => ({ el: $(id), img: $(id + " img"), clip: "h" + (i + 1), rot: [-3, 2.5, 2, -2.5][i] }));
 const tags = TAGS.map(([t0, txt, side, y], i) => {
   const d = document.createElement("div");
   d.className = "tag abs";
@@ -182,7 +155,9 @@ const tags = TAGS.map(([t0, txt, side, y], i) => {
   d.style[side === "L" ? "left" : "right"] = "46px";
   $("#tags").appendChild(d);
   const next = TAGS[i + 1] ? TAGS[i + 1][0] : CTA_START;
-  return { el: d, t0, t1: Math.min(next, t0 + 3.2), side };
+  let t1 = Math.min(next, t0 + 3.2);
+  if (t0 < SWITCH) t1 = Math.min(t1, SWITCH - 0.3);          // leave before the product switch
+  return { el: d, t0, t1, side };
 });
 const RAYS = [[960, 120, 22, 90, 38, 0], [1020, 190, 22, 64, 70, .08], [905, 92, 22, 58, 8, .04],
               [100, 1760, 22, 90, -140, .12], [44, 1680, 22, 64, -110, .16], [160, 1830, 22, 56, -170, .2]];
@@ -195,10 +170,8 @@ const rays = RAYS.map(([x, y, w, h, a, d]) => {
 });
 
 /* ---------------- sound cues ---------------- */
-const ev = [{ type: "impact", t: 0.05 }, { type: "pop2", t: 0.2 }];
-words.forEach((w, i) => ev.push({ type: "key", t: 0.25 + i * 0.07 }));
-tiles.forEach((tl, i) => ev.push({ type: "pop", t: 0.9 + i * 0.15 }));
-CH.forEach(c => { ev.push({ type: "whoosh", t: c.t - 0.35 }, { type: "impact", t: c.t + 0.05 }, { type: "whoosh", t: c.t + 0.7 }); });
+const ev = [{ type: "impact", t: 0.1 }, { type: "marker", t: 0.75 }, { type: "whoosh", t: HOOK_END - 0.35 },
+            { type: "whoosh", t: SWITCH - 0.3 }, { type: "chime", t: SWITCH + 0.05 }];
 TAGS.forEach(([t0]) => ev.push({ type: "pop2", t: t0 }));
 ev.push({ type: "whoosh", t: CTA_START - 0.3 }, { type: "chime", t: CTA_START + 0.9 }, { type: "chime", t: CTA_START + 2.2 });
 window.SFX_EVENTS = ev.sort((a, b) => a.t - b.t);
@@ -214,32 +187,30 @@ window.render = async function (t) {
   set($("#topLogo"), easeOutCubic(prog(t, 0, 0.4)) * ctaOut);
 
   /* hook */
-  const hookOn = t < HOOK_END + 0.05;
+  const hookOn = t < HOOK_END + 0.3;
   vis($("#hook"), hookOn);
   if (hookOn) {
-    const c = easeOutBack(prog(t, 0.1, 0.4), 1.8);
-    set($("#chip"), clamp(c * 1.5), `scale(${lerp(.5, 1, c)})`);
-    words.forEach((w, i) => {
-      const x = easeOutExpo(prog(t, 0.25 + i * 0.07, 0.6 + i * 0.07));
-      set(w, x, `translateY(${lerp(50, 0, x)}px)`);
+    const out = easeInOut(prog(t, HOOK_END - 0.3, HOOK_END + 0.2));
+    document.querySelectorAll("#hTitle .l").forEach((l, i) => {
+      const x = easeOutExpo(prog(t, 0.1 + i * 0.2, 0.7 + i * 0.2));
+      set(l, x * (1 - out), `translateY(${lerp(60, 0, x) - 120 * out}px)`);
     });
-    tiles.forEach((tl, i) => {
-      const x = easeOutBack(prog(t, 0.9 + i * 0.15, 1.3 + i * 0.15), 1.4);
-      set(tl.el, clamp(x * 1.5), `scale(${lerp(.4, 1, x)}) rotate(${lerp(tl.rot * 4, tl.rot, x)}deg)`);
-      waits.push(showFrame(tl.img, tl.clip, frameAt(t, 0)));
-    });
+    const r = easeOutExpo(prog(t, 0.7, 1.2));
+    set($("#hRule"), r * (1 - out), `scaleX(${r}) translateY(${-120 * out}px)`);
   }
 
   /* product scenes */
-  const sceneOn = t >= CH[0].t + 0.5 && t < CTA_START + 0.3;
+  const sceneOn = t >= HOOK_END - 0.2 && t < CTA_START + 0.3;
   vis($("#scene"), sceneOn);
   if (sceneOn) {
     const sc = [...SCENES].reverse().find(s => t >= s.start) || SCENES[0];
     waits.push(showFrame($("#clip"), sc.clip, frameAt(t, sc.start)));
     // card entrance after each chapter card + exit to CTA
-    const ent = Math.max(...CH.map(c => t >= c.t + 0.6 ? easeOutBack(prog(t, c.t + 0.6, c.t + 1.15), 1.2) : 0));
+    const ent = easeOutCubic(prog(t, HOOK_END - 0.2, HOOK_END + 0.4));
     const out = easeInOut(prog(t, CTA_START - 0.2, CTA_START + 0.3));
-    set($("#card"), 1 - out, `translateY(${lerp(180, 0, ent) - 200 * out}px) scale(${lerp(.9, 1, ent) * (1 - 0.1 * out)})`);
+    // soft product switch: brief dip (scale + fade) around SWITCH
+    const dip = Math.sin(Math.PI * prog(t, SWITCH - 0.25, SWITCH + 0.25));
+    set($("#card"), (1 - out) * ent * (1 - 0.85 * dip), `translateY(${lerp(140, 0, ent) - 200 * out}px) scale(${lerp(.94, 1, ent) * (1 - 0.1 * out) * (1 - 0.05 * dip)})`);
     // story bars + counter
     const prod = sc.prod;
     $("#cardNum").textContent = `0${prod + 1} / 02`;
@@ -251,7 +222,7 @@ window.render = async function (t) {
     const P = PRODUCTS[prod];
     const nm = $("#name");
     if (nm.dataset.p !== String(prod)) { nm.dataset.p = prod; nm.querySelector(".n").innerHTML = P.n; nm.querySelector(".s").textContent = P.s; }
-    const ni = easeOutCubic(prog(t, P.from - 0.2, P.from + 0.3));
+    const ni = prod === 0 ? easeOutCubic(prog(t, HOOK_END, HOOK_END + 0.4)) * (1 - prog(t, SWITCH - 0.25, SWITCH)) : easeOutCubic(prog(t, SWITCH, SWITCH + 0.35));
     set(nm, ni * (1 - out), `translateY(${lerp(40, 0, ni)}px)`);
     // feature tags
     tags.forEach(g => {
@@ -264,21 +235,6 @@ window.render = async function (t) {
       g.el.querySelector("i").style.transform = `scale(${1 + 0.15 * Math.sin(t * 8)})`;
     });
   }
-
-  /* chapter cards: slide in from the right, hold, slide up */
-  CH.forEach(c => {
-    const el = $(c.el);
-    const a = prog(t, c.t - 0.3, c.t), b = prog(t, c.t + 0.75, c.t + 1.05);
-    const on = a > 0 && b < 1;
-    vis(el, on);
-    if (!on) return;
-    el.style.transform = `translate(${lerp(100, 0, easeInOut(a))}%, ${lerp(0, -100, easeInOut(b))}%)`;
-    const k = easeOutExpo(prog(t, c.t - 0.1, c.t + 0.35));
-    set(el.querySelector(".num"), 1, `translateX(${lerp(-200, 0, k)}px)`);
-    set(el.querySelector(".nm"), k, `translateY(${lerp(60, 0, k)}px)`);
-    const s = easeOutBack(prog(t, c.t + 0.15, c.t + 0.45), 1.8);
-    set(el.querySelector(".sb"), clamp(s * 1.4), `scale(${lerp(.5, 1, s)})`);
-  });
 
   /* CTA */
   const T = CTA_START;
@@ -294,8 +250,6 @@ window.render = async function (t) {
       const x = easeOutCubic(prog(t, T + 0.85 + i * 0.18, T + 1.3 + i * 0.18));
       set(l, x, `translateY(${lerp(40, 0, x)}px)`);
     });
-    const ch = easeOutBack(prog(t, T + 2.2, T + 2.6), 1.6);
-    set($("#ctaChips"), clamp(ch * 1.4), `scale(${lerp(.7, 1, ch)})`);
   }
   await Promise.all(waits);
 };

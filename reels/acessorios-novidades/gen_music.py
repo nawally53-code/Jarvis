@@ -9,7 +9,7 @@ import numpy as np
 SR = 48000
 BPM = 120
 BEAT = 60 / BPM
-DROP = 2.9                     # first downbeat: chapter 01 card (chapter 02 lands 5 bars later)
+DROP = 1.9                     # downbeats every 2 s land on the card entrance and the product switch (11.9 s)
 rng = np.random.default_rng(3)
 cues = json.load(open("sfx-events.json"))
 DUR = cues["duration"]
