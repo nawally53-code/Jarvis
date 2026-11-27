@@ -25,3 +25,6 @@ e é tocada a 130/120 (`SPEED` no `index.html`), então os tempos reais são ~8%
 - Efeitos reduzidos aos mais relevantes: impacto no calendário, neon do slogan, impacto no "SÓ HOJE", "ding" em cada oferta revelada e impacto no final.
 - Ordem: `node render.js --events` → `python3 gen_sfx.py` → `python3 gen_music_house.py` → `node render.js reel-dia-black-friday.mp4`
   (o áudio final `audio.wav` é normalizado para ~-13 LUFS).
+
+Versão só com efeitos sonoros (sem trilha), para colocar a música direto no Instagram: `reel-dia-black-friday-so-efeitos.mp4`
+(gerada a partir do vídeo final + `sfx.wav` normalizado).
