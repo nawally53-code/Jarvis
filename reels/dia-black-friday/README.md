@@ -18,9 +18,10 @@ e é tocada a 130/120 (`SPEED` no `index.html`), então os tempos reais são ~8%
 | 23–28,5 s | Logo + slogan + "Corre! Venha até uma de nossas lojas e aproveite só hoje!" |
 
 ## Áudio
-- Trilha original (sem direitos autorais) no estilo da referência: trap/phonk escuro a 130 BPM, 808 distorcido, caixa no 2 e 4,
-  chimbal com viradas e riff de cowbell. O 1º compasso (calendário) é uma subida com virada de caixa acelerando; a batida
-  "dropa" quando o slogan Multi Friday acende. → `python3 gen_music_phonk.py`
+- Trilha original (sem direitos autorais): eletrônica animada estilo house/EDM de propaganda, 130 BPM, tom maior (Dó–Sol–Lá m–Fá),
+  bumbo nos 4 tempos, chimbal no contratempo, palmas no 2 e 4, baixo no contratempo, acordes brilhantes com "pumping" e melodia alegre.
+  O 1º compasso (calendário) é uma subida; a batida entra quando o slogan Multi Friday acende. → `python3 gen_music_house.py`
+  (a versão anterior, trap/phonk, continua em `gen_music_phonk.py`).
 - Efeitos reduzidos aos mais relevantes: impacto no calendário, neon do slogan, impacto no "SÓ HOJE", "ding" em cada oferta revelada e impacto no final.
-- Ordem: `node render.js --events` → `python3 gen_sfx.py` → `python3 gen_music_phonk.py` → `node render.js reel-dia-black-friday.mp4`
+- Ordem: `node render.js --events` → `python3 gen_sfx.py` → `python3 gen_music_house.py` → `node render.js reel-dia-black-friday.mp4`
   (o áudio final `audio.wav` é normalizado para ~-13 LUFS).
