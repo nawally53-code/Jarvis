@@ -280,10 +280,7 @@ function animSlogan(p, t, t0, scale) {
 /* ---------------- sound cues ---------------- */
 const ev = [
   { type: "impact", t: FLIP + 0.05 },              // calendar flips to 27/11
-  { type: "neon", t: 2.05 },                       // Multi Friday lights up
   { type: "impact", t: 4.0 },                      // SÓ HOJE stamp
-  { type: "chime", t: 7.1 }, { type: "chime", t: 10.2 }, { type: "chime", t: 12.6 },
-  { type: "chime", t: 16.1 }, { type: "chime", t: 19.0 },
   { type: "impact", t: CTA_START },                // closing
 ];
 ev.forEach(e => { e.t /= SPEED; });

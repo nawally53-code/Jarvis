@@ -22,7 +22,7 @@ e é tocada a 130/120 (`SPEED` no `index.html`), então os tempos reais são ~8%
   bumbo nos 4 tempos, chimbal no contratempo, palmas no 2 e 4, baixo no contratempo, acordes brilhantes com "pumping" e melodia alegre.
   O 1º compasso (calendário) é uma subida; a batida entra quando o slogan Multi Friday acende. → `python3 gen_music_house.py`
   (a versão anterior, trap/phonk, continua em `gen_music_phonk.py`).
-- Efeitos reduzidos aos mais relevantes: impacto no calendário, neon do slogan, impacto no "SÓ HOJE", "ding" em cada oferta revelada e impacto no final.
+- Efeitos reduzidos ao essencial: impacto quando o calendário vira para 27/11, impacto no "SÓ HOJE" e impacto no final.
 - Ordem: `node render.js --events` → `python3 gen_sfx.py` → `python3 gen_music_house.py` → `node render.js reel-dia-black-friday.mp4`
   (o áudio final `audio.wav` é normalizado para ~-13 LUFS).
 
