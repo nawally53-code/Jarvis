@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Reel Multi Friday — Grupo Caldas Celulares</title>
+<style>
+  @font-face { font-family: "ID"; font-weight: 500; src: url(assets/fonts/InterDisplay-Medium.otf); }
+  @font-face { font-family: "ID"; font-weight: 600; src: url(assets/fonts/InterDisplay-SemiBold.otf); }
+  @font-face { font-family: "ID"; font-weight: 700; src: url(assets/fonts/InterDisplay-Bold.otf); }
+  @font-face { font-family: "ID"; font-weight: 800; src: url(assets/fonts/InterDisplay-ExtraBold.otf); }
+  @font-face { font-family: "ID"; font-weight: 900; src: url(assets/fonts/InterDisplay-Black.otf); }
+  @font-face { font-family: "ID"; font-weight: 800; font-style: italic; src: url(assets/fonts/InterDisplay-ExtraBoldItalic.otf); }
+  @font-face { font-family: "ID"; font-weight: 900; font-style: italic; src: url(assets/fonts/InterDisplay-BlackItalic.otf); }
+
+  :root {
+    --red: #EF0000;
+    --neon: #FF2626;
+    --glow: rgba(255, 30, 30, .85);
+    --ink: #0A0A0C;
+    --muted: #A99C9C;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
+  body { font-family: "ID", sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
+
+  #stage { position: absolute; inset: 0; overflow: hidden;
+    background:
+      radial-gradient(900px 700px at 50% -8%, rgba(239,0,0,.30), transparent 70%),
+      radial-gradient(1000px 800px at 50% 112%, rgba(239,0,0,.28), transparent 70%),
+      var(--ink); }
+  .abs { position: absolute; will-change: transform, opacity; }
+
+  /* neon light waves (as in the campaign art) */
+  #waves { position: absolute; left: -100px; width: 1280px; height: 1920px; top: 0; }
+  #waves path { fill: none; stroke: var(--neon); stroke-linecap: round; }
+
+  .ray { position: absolute; border: 6px solid var(--neon); border-radius: 14px;
+    box-shadow: 0 0 18px var(--glow), inset 0 0 12px var(--glow); transform-origin: 50% 100%; }
+
+  /* ---------- slogan (built in CSS for crisp neon at 1080p) ---------- */
+  .slogan { position: absolute; width: 1000px; height: 560px; transform-origin: 50% 50%; }
+  .slogan .multi { position: absolute; left: 40px; top: 0; font-weight: 900; font-style: italic; font-size: 236px; line-height: 1;
+    letter-spacing: -0.02em; color: transparent; -webkit-text-stroke: 7px var(--neon);
+    filter: drop-shadow(0 0 10px var(--glow)) drop-shadow(0 0 28px rgba(255,0,0,.6)); }
+  .slogan .friday { position: absolute; left: 20px; top: 205px; font-weight: 900; font-style: italic; font-size: 214px; line-height: 1;
+    letter-spacing: -0.035em; color: #fff; filter: drop-shadow(0 0 16px rgba(255,255,255,.35)); }
+  .slogan .ring { position: absolute; left: 700px; top: 285px; width: 150px; height: 150px; border-radius: 50%;
+    border: 18px solid var(--neon); box-shadow: 0 0 22px var(--glow), inset 0 0 18px var(--glow); }
+  .slogan .s1, .slogan .s2 { position: absolute; border: 7px solid var(--neon); border-radius: 12px;
+    box-shadow: 0 0 20px var(--glow), inset 0 0 12px var(--glow); }
+  .slogan .s1 { left: 862px; top: 90px; width: 50px; height: 200px; transform: rotate(40deg); }
+  .slogan .s2 { left: 880px; top: 337px; width: 175px; height: 50px; }
+  .slogan .pill { position: absolute; left: 30px; top: 432px; padding: 10px 56px 18px; border-radius: 999px;
+    border: 7px solid var(--neon); background: rgba(10,10,12,.55);
+    box-shadow: 0 0 24px var(--glow), inset 0 0 16px rgba(255,30,30,.6);
+    font-weight: 800; font-size: 82px; letter-spacing: -0.02em; color: #fff; white-space: nowrap; }
+
+  #topLogo { left: 50%; top: 92px; width: 520px; margin-left: -260px; }
+
+  /* ---------- HOOK ---------- */
+  #hook { left: 72px; right: 72px; top: 520px; }
+  #hook .eyebrow { display: inline-flex; align-items: center; gap: 16px; font-weight: 800; font-size: 38px;
+    letter-spacing: .14em; color: var(--neon); text-transform: uppercase; margin-bottom: 44px;
+    text-shadow: 0 0 18px var(--glow); }
+  #hook .eyebrow i { width: 64px; height: 8px; background: var(--neon); border-radius: 4px; display: block; box-shadow: 0 0 14px var(--glow); }
+  #hook h1 { font-weight: 900; font-size: 126px; line-height: 1.0; letter-spacing: -0.035em; }
+  #hook h1 .w { display: inline-block; margin-right: .22em; }
+  #hook h1 .r { color: var(--neon); text-shadow: 0 0 26px rgba(255,20,20,.7); }
+  #hook .underline { height: 14px; background: var(--neon); border-radius: 7px; margin-top: 40px; transform-origin: 0 50%; width: 520px;
+    box-shadow: 0 0 20px var(--glow); }
+
+  /* ---------- SLOGAN INTRO ---------- */
+  #intro { left: 30px; top: 680px; }
+
+  /* ---------- MONTAGE ---------- */
+  .card { left: 64px; top: 300px; width: 952px; height: 1250px; border-radius: 56px; overflow: hidden; background: #222;
+    box-shadow: 0 0 0 3px rgba(255,38,38,.85), 0 0 36px rgba(255,20,20,.55), 0 40px 90px -30px rgba(0,0,0,.8); }
+  .card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 40%; }
+  .card .shade { position: absolute; left: 0; right: 0; bottom: 0; height: 480px;
+    background: linear-gradient(to top, rgba(0,0,0,.78), rgba(0,0,0,0)); }
+  .card .cap { position: absolute; left: 48px; bottom: 48px; right: 48px; color: #fff; }
+  .card .cap .chip { display: inline-flex; align-items: center; gap: 14px; background: var(--red); color: #fff;
+    font-weight: 800; font-size: 34px; letter-spacing: .06em; text-transform: uppercase; padding: 16px 28px; border-radius: 999px;
+    box-shadow: 0 0 22px rgba(255,20,20,.6); }
+  .card .cap .chip b { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; color: var(--red); font-size: 26px; }
+  .card .cap h3 { font-weight: 800; font-size: 66px; letter-spacing: -0.02em; line-height: 1.05; margin-top: 22px; text-shadow: 0 4px 24px rgba(0,0,0,.45); }
+
+  #bottomBar { left: 64px; right: 64px; top: 1612px; z-index: 50; }
+  #bottomBar .row { display: flex; justify-content: space-between; align-items: baseline; }
+  #bottomBar .tag { font-weight: 900; font-style: italic; font-size: 58px; letter-spacing: -0.02em; }
+  #bottomBar .tag .o { color: transparent; -webkit-text-stroke: 3px var(--neon); filter: drop-shadow(0 0 8px var(--glow)); margin-right: 12px; }
+  #bottomBar .tag .c { font-style: normal; font-weight: 700; font-size: 38px; color: var(--muted); margin-left: 14px; letter-spacing: 0; }
+  #bottomBar .count { font-weight: 700; font-size: 38px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  #bottomBar .count b { color: #fff; }
+  #bottomBar .sub { font-weight: 600; font-size: 33px; color: var(--muted); margin-top: 12px; }
+  #bottomBar .track { height: 10px; border-radius: 5px; background: rgba(255,38,38,.18); margin-top: 32px; overflow: hidden; }
+  #bottomBar .fill { height: 100%; width: 100%; background: var(--neon); border-radius: 5px; transform-origin: 0 50%; box-shadow: 0 0 14px var(--glow); }
+
+  /* ---------- CTA ---------- */
+  #cta { left: 0; right: 0; top: 0; bottom: 0; }
+  #ctaLogo { left: 50%; top: 250px; width: 860px; margin-left: -430px; }
+  #ctaSlogan { left: 30px; top: 630px; }
+  #ctaRule { left: 50%; top: 1290px; width: 160px; height: 12px; margin-left: -80px; border-radius: 6px; background: var(--neon);
+    box-shadow: 0 0 18px var(--glow); transform-origin: 50% 50%; }
+  #ctaMsg { left: 72px; right: 72px; top: 1360px; text-align: center; font-weight: 900; font-size: 86px; line-height: 1.08; letter-spacing: -0.03em; }
+  #ctaMsg .l { display: block; }
+  #ctaMsg .r { color: var(--neon); text-shadow: 0 0 24px rgba(255,20,20,.65); }
+
+  #flash { inset: 0; background: var(--red); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg id="waves" viewBox="0 0 1280 1920"></svg>
+  <div id="rays"></div>
+
+  <img id="topLogo" class="abs" src="assets/logo-caldas-branca.png" alt="Grupo Caldas Celulares">
+
+  <!-- HOOK -->
+  <div id="hook" class="abs">
+    <div class="eyebrow"><i></i>Multi Friday</div>
+    <h1 id="hookText"></h1>
+    <div class="underline"></div>
+  </div>
+
+  <!-- SLOGAN INTRO -->
+  <div id="intro" class="slogan"></div>
+
+  <!-- MONTAGE -->
+  <div id="cards"></div>
+  <div id="bottomBar" class="abs">
+    <div class="row">
+      <div class="tag"><span class="o">MULTI</span>Friday<span class="c">Claro que tem</span></div>
+      <div class="count"><b id="countN">01</b>/09</div>
+    </div>
+    <div class="sub">Clientes aproveitando as ofertas imperdíveis de Black Friday</div>
+    <div class="track"><div class="fill"></div></div>
+  </div>
+
+  <!-- CTA -->
+  <div id="cta" class="abs">
+    <img id="ctaLogo" class="abs" src="assets/logo-caldas-branca.png" alt="Grupo Caldas Celulares">
+    <div id="ctaSlogan" class="slogan"></div>
+    <div id="ctaRule" class="abs"></div>
+    <div id="ctaMsg" class="abs">
+      <span class="l">Venha até uma das</span>
+      <span class="l">nossas lojas e</span>
+      <span class="l r">aproveite as ofertas!</span>
+    </div>
+  </div>
+
+  <div id="flash" class="abs"></div>
+</div>
+
+<script>
+/* ---------------- data ---------------- */
+const HOOK = "Clientes aproveitando as ofertas imperdíveis de Black Friday";
+const RED_WORDS = new Set(["ofertas", "imperdíveis", "Black", "Friday"]);
+const SHOTS = [
+  { src: "assets/cliente-1.jpg", chip: "Plano fechado e troca de aparelho", title: "Samsung A07 5G com brindes", pos: "50% 45%" },
+  { src: "assets/cliente-2.jpg", chip: "Ofertas de aparelhos", title: "Samsung A17 5G + UltraWatch", pos: "50% 45%" },
+  { src: "assets/cliente-3.jpg", chip: "Ofertas de aparelhos", title: "Samsung A17 5G e brindes garantidos", pos: "50% 40%" },
+  { src: "assets/cliente-4.jpg", chip: "Smartphone + TV", title: "Motorola G37 e Claro Box TV", pos: "50% 45%" },
+  { src: "assets/cliente-5.jpg", chip: "Ofertas de aparelhos", title: "Mais uma cliente satisfeita com o Samsung A17 5G + Brindes", pos: "50% 35%" },
+  { src: "assets/cliente-6.jpg", chip: "Esse é o meu novo", title: "Galaxy A17 5G + acessórios", pos: "50% 35%" },
+  { src: "assets/cliente-7.jpg", chip: "Ofertas de aparelhos", title: "Galaxy A57 5G com acessórios", pos: "50% 45%" },
+  { src: "assets/cliente-8.jpg", chip: "Kit completo", title: "Motorola G37, power bank e caixa de som", pos: "50% 35%" },
+  { src: "assets/cliente-9.jpg", chip: "Oferta imperdível", title: "Galaxy S26 FE + smartwatch + película", pos: "50% 45%" },
+];
+
+/* ---------------- timeline (seconds) ---------------- */
+const DUR = 30;
+const HOOK_END = 2.8;
+const INTRO_START = 2.7, INTRO_END = 5.15;
+const MONT_START = 5.0, MONT_END = 25.25;
+const SLOT = (MONT_END - MONT_START) / SHOTS.length;   // 2.25s per shot
+const CTA_START = 25.1;
+
+/* ---------------- helpers ---------------- */
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const easeOutCubic = x => 1 - Math.pow(1 - x, 3);
+const easeOutExpo = x => x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+const easeInOut = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const easeOutBack = (x, s = 1.6) => 1 + (s + 1) * Math.pow(x - 1, 3) + s * Math.pow(x - 1, 2);
+const lerp = (a, b, x) => a + (b - a) * x;
+const $ = s => document.querySelector(s);
+const set = (el, o, tf) => { el.style.opacity = o; if (tf !== undefined) el.style.transform = tf; };
+// deterministic neon "power on" flicker: 0 before t0, flickers, then 1
+const flicker = (t, t0, len = 0.45) => {
+  if (t < t0) return 0;
+  const x = (t - t0) / len;
+  if (x >= 1) return 1;
+  const steps = [1, 0.15, 1, 0.3, 0.9, 0.2, 1, 1];
+  return steps[Math.floor(x * steps.length)];
+};
+
+/* ---------------- build DOM ---------------- */
+const SLOGAN_HTML = `<div class="multi">MULTI</div><div class="s1"></div><div class="friday">Friday</div>
+  <div class="ring"></div><div class="s2"></div><div class="pill">Claro que tem</div>`;
+const sloganParts = el => { el.innerHTML = SLOGAN_HTML; return ["multi", "s1", "friday", "ring", "s2", "pill"].map(c => el.querySelector("." + c)); };
+const introParts = sloganParts($("#intro"));
+const ctaParts = sloganParts($("#ctaSlogan"));
+
+const hookEl = $("#hookText");
+const words = HOOK.split(" ").map(w => {
+  const s = document.createElement("span");
+  s.className = "w" + (RED_WORDS.has(w) ? " r" : "");
+  s.textContent = w;
+  hookEl.appendChild(s);
+  return s;
+});
+
+const cardsEl = $("#cards");
+const cards = SHOTS.map(s => {
+  const c = document.createElement("div");
+  c.className = "card abs";
+  c.innerHTML = `<img src="${s.src}" style="object-position:${s.pos}"><div class="shade"></div>
+    <div class="cap"><span class="chip" style="${s.chip.length > 22 ? "font-size:28px;letter-spacing:.04em" : ""}"><b>✓</b>${s.chip}</span><h3>${s.title}</h3></div>`;
+  cardsEl.appendChild(c);
+  return { el: c, img: c.querySelector("img"), chip: c.querySelector(".chip"), h3: c.querySelector("h3") };
+});
+
+const raysEl = $("#rays");
+const RAYS = [
+  [950, 90, 30, 110, 38, 0.05], [1015, 170, 30, 80, 70, 0.12], [895, 60, 30, 70, 8, 0.0],
+  [110, 1590, 30, 110, -140, 0.18], [60, 1500, 30, 80, -110, 0.24], [170, 1660, 30, 70, -170, 0.3],
+];
+const rays = RAYS.map(([x, y, w, h, a, d]) => {
+  const r = document.createElement("div");
+  r.className = "ray";
+  Object.assign(r.style, { left: x + "px", top: y + "px", width: w + "px", height: h + "px" });
+  raysEl.appendChild(r);
+  return { el: r, a, d };
+});
+
+// neon waves
+const SVGNS = "http://www.w3.org/2000/svg";
+const wavesEl = $("#waves");
+const WAVES = [
+  { y: 1815, amp: 45, len: 900, w: 4, o: .9, sp: .25 }, { y: 1860, amp: 35, len: 1100, w: 2, o: .6, sp: -.18 },
+  { y: 1790, amp: 50, len: 1300, w: 1.5, o: .45, sp: .12 },
+  { y: 160, amp: 60, len: 1000, w: 3, o: .55, sp: -.2 }, { y: 220, amp: 40, len: 1200, w: 1.5, o: .35, sp: .15 },
+];
+const waves = WAVES.map(cfg => {
+  const p = document.createElementNS(SVGNS, "path");
+  p.setAttribute("stroke-width", cfg.w);
+  p.style.opacity = cfg.o;
+  p.style.filter = `drop-shadow(0 0 ${6 + cfg.w * 3}px rgba(255,20,20,.9))`;
+  wavesEl.appendChild(p);
+  return { p, ...cfg };
+});
+const wavePath = (cfg, t) => {
+  let d = "";
+  for (let x = 0; x <= 1280; x += 20) {
+    const y = cfg.y + cfg.amp * Math.sin((x / cfg.len) * Math.PI * 2 + t * cfg.sp * 6)
+      + cfg.amp * 0.35 * Math.sin((x / cfg.len) * Math.PI * 5 - t * cfg.sp * 4);
+    d += (x ? " L" : "M") + x + " " + y.toFixed(1);
+  }
+  return d;
+};
+
+/* ---------------- slogan animation ---------------- */
+function animSlogan(parts, t, t0, scale, outT = Infinity) {
+  const [multi, s1, friday, ring, s2, pill] = parts;
+  const out = easeInOut(prog(t, outT, outT + 0.35));
+  const fr = easeOutExpo(prog(t, t0 + 0.25, t0 + 0.7));
+  const pl = easeOutBack(prog(t, t0 + 0.55, t0 + 0.95), 1.6);
+  multi.style.opacity = flicker(t, t0, 0.5);
+  set(friday, fr, `translateX(${lerp(-80, 0, fr)}px) skewX(${lerp(-8, 0, fr)}deg)`);
+  [ring, s1, s2].forEach((el, i) => { el.style.opacity = flicker(t, t0 + 0.45 + i * 0.12, 0.35); });
+  set(pill, clamp(pl * 1.3), `scale(${lerp(.6, 1, pl)})`);
+  const breathe = 1 + 0.012 * Math.sin(Math.max(0, t - t0) * 2.6);
+  return { out, transform: `scale(${scale * breathe * (1 + 0.15 * out)})`, opacity: 1 - out };
+}
+
+/* ---------------- render(t) ---------------- */
+window.render = function (t) {
+  waves.forEach(w => w.p.setAttribute("d", wavePath(w, t)));
+
+  rays.forEach(({ el, a, d }) => {
+    const pin = easeOutBack(prog(t, 0.1 + d, 0.6 + d));
+    const pinCta = easeOutBack(prog(t, CTA_START + 0.3 + d, CTA_START + 0.8 + d));
+    const vis = t < MONT_START + 0.2 ? pin * (1 - prog(t, MONT_START - 0.1, MONT_START + 0.25)) : pinCta;
+    const breathe = 1 + 0.06 * Math.sin(t * 3 + d * 10);
+    set(el, clamp(vis), `rotate(${a}deg) scaleY(${Math.max(0, vis) * breathe})`);
+  });
+
+  {
+    const tl = $("#topLogo");
+    const i = easeOutCubic(prog(t, 0.0, 0.5));
+    const o = 1 - prog(t, CTA_START - 0.1, CTA_START + 0.2);
+    set(tl, i * o, `translateY(${lerp(-30, 0, i)}px)`);
+  }
+
+  /* HOOK */
+  {
+    const h = $("#hook");
+    const out = easeInOut(prog(t, HOOK_END - 0.3, HOOK_END + 0.05));
+    set(h, 1 - out, `translateY(${-120 * out}px) scale(${1 - 0.06 * out})`);
+    const eb = easeOutCubic(prog(t, 0.0, 0.35));
+    set(h.querySelector(".eyebrow"), eb, `translateX(${lerp(-40, 0, eb)}px)`);
+    words.forEach((w, i) => {
+      const x = easeOutExpo(prog(t, 0.08 + i * 0.07, 0.5 + i * 0.07));
+      set(w, x, `translateY(${lerp(70, 0, x)}px) scale(${lerp(.9, 1, x)})`);
+    });
+    $("#hook .underline").style.transform = `scaleX(${easeOutExpo(prog(t, 0.9, 1.5))})`;
+  }
+
+  /* SLOGAN INTRO */
+  {
+    const el = $("#intro");
+    const show = t > INTRO_START - 0.01 && t < INTRO_END + 0.4;
+    el.style.visibility = show ? "visible" : "hidden";
+    if (show) {
+      const r = animSlogan(introParts, t, INTRO_START, 0.88, INTRO_END - 0.3);
+      set(el, r.opacity, r.transform);
+    }
+  }
+
+  /* MONTAGE */
+  cards.forEach((c, i) => {
+    const s = MONT_START + i * SLOT, e = s + SLOT;
+    const enter = easeOutCubic(prog(t, s - 0.05, s + 0.55));
+    const leave = easeInOut(prog(t, e - 0.05, e + 0.5));
+    const last = i === cards.length - 1;
+    const visible = t > s - 0.06 && t < e + 0.55;
+    c.el.style.visibility = visible ? "visible" : "hidden";
+    c.el.style.zIndex = 10 + i;
+    if (!visible) return;
+    const dir = i % 2 ? -1 : 1;
+    const ty = lerp(1300, 0, enter);
+    const rot = lerp(6 * dir, 0, enter) - (last ? 0 : 3 * dir * leave);
+    const sc = lerp(0.92, 1, enter) * (1 - 0.08 * leave);
+    const op = last ? 1 - prog(t, CTA_START - 0.05, CTA_START + 0.25) : 1 - leave * 0.9;
+    set(c.el, op, `translateY(${ty - 60 * leave}px) rotate(${rot}deg) scale(${sc})`);
+    const kb = prog(t, s, e + 0.5);
+    c.img.style.transform = `scale(${lerp(1.14, 1.02, kb)}) translateX(${lerp(-14 * dir, 14 * dir, kb)}px)`;
+    const cp = easeOutBack(prog(t, s + 0.35, s + 0.75), 1.3);
+    set(c.chip, clamp(cp), `translateY(${lerp(30, 0, cp)}px) scale(${lerp(.85, 1, cp)})`);
+    const hp = easeOutCubic(prog(t, s + 0.45, s + 0.85));
+    set(c.h3, hp, `translateY(${lerp(40, 0, hp)}px)`);
+  });
+
+  {
+    const b = $("#bottomBar");
+    const i = easeOutCubic(prog(t, MONT_START, MONT_START + 0.45));
+    const o = 1 - prog(t, CTA_START - 0.1, CTA_START + 0.2);
+    set(b, i * o, `translateY(${lerp(60, 0, i)}px)`);
+    const idx = clamp(Math.floor((t - MONT_START) / SLOT), 0, SHOTS.length - 1);
+    $("#countN").textContent = String(idx + 1).padStart(2, "0");
+    $("#bottomBar .fill").style.transform = `scaleX(${prog(t, MONT_START, MONT_END)})`;
+  }
+
+  /* red wipe into CTA */
+  {
+    const a = prog(t, CTA_START - 0.15, CTA_START + 0.1), b = prog(t, CTA_START + 0.1, CTA_START + 0.45);
+    const f = $("#flash");
+    f.style.opacity = 1;
+    f.style.transform = `translateY(${a < 1 ? lerp(100, 0, easeInOut(a)) : lerp(0, -100, easeInOut(b))}%)`;
+    f.style.visibility = (a > 0 && b < 1) ? "visible" : "hidden";
+  }
+
+  /* CTA: logo + slogan + message */
+  {
+    const T = CTA_START + 0.15;
+    const show = t >= T - 0.01;
+    $("#cta").style.visibility = show ? "visible" : "hidden";
+    if (show) {
+      const lg = easeOutBack(prog(t, T + 0.1, T + 0.7), 1.2);
+      set($("#ctaLogo"), clamp(lg * 1.3), `translateY(${lerp(-50, 0, lg)}px) scale(${lerp(.9, 1, lg)})`);
+      const r = animSlogan(ctaParts, t, T + 0.4, 0.8);
+      set($("#ctaSlogan"), 1, r.transform);
+      const ru = easeOutExpo(prog(t, T + 1.3, T + 1.8));
+      set($("#ctaRule"), ru, `scaleX(${ru})`);
+      document.querySelectorAll("#ctaMsg .l").forEach((l, i) => {
+        const x = easeOutCubic(prog(t, T + 1.5 + i * 0.18, T + 1.95 + i * 0.18));
+        set(l, x, `translateY(${lerp(40, 0, x)}px)`);
+      });
+    }
+  }
+};
+
+window.ready = Promise.all([
+  document.fonts.ready,
+  ...[...document.images].map(im => im.complete ? 0 : new Promise(r => { im.onload = im.onerror = r; })),
+]).then(() => Promise.all([document.fonts.load('900 100px "ID"'), document.fonts.load('italic 900 100px "ID"'), document.fonts.load('italic 800 100px "ID"')]));
+render(0);
+</script>
+</body>
+</html>
