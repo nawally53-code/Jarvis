@@ -6,9 +6,7 @@ import os, shutil, subprocess
 V = "assets/videos/"
 #  id      source file                    start  end   speed  size (w x h)
 CLIPS = [
-  ("fachada", "fachada-entrada.mov",  0.0, 3.1, 1.0, (1080, 1920)),
-  ("entrada", "fachada-entrada.mov",  3.5, 5.8, 1.0, (1080, 1920)),
-  ("interna", "loja-interna.mov",     0.6, 2.9, 1.0, (1080, 1920)),
+  ("interna", "loja-interna.mov",     0.0, 3.4, 1.0, (1080, 1920)),
 ]
 for cid, src, a, b, speed, (w, h) in CLIPS:
     out = f"assets/clips/{cid}"

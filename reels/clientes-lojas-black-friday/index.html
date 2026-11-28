@@ -91,12 +91,10 @@
 <script>
 /* ---------------- content & timeline ---------------- */
 const FPS = 30;
-const CLIP_FRAMES = { fachada: 93, entrada: 69, interna: 69 };
+const CLIP_FRAMES = { interna: 102 };
 const PHOTOS = Array.from({ length: 13 }, (_, i) => `assets/fotos/cliente-${String(i + 1).padStart(2, "0")}.jpg`);
 const SHOTS = [
-  { clip: "fachada", dur: 3.0 },
-  { clip: "entrada", dur: 2.2 },
-  { clip: "interna", dur: 2.2 },
+  { clip: "interna", dur: 3.2 },
   ...PHOTOS.map(src => ({ photo: src, dur: 1.6 })),
 ];
 const WIPE = 0.42;                         // stroke wipe duration (centred on each cut)
@@ -153,7 +151,7 @@ const ctaParts = ["multi", "s1", "friday", "ring", "s2", "pill"].map(c => $("#ct
 /* ---------------- sound cues (kept to the essentials) ---------------- */
 window.SFX_EVENTS = [
   { type: "impact", t: 0.05 },               // opening
-  { type: "whoosh", t: SHOTS[3].start - 0.3 },// into the customer photos
+  { type: "whoosh", t: SHOTS[1].start - 0.3 },// into the customer photos
   { type: "impact", t: CTA_START },          // closing
 ];
 
@@ -200,7 +198,7 @@ window.render = async function (t) {
   const ctaOut = 1 - prog(t, CTA_START - 0.1, CTA_START + 0.2);
   set($("#topLogo"), easeOutCubic(prog(t, 0, 0.4)) * ctaOut);
   ["#topShade", "#botShade"].forEach(s => { $(s).style.opacity = ctaOut; });
-  const tg = easeOutCubic(prog(t, SHOTS[3].start, SHOTS[3].start + 0.4)) * ctaOut;
+  const tg = easeOutCubic(prog(t, SHOTS[1].start, SHOTS[1].start + 0.4)) * ctaOut;
   set($("#tag"), tg, `translateY(${lerp(30, 0, tg)}px)`);
 
   // hook: magazine cover over the storefront video
