@@ -236,7 +236,17 @@ const SC = [
   ["oGift", 12.0, 15.0], ["o50", 15.0, 18.0], ["oAmz", 18.0, 21.5], ["sMore", 21.5, 23.0], ["sCta", 23.0, 28.5],
 ].map(([id, a, b]) => ({ id, a, b, el: document.getElementById(id) }));
 const SPEED = 130 / 120;              // timeline below is written at 120 BPM; played back at 130 BPM
-const DUR = +(28.5 / SPEED).toFixed(3);
+// slower hook: real time r → timeline time s. The hook plays at 0.7x, then holds on
+// "PRORROGAMOS A BLACK FRIDAY!"; from r = 3.6 s the rest runs at 130/120 (cuts stay on the beat grid,
+// shifted by exactly one bar: the slogan lands at r = 2 bars = 3.692 s).
+const H_SLOW = 2.4, H_HOLD = 3.6, S_HOLD0 = 0.7 * H_SLOW, S_HOLD1 = 1.9;
+const timeline = r => r < H_SLOW ? 0.7 * r
+  : r < H_HOLD ? S_HOLD0 + (r - H_SLOW) * (S_HOLD1 - S_HOLD0) / (H_HOLD - H_SLOW)
+  : S_HOLD1 + (r - H_HOLD) * SPEED;
+const realOf = s => s < S_HOLD0 ? s / 0.7
+  : s < S_HOLD1 ? H_SLOW + (s - S_HOLD0) * (H_HOLD - H_SLOW) / (S_HOLD1 - S_HOLD0)
+  : H_HOLD + (s - S_HOLD1) / SPEED;
+const DUR = +realOf(28.5).toFixed(3);
 const CTA_START = 23.0;
 const FLIP = 0.55;                    // calendar page flips
 
@@ -288,7 +298,7 @@ const ev = [
   { type: "impact", t: 4.0 },                      // ÚLTIMA CHANCE
   { type: "impact", t: CTA_START },                // closing
 ];
-ev.forEach(e => { e.t /= SPEED; });
+ev.forEach(e => { e.t = realOf(e.t); });
 window.SFX_EVENTS = ev.sort((a, b) => a.t - b.t);
 
 /* ---------------- render(t) ---------------- */
@@ -415,7 +425,7 @@ function renderT(t) {
   }
 };
 
-window.render = t => renderT(t * SPEED);
+window.render = t => renderT(timeline(t));
 
 window.ready = Promise.all([
   document.fonts.ready,

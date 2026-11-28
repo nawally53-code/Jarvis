@@ -1,6 +1,6 @@
 # Reel Black Friday Prorrogada — 28/11 (continuação do reel de 27/11 · Grupo Caldas Celulares)
 
-Mesma identidade do reel `dia-black-friday`, ~26,3 s. Duas versões:
+Mesma identidade do reel `dia-black-friday`, ~28 s. Gancho mais lento (0,7x) com a frase "PRORROGAMOS A BLACK FRIDAY!" parada ~1,5 s; depois o vídeo segue no ritmo de 130 BPM (`timeline`/`realOf` no `index.html`; a música tem 2 compassos de subida). Duas versões:
 - `reel-black-friday-prorrogada.mp4` — com trilha eletrônica original + 4 impactos.
 - `reel-black-friday-prorrogada-so-efeitos.mp4` — só os impactos, para colocar a música direto no Instagram.
 

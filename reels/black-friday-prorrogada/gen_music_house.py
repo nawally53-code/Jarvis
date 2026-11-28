@@ -13,7 +13,7 @@ SR = 48000
 BPM = 130
 BEAT = 60 / BPM
 BAR = 4 * BEAT
-DROP = BAR
+DROP = 2 * BAR                                   # 2-bar build under the slower hook
 rng = np.random.default_rng(5)
 DUR = json.load(open("sfx-events.json"))["duration"]
 N = int(DUR * SR)
@@ -107,7 +107,7 @@ MEL = [76, None, 79, 76, 74, None, 72, 74, 76, None, 79, None, 81, 79, 76, None]
 # build: riser + snare roll (claps) accelerating, then drop
 add(riser(DROP), 0.0, 0.9)
 for k, rt in enumerate([0, 1, 2, 3, 4, 4.5, 5, 5.5, 6, 6.25, 6.5, 6.75, 7, 7.125, 7.25, 7.375, 7.5, 7.625, 7.75]):
-    tt = rt * BEAT / 2
+    tt = rt * BEAT / 2 * (DROP / BAR)
     if tt < DROP - 0.05:
         add(clap(), tt, 0.2 + 0.6 * tt / DROP)
 add(crash(), DROP, 0.8)
