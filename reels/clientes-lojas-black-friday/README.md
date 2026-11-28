@@ -5,8 +5,8 @@ Layout: fotos e vídeos em tela cheia, trocando por uma faixa vermelha diagonal 
 
 | Tempo | Cena |
 |---|---|
-| 0–3 s | Vídeo da fachada + "Olha quem aproveitou a **Black Friday** com a gente!" |
-| 3–7,4 s | Entrada pelo banner Multi Friday + loja com clientes ("Loja cheia!") |
+| 0–3 s | Vídeo da fachada com layout de capa (moldura branca, selo MULTI FRIDAY) + "Olha quem / aproveitou / a Black Friday / com a gente!" |
+| 3–7,4 s | Entrada pelo banner Multi Friday + loja decorada com clientes |
 | 7,4–28,2 s | 13 fotos de clientes (1,6 s cada), sem legendas |
 | 28,2–32,8 s | Logo + slogan + "Ainda dá tempo! Ofertas prorrogadas até hoje. Venha até uma de nossas lojas e aproveite!" |
 
