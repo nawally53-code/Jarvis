@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Reel Black Friday Prorrogada 28/11 — Grupo Caldas Celulares</title>
+<style>
+  @font-face { font-family: "ID"; font-weight: 600; src: url(assets/fonts/InterDisplay-SemiBold.otf); }
+  @font-face { font-family: "ID"; font-weight: 700; src: url(assets/fonts/InterDisplay-Bold.otf); }
+  @font-face { font-family: "ID"; font-weight: 800; src: url(assets/fonts/InterDisplay-ExtraBold.otf); }
+  @font-face { font-family: "ID"; font-weight: 900; src: url(assets/fonts/InterDisplay-Black.otf); }
+  @font-face { font-family: "ID"; font-weight: 800; font-style: italic; src: url(assets/fonts/InterDisplay-ExtraBoldItalic.otf); }
+  @font-face { font-family: "ID"; font-weight: 900; font-style: italic; src: url(assets/fonts/InterDisplay-BlackItalic.otf); }
+
+  :root { --red: #EF0000; --neon: #FF2626; --glow: rgba(255,30,30,.85); --ink: #070708; --gold: #FFD76A; --muted: #B4A8A8; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
+  body { font-family: "ID", sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
+  #stage { position: absolute; inset: 0; overflow: hidden; background: var(--ink); }
+  .abs { position: absolute; will-change: transform, opacity; }
+  #pulse { inset: 0; background: radial-gradient(900px 900px at 50% 50%, rgba(239,0,0,.55), rgba(239,0,0,.12) 55%, transparent 75%); }
+  #beams { left: 540px; top: 960px; width: 0; height: 0; }
+  #beams i { position: absolute; left: -90px; top: -1500px; width: 180px; height: 1500px; transform-origin: 50% 100%;
+    background: linear-gradient(0deg, rgba(255,40,40,.0), rgba(255,40,40,.22) 40%, rgba(255,60,60,0)); filter: blur(6px); }
+  #scan { inset: 0; background: repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 2px, transparent 2px 6px); mix-blend-mode: overlay; }
+  #shake { inset: 0; }
+
+  /* caution-style tickers */
+  .tape { left: -60px; width: 1200px; height: 92px; background: var(--red); overflow: hidden; z-index: 60;
+    box-shadow: 0 10px 30px rgba(0,0,0,.6), 0 0 40px rgba(255,20,20,.45); }
+  .tape .row { position: absolute; top: 0; left: 0; white-space: nowrap; font-weight: 900; font-style: italic; font-size: 54px; line-height: 92px; letter-spacing: .02em; }
+  .tape .row b { color: var(--ink); margin: 0 22px; font-style: normal; }
+  #tapeTop { top: 150px; transform: rotate(-3deg); }
+  #tapeBot { top: 1700px; transform: rotate(3deg); }
+
+  #topLogo { left: 50%; top: 36px; width: 380px; margin-left: -190px; z-index: 61; }
+
+  .scene { inset: 0; }
+
+  /* --- hook: calendar flip --- */
+  #calWrap { left: 240px; top: 470px; width: 600px; height: 640px; perspective: 1800px; }
+  .cal { position: absolute; inset: 0; border-radius: 44px; background: #fff; color: var(--ink); overflow: hidden;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,.8), 0 0 80px rgba(255,20,20,.35); backface-visibility: hidden; transform-origin: 50% 0; }
+  .cal .hd { height: 150px; background: var(--red); color: #fff; font-weight: 900; font-size: 64px; letter-spacing: .12em; display: grid; place-items: center; }
+  .cal .rings { position: absolute; top: 22px; left: 0; right: 0; display: flex; justify-content: center; gap: 260px; }
+  .cal .rings i { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); display: block; }
+  .cal .dd { text-align: center; font-weight: 900; font-size: 330px; letter-spacing: -0.06em; line-height: 1; margin-top: 30px; }
+  .cal .mm { text-align: center; font-weight: 800; font-size: 54px; letter-spacing: .1em; color: #777; margin-top: 0; }
+  #calNew .dd { color: var(--red); }
+  #hk1 { left: 0; right: 0; top: 1170px; text-align: center; font-weight: 900; font-style: italic; font-size: 118px; line-height: .95; letter-spacing: -0.045em; text-transform: uppercase; }
+  #hk1 .r { color: var(--neon); text-shadow: 0 0 30px rgba(255,20,20,.7); }
+  #hk1 .w { display: inline-block; margin: 0 .1em; }
+  #prStamp { position: absolute; left: -20px; top: 520px; width: 640px; text-align: center; font-weight: 900; font-style: italic; font-size: 92px;
+    letter-spacing: -0.02em; color: #fff; background: var(--red); border: 10px solid #fff; border-radius: 26px; padding: 6px 0 14px;
+    transform-origin: 50% 50%; box-shadow: 0 0 60px rgba(255,20,20,.8), 0 20px 40px rgba(0,0,0,.6); }
+  #flashW { inset: 0; background: #fff; z-index: 90; }
+
+  /* --- slogan --- */
+  .slogan { position: absolute; width: 1000px; height: 560px; transform-origin: 50% 50%; }
+  .slogan .multi { position: absolute; left: 40px; top: 0; font-weight: 900; font-style: italic; font-size: 236px; line-height: 1; letter-spacing: -0.02em;
+    color: transparent; -webkit-text-stroke: 7px var(--neon); filter: drop-shadow(0 0 10px var(--glow)) drop-shadow(0 0 28px rgba(255,0,0,.6)); }
+  .slogan .friday { position: absolute; left: 20px; top: 205px; font-weight: 900; font-style: italic; font-size: 214px; line-height: 1; letter-spacing: -0.035em;
+    color: #fff; filter: drop-shadow(0 0 16px rgba(255,255,255,.35)); }
+  .slogan .ring { position: absolute; left: 700px; top: 285px; width: 150px; height: 150px; border-radius: 50%; border: 18px solid var(--neon); box-shadow: 0 0 22px var(--glow), inset 0 0 18px var(--glow); }
+  .slogan .s1, .slogan .s2 { position: absolute; border: 7px solid var(--neon); border-radius: 12px; box-shadow: 0 0 20px var(--glow), inset 0 0 12px var(--glow); }
+  .slogan .s1 { left: 862px; top: 90px; width: 50px; height: 200px; transform: rotate(40deg); }
+  .slogan .s2 { left: 880px; top: 337px; width: 175px; height: 50px; }
+  .slogan .pill { position: absolute; left: 30px; top: 432px; padding: 10px 56px 18px; border-radius: 999px; border: 7px solid var(--neon); background: rgba(10,10,12,.55);
+    box-shadow: 0 0 24px var(--glow), inset 0 0 16px rgba(255,30,30,.6); font-weight: 800; font-size: 82px; letter-spacing: -0.02em; color: #fff; white-space: nowrap; }
+  #sl1 { left: 30px; top: 560px; }
+  #slCaldas { left: 0; right: 0; top: 1170px; text-align: center; font-weight: 900; font-size: 72px; line-height: 1.05; letter-spacing: -0.02em; }
+  #slCaldas span { color: var(--neon); }
+
+  /* --- SÓ HOJE stamp --- */
+  #stamp { left: 50%; top: 960px; width: 0; height: 0; }
+  #stamp .s { position: absolute; left: -470px; top: -300px; width: 940px; height: 600px; border: 18px solid #fff; border-radius: 40px; transform: rotate(-8deg);
+    display: grid; place-items: center; text-align: center; background: var(--red); box-shadow: 0 0 80px rgba(255,20,20,.7); }
+  #stamp .s div { font-weight: 900; font-style: italic; font-size: 190px; line-height: .86; letter-spacing: -0.05em; }
+  #stamp .s small { display: block; font-style: normal; font-size: 60px; letter-spacing: .14em; margin-top: 24px; font-weight: 800; }
+
+  /* --- offers --- */
+  .kick { left: 0; right: 0; top: 420px; text-align: center; font-weight: 800; font-size: 44px; letter-spacing: .18em; color: var(--neon); text-shadow: 0 0 16px var(--glow); }
+  .big { left: 0; right: 0; text-align: center; font-weight: 900; letter-spacing: -0.06em; line-height: .9; }
+  .lead { left: 60px; right: 60px; text-align: center; font-weight: 900; font-size: 92px; line-height: 1; letter-spacing: -0.04em; text-transform: uppercase; }
+  .lead .r { color: var(--neon); }
+  .fine { left: 0; right: 0; text-align: center; font-weight: 600; font-size: 30px; color: var(--muted); }
+  #o60 .big { top: 560px; font-size: 520px; font-style: italic; color: #fff; text-shadow: 0 0 60px rgba(255,20,20,.6); }
+  #o60 .big sup { font-size: 240px; color: var(--neon); vertical-align: 170px; margin-left: 6px; }
+  #o60 .ate { left: 0; right: 0; top: 500px; text-align: center; font-weight: 900; font-size: 90px; letter-spacing: .06em; }
+  #o60 .off { left: 0; right: 0; margin: 0 auto; width: max-content; top: 1080px; background: var(--neon); padding: 6px 50px 16px; border-radius: 26px;
+    font-weight: 900; font-style: italic; font-size: 150px; letter-spacing: -0.03em; transform: rotate(-4deg); box-shadow: 0 0 50px rgba(255,20,20,.7); }
+  #o60 .lead { top: 1340px; font-size: 76px; }
+
+  .ph { width: 400px; height: 481px; }
+  .ph img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 30px 40px rgba(0,0,0,.7)) drop-shadow(0 0 30px rgba(255,255,255,.12)); }
+  #oA57 .lead { top: 440px; font-size: 78px; }
+  #oA57 .plus { left: 0; right: 0; top: 860px; text-align: center; font-weight: 900; font-size: 200px; line-height: 1; color: var(--neon); text-shadow: 0 0 40px var(--glow); }
+  #oA57 .tag2 { left: 0; right: 0; margin: 0 auto; width: max-content; top: 1340px; background: #fff; color: var(--red); font-weight: 900; font-size: 64px; padding: 12px 44px;
+    border-radius: 999px; transform: rotate(-3deg); }
+
+  #gift { left: 340px; top: 830px; width: 400px; height: 420px; }
+  #gift .box { position: absolute; left: 20px; top: 140px; width: 360px; height: 280px; background: var(--red); border-radius: 18px; box-shadow: 0 0 60px rgba(255,20,20,.6); }
+  #gift .box::before { content: ""; position: absolute; left: 150px; top: 0; width: 60px; height: 100%; background: #fff; }
+  #gift .lid { position: absolute; left: 0; top: 70px; width: 400px; height: 90px; background: #FF3B3B; border-radius: 16px; transform-origin: 0% 100%; }
+  #gift .lid::before { content: ""; position: absolute; left: 170px; top: 0; width: 60px; height: 100%; background: #fff; }
+  #gift .bow { position: absolute; left: 110px; top: -30px; width: 180px; height: 110px; }
+  #gift .bow i { position: absolute; top: 0; width: 100px; height: 100px; border: 22px solid #fff; border-radius: 50% 50% 10% 50%; }
+  #gift .bow i:first-child { left: -10px; transform: rotate(-30deg); }
+  #gift .bow i:last-child { right: -10px; transform: rotate(30deg) scaleX(-1); }
+  #spark { left: 540px; top: 960px; width: 0; height: 0; }
+  #spark i { position: absolute; left: -6px; top: -26px; width: 12px; height: 52px; border-radius: 6px; background: var(--gold); transform-origin: 50% 50%; }
+  #oGift .lead { top: 470px; }
+  #oGift .sub { left: 0; right: 0; top: 1330px; text-align: center; font-weight: 800; font-size: 56px; }
+
+  #o50 .big { top: 640px; font-size: 400px; color: var(--neon); text-shadow: 0 0 60px rgba(255,20,20,.6); }
+  #o50 .big small { font-size: 170px; color: #fff; letter-spacing: -0.03em; }
+  #o50 .ate { left: 0; right: 0; top: 530px; text-align: center; font-weight: 900; font-size: 90px; letter-spacing: .06em; }
+  #o50 .lead { top: 1110px; font-size: 80px; }
+  #o50 .pill { left: 0; right: 0; margin: 0 auto; width: max-content; top: 1330px; border: 5px solid var(--neon); border-radius: 999px; padding: 14px 46px;
+    font-weight: 900; font-size: 64px; box-shadow: 0 0 30px rgba(255,20,20,.5); }
+
+  #oAmz .lead { top: 430px; font-size: 84px; }
+  #prime { left: 120px; right: 120px; top: 640px; height: 420px; border-radius: 40px; background: #fff; color: var(--ink); text-align: center; transform-origin: 50% 50%;
+    box-shadow: 0 30px 70px -20px rgba(0,0,0,.8); }
+  #prime .n { padding-top: 40px; font-weight: 900; font-size: 210px; line-height: 1; letter-spacing: -0.05em; color: var(--red); }
+  #prime .t { font-weight: 900; font-size: 64px; }
+  #prime .t span { color: #1A98FF; }
+  #ticket { left: 160px; right: 160px; top: 1110px; height: 290px; border: 6px dashed #fff; border-radius: 34px; background: var(--red); text-align: center; transform-origin: 50% 50%;
+    box-shadow: 0 0 50px rgba(255,20,20,.6); }
+  #ticket .a { font-weight: 800; font-size: 46px; padding-top: 26px; letter-spacing: .1em; }
+  #ticket .v { font-weight: 900; font-size: 150px; line-height: 1; letter-spacing: -0.04em; }
+  #ticket .v span { font-size: 70px; vertical-align: 56px; margin-right: 8px; }
+  #oAmz .fine { top: 1440px; }
+
+  #more { left: 0; right: 0; top: 700px; text-align: center; font-weight: 900; font-style: italic; font-size: 210px; line-height: .9; letter-spacing: -0.05em; text-transform: uppercase; }
+  #more .r { color: var(--neon); text-shadow: 0 0 50px var(--glow); }
+
+  /* --- CTA --- */
+  #ctaLogo { left: 50%; top: 300px; width: 820px; margin-left: -410px; }
+  #sl2 { left: 30px; top: 640px; }
+  #ctaMsg { left: 60px; right: 60px; top: 1180px; text-align: center; font-weight: 900; font-size: 80px; line-height: 1.04; letter-spacing: -0.04em; }
+  #ctaMsg .l { display: block; }
+  #ctaMsg .r { color: var(--neon); text-shadow: 0 0 24px rgba(255,20,20,.65); }
+  #ctaFine { left: 40px; right: 40px; top: 1555px; text-align: center; font-weight: 600; font-size: 28px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="pulse" class="abs"></div>
+  <div id="beams" class="abs"></div>
+  <div id="shake" class="abs">
+
+    <!-- 1. HOOK: calendar flips to 27/11 -->
+    <div id="sHook" class="scene abs">
+      <div id="calWrap" class="abs">
+        <div class="cal" id="calNew"><div class="hd">NOVEMBRO</div><div class="rings"><i></i><i></i></div><div class="dd">28</div><div class="mm">SÁBADO</div></div>
+        <div class="cal" id="calOld"><div class="hd">NOVEMBRO</div><div class="rings"><i></i><i></i></div><div class="dd">27</div><div class="mm">SEXTA-FEIRA</div></div>
+        <div id="prStamp">PRORROGADO</div>
+      </div>
+      <div id="hk1" class="abs"><span class="w">Prorrogamos</span><span class="w">a</span><br><span class="w r">Black</span><span class="w r">Friday!</span></div>
+    </div>
+
+    <!-- 2. slogan -->
+    <div id="sSlogan" class="scene abs">
+      <div id="sl1" class="slogan"></div>
+      <div id="slCaldas" class="abs">Mais uma chance para<br><span>você aproveitar!</span></div>
+    </div>
+
+    <!-- 3. SÓ HOJE -->
+    <div id="sHoje" class="scene abs"><div id="stamp" class="abs"><div class="s"><div>ÚLTIMA<br>CHANCE!<small>SÓ ATÉ HOJE, 28/11</small></div></div></div></div>
+
+    <!-- 4. up to 60% -->
+    <div id="o60" class="scene abs">
+      <div class="ate abs">ATÉ</div>
+      <div class="big abs"><span id="n60">60</span><sup>%</sup></div>
+      <div class="off abs">OFF</div>
+      <div class="lead abs">de desconto em <span class="r">aparelhos</span></div>
+    </div>
+
+    <!-- 5. A57 buy one get one -->
+    <div id="oA57" class="scene abs">
+      <div class="lead abs">Compre um <span class="r">Galaxy A57</span><br>e leve outro!</div>
+      <div class="ph abs" id="ph1" style="left:70px;top:720px"><img src="assets/a57-branco.png" alt="Samsung Galaxy A57"></div>
+      <div class="plus abs">+</div>
+      <div class="ph abs" id="ph2" style="left:610px;top:720px"><img src="assets/a57-branco.png" alt="Samsung Galaxy A57"></div>
+      <div class="tag2 abs">LEVE OUTRO IGUAL</div>
+      <div class="fine abs" style="top:1480px">*Consulte condições.</div>
+    </div>
+
+    <!-- 6. exclusive gifts -->
+    <div id="oGift" class="scene abs">
+      <div class="lead abs">Brindes<br><span class="r">exclusivos</span></div>
+      <div id="spark" class="abs"></div>
+      <div id="gift" class="abs"><div class="box"></div><div class="lid"><div class="bow"><i></i><i></i></div></div></div>
+      <div class="sub abs">nas suas compras de hoje</div>
+    </div>
+
+    <!-- 7. +50GB -->
+    <div id="o50" class="scene abs">
+      <div class="ate abs">ATÉ</div>
+      <div class="big abs">+<span id="n50">50</span><small>GB</small></div>
+      <div class="lead abs">de bônus de <span class="r">internet</span></div>
+      <div class="pill abs">no plano Pós</div>
+    </div>
+
+    <!-- 8. Amazon Prime + coupon -->
+    <div id="oAmz" class="scene abs">
+      <div class="lead abs">E ainda <span class="r">ganha:</span></div>
+      <div id="prime" class="abs"><div class="n">3 meses</div><div class="t">grátis de <span>Amazon Prime</span></div></div>
+      <div id="ticket" class="abs"><div class="a">+ CUPOM DE</div><div class="v"><span>R$</span>30</div></div>
+      <div class="fine abs">Cupom para compras no site da Amazon. Consulte condições.</div>
+    </div>
+
+    <!-- 9. and much more -->
+    <div id="sMore" class="scene abs"><div id="more" class="abs">E muito<br><span class="r">mais!</span></div></div>
+
+    <!-- 10. CTA -->
+    <div id="sCta" class="scene abs">
+      <img id="ctaLogo" class="abs" src="assets/logo-caldas-branca.png" alt="Grupo Caldas Celulares">
+      <div id="sl2" class="slogan"></div>
+      <div id="ctaMsg" class="abs"><span class="l r">Última chance!</span><span class="l">Venha até uma de</span><span class="l">nossas lojas e</span><span class="l r">aproveite hoje!</span></div>
+      <div id="ctaFine" class="abs">Ofertas prorrogadas até 28/11 ou enquanto durarem os estoques. Consulte condições.</div>
+    </div>
+  </div>
+
+  <div id="tapeTop" class="tape abs"><div class="row"></div></div>
+  <div id="tapeBot" class="tape abs"><div class="row"></div></div>
+  <img id="topLogo" class="abs" src="assets/logo-caldas-branca.png" alt="">
+  <div id="scan" class="abs"></div>
+  <div id="flashW" class="abs"></div>
+</div>
+
+<script>
+/* ---------------- timeline (120 BPM → every scene change lands on a beat) ---------------- */
+const SC = [
+  ["sHook", 0.0, 2.0], ["sSlogan", 2.0, 4.0], ["sHoje", 4.0, 6.0], ["o60", 6.0, 9.0], ["oA57", 9.0, 12.0],
+  ["oGift", 12.0, 15.0], ["o50", 15.0, 18.0], ["oAmz", 18.0, 21.5], ["sMore", 21.5, 23.0], ["sCta", 23.0, 28.5],
+].map(([id, a, b]) => ({ id, a, b, el: document.getElementById(id) }));
+const SPEED = 130 / 120;              // timeline below is written at 120 BPM; played back at 130 BPM
+const DUR = +(28.5 / SPEED).toFixed(3);
+const CTA_START = 23.0;
+const FLIP = 0.55;                    // calendar page flips
+
+/* ---------------- helpers ---------------- */
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const easeOutCubic = x => 1 - Math.pow(1 - x, 3);
+const easeOutExpo = x => x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+const easeInOut = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const easeOutBack = (x, s = 1.6) => 1 + (s + 1) * Math.pow(x - 1, 3) + s * Math.pow(x - 1, 2);
+const easeInCubic = x => x * x * x;
+const lerp = (a, b, x) => a + (b - a) * x;
+const $ = s => document.querySelector(s);
+const set = (el, o, tf) => { el.style.opacity = o; if (tf !== undefined) el.style.transform = tf; };
+const flicker = (t, t0, len = 0.45) => {
+  if (t < t0) return 0;
+  const x = (t - t0) / len;
+  return x >= 1 ? 1 : [1, 0.15, 1, 0.3, 0.9, 0.2, 1, 1][Math.floor(x * 8)];
+};
+// "slam" in: big + transparent → normal size
+const slam = (t, t0, d = 0.28, from = 1.8) => { const x = easeOutCubic(prog(t, t0, t0 + d)); return { o: clamp(x * 2), s: lerp(from, 1, x) }; };
+
+/* ---------------- build ---------------- */
+const TICK = "PRORROGADO <b>✦</b> ATÉ HOJE 28/11 <b>✦</b> ÚLTIMA CHANCE <b>✦</b> MULTI FRIDAY <b>✦</b> ";
+document.querySelectorAll(".tape .row").forEach(r => { r.innerHTML = TICK.repeat(6); });
+for (let i = 0; i < 10; i++) { const b = document.createElement("i"); $("#beams").appendChild(b); }
+const beams = [...document.querySelectorAll("#beams i")];
+for (let i = 0; i < 16; i++) { const s = document.createElement("i"); $("#spark").appendChild(s); }
+const sparks = [...document.querySelectorAll("#spark i")];
+const SLOGAN_HTML = `<div class="multi">MULTI</div><div class="s1"></div><div class="friday">Friday</div><div class="ring"></div><div class="s2"></div><div class="pill">Claro que tem</div>`;
+["#sl1", "#sl2"].forEach(id => { $(id).innerHTML = SLOGAN_HTML; });
+const parts = id => ["multi", "s1", "friday", "ring", "s2", "pill"].map(c => $(id + " ." + c));
+const sl1 = parts("#sl1"), sl2 = parts("#sl2");
+function animSlogan(p, t, t0, scale) {
+  const [multi, s1, friday, ring, s2, pill] = p;
+  const fr = easeOutExpo(prog(t, t0 + 0.2, t0 + 0.6));
+  const pl = easeOutBack(prog(t, t0 + 0.45, t0 + 0.85), 1.6);
+  multi.style.opacity = flicker(t, t0, 0.45);
+  set(friday, fr, `translateX(${lerp(-80, 0, fr)}px) skewX(${lerp(-8, 0, fr)}deg)`);
+  [ring, s1, s2].forEach((el, i) => { el.style.opacity = flicker(t, t0 + 0.4 + i * 0.1, 0.3); });
+  set(pill, clamp(pl * 1.3), `scale(${lerp(.6, 1, pl)})`);
+  return `scale(${scale * (1 + 0.015 * Math.sin(Math.max(0, t - t0) * 6.28))})`;
+}
+
+/* ---------------- sound cues ---------------- */
+const ev = [
+  { type: "impact", t: FLIP + 0.05 },              // calendar flips to 28/11
+  { type: "impact", t: 1.3 },                      // PRORROGADO stamp
+  { type: "impact", t: 4.0 },                      // ÚLTIMA CHANCE
+  { type: "impact", t: CTA_START },                // closing
+];
+ev.forEach(e => { e.t /= SPEED; });
+window.SFX_EVENTS = ev.sort((a, b) => a.t - b.t);
+
+/* ---------------- render(t) ---------------- */
+function renderT(t) {
+  const beat = (t % 0.5) / 0.5;                 // 120 BPM
+  const thump = Math.exp(-beat * 5);
+  $("#pulse").style.opacity = 0.45 + 0.5 * thump * (t > 2 ? 1 : 0.4);
+  beams.forEach((b, i) => { b.style.transform = `rotate(${i * 36 + t * (i % 2 ? 22 : -18)}deg)`; b.style.opacity = 0.7 + 0.3 * Math.sin(t * 3 + i); });
+
+  // camera shake on scene slams
+  let sh = 0;
+  [FLIP, 1.3, ...SC.slice(1).map(s => s.a)].forEach(a => { if (t >= a) sh = Math.max(sh, 1 - (t - a) / 0.3); });
+  sh = Math.max(0, sh);
+  $("#shake").style.transform = `translate(${sh * 16 * Math.sin(t * 95)}px, ${sh * 12 * Math.cos(t * 83)}px)`;
+  let fl = 0;
+  [FLIP, ...SC.slice(1).map(s => s.a)].forEach(a => { if (t >= a) fl = Math.max(fl, 1 - (t - a) / 0.14); });
+  $("#flashW").style.opacity = Math.max(0, fl) * 0.45;
+
+  // tickers
+  const tp = easeOutCubic(prog(t, 0.0, 0.4)) * (1 - prog(t, DUR - 0.6, DUR));
+  $("#tapeTop").style.opacity = tp; $("#tapeBot").style.opacity = tp;
+  $("#tapeTop .row").style.transform = `translateX(${-(t * 260) % 1400}px)`;
+  $("#tapeBot .row").style.transform = `translateX(${-1400 + (t * 260) % 1400}px)`;
+  set($("#topLogo"), (1 - prog(t, CTA_START - 0.1, CTA_START + 0.2)) * easeOutCubic(prog(t, 0, 0.4)));
+
+  SC.forEach(s => {
+    const on = t >= s.a - 0.001 && t < s.b;
+    s.el.style.visibility = on ? "visible" : "hidden";
+    if (on) s.el.style.transform = `scale(${1 + 0.02 * (t - s.a)})`;   // slow push-in
+  });
+
+  /* 1. hook: calendar flip */
+  {
+    const cw = slam(t, 0.05, 0.35, 0.6);
+    set($("#calWrap"), cw.o, `scale(${cw.s}) rotate(${lerp(-6, 0, cw.o)}deg)`);
+    const f = easeInCubic(prog(t, FLIP - 0.25, FLIP + 0.05));
+    $("#calOld").style.transform = `rotateX(${-100 * f}deg)`;
+    $("#calOld").style.opacity = f < 0.98 ? 1 : 0;
+    const nb = easeOutBack(prog(t, FLIP + 0.02, FLIP + 0.35), 2.2);
+    $("#calNew").style.transform = `scale(${lerp(.92, 1, nb)})`;
+    const ps = slam(t, 1.3, 0.22, 2.6);
+    set($("#prStamp"), ps.o, `rotate(-7deg) scale(${ps.s})`);
+    document.querySelectorAll("#hk1 .w").forEach((w, i) => {
+      const x = slam(t, 0.95 + i * 0.12, 0.22, 2.2);
+      set(w, x.o, `scale(${x.s})`);
+    });
+  }
+
+  /* 2. slogan */
+  set($("#sl1"), 1, animSlogan(sl1, t, 2.05, 0.92));
+  { const c = easeOutCubic(prog(t, 2.9, 3.3)); set($("#slCaldas"), c, `translateY(${lerp(40, 0, c)}px)`); }
+
+  /* 3. SÓ HOJE stamp */
+  { const x = slam(t, 4.0, 0.25, 2.6); set($("#stamp"), x.o, `scale(${x.s * (1 + 0.04 * thump)})`); }
+
+  /* 4. 60% */
+  {
+    set($("#o60 .ate"), slam(t, 6.0, 0.25, 2).o);
+    const b = slam(t, 6.1, 0.3, 1.6); set($("#o60 .big"), b.o, `scale(${b.s})`);
+    $("#n60").textContent = Math.round(60 * easeOutCubic(prog(t, 6.25, 7.05)));
+    const o = easeOutBack(prog(t, 7.05, 7.35), 2.2); set($("#o60 .off"), clamp(o * 1.4), `rotate(-4deg) scale(${lerp(.3, 1, o) * (1 + 0.05 * thump)})`);
+    const l = easeOutCubic(prog(t, 7.4, 7.8)); set($("#o60 .lead"), l, `translateY(${lerp(40, 0, l)}px)`);
+  }
+
+  /* 5. A57 */
+  {
+    const l = slam(t, 9.0, 0.25, 1.6); set($("#oA57 .lead"), l.o, `scale(${l.s})`);
+    const p1 = easeOutBack(prog(t, 9.3, 9.65), 1.4), p2 = easeOutBack(prog(t, 9.7, 10.05), 1.4);
+    set($("#ph1"), clamp(p1 * 1.4), `translateX(${lerp(-600, 0, p1)}px) rotate(${lerp(-20, -6, p1) + 2 * Math.sin(t * 2.5)}deg)`);
+    set($("#ph2"), clamp(p2 * 1.4), `translateX(${lerp(600, 0, p2)}px) rotate(${lerp(20, 6, p2) - 2 * Math.sin(t * 2.5)}deg)`);
+    const pl = easeOutBack(prog(t, 9.6, 9.9), 2); set($("#oA57 .plus"), clamp(pl * 1.4), `scale(${lerp(.2, 1, pl) * (1 + 0.08 * thump)})`);
+    const tg = easeOutBack(prog(t, 10.2, 10.5), 2); set($("#oA57 .tag2"), clamp(tg * 1.4), `rotate(-3deg) scale(${lerp(.4, 1, tg)})`);
+    set($("#oA57 .fine"), prog(t, 10.5, 10.8));
+  }
+
+  /* 6. gift */
+  {
+    const l = slam(t, 12.0, 0.25, 1.6); set($("#oGift .lead"), l.o, `scale(${l.s})`);
+    const g = easeOutBack(prog(t, 12.1, 12.45), 1.6);
+    const wob = t < 12.55 ? 0 : 3 * Math.sin((t - 12.55) * 12) * Math.exp(-(t - 12.55) * 2);
+    set($("#gift"), clamp(g * 1.4), `scale(${lerp(.3, 1, g)}) rotate(${wob}deg)`);
+    const lid = easeOutBack(prog(t, 12.55, 12.9), 1.4);
+    $("#gift .lid").style.transform = `translate(${-150 * lid}px, ${-60 * lid}px) rotate(${-38 * lid}deg)`;
+    const sp = prog(t, 12.6, 13.3);
+    sparks.forEach((s, i) => {
+      const a = (360 / sparks.length) * i, d = lerp(30, 360, easeOutCubic(sp));
+      s.style.opacity = sp > 0 && sp < 1 ? 1 - sp : 0;
+      s.style.transform = `rotate(${a}deg) translateY(${-d}px) scaleY(${1 - 0.6 * sp})`;
+    });
+    const sb = easeOutCubic(prog(t, 13.0, 13.4)); set($("#oGift .sub"), sb, `translateY(${lerp(30, 0, sb)}px)`);
+  }
+
+  /* 7. +50GB */
+  {
+    set($("#o50 .ate"), slam(t, 15.0, 0.25, 2).o);
+    const b = slam(t, 15.1, 0.3, 1.6); set($("#o50 .big"), b.o, `scale(${b.s})`);
+    $("#n50").textContent = Math.round(50 * easeOutCubic(prog(t, 15.25, 16.05)));
+    const l = easeOutCubic(prog(t, 16.1, 16.45)); set($("#o50 .lead"), l, `translateY(${lerp(40, 0, l)}px)`);
+    const p = easeOutBack(prog(t, 16.4, 16.7), 2); set($("#o50 .pill"), clamp(p * 1.4), `scale(${lerp(.4, 1, p)})`);
+  }
+
+  /* 8. Amazon */
+  {
+    const l = slam(t, 18.0, 0.25, 1.6); set($("#oAmz .lead"), l.o, `scale(${l.s})`);
+    const p = easeOutBack(prog(t, 18.35, 18.7), 1.6); set($("#prime"), clamp(p * 1.4), `scale(${lerp(.4, 1, p)}) rotate(${lerp(8, -2, p)}deg)`);
+    const k = easeOutBack(prog(t, 18.85, 19.2), 1.6); set($("#ticket"), clamp(k * 1.4), `scale(${lerp(.4, 1, k)}) rotate(${lerp(-8, 2, k)}deg)`);
+    set($("#oAmz .fine"), prog(t, 19.3, 19.6));
+  }
+
+  /* 9. e muito mais */
+  { const x = slam(t, 21.5, 0.25, 2.4); set($("#more"), x.o, `scale(${x.s * (1 + 0.05 * thump)}) rotate(-4deg)`); }
+
+  /* 10. CTA */
+  {
+    const T = CTA_START;
+    const lg = easeOutBack(prog(t, T + 0.05, T + 0.5), 1.2);
+    set($("#ctaLogo"), clamp(lg * 1.3), `translateY(${lerp(-50, 0, lg)}px) scale(${lerp(.9, 1, lg)})`);
+    set($("#sl2"), 1, animSlogan(sl2, t, T + 0.4, 0.78));
+    document.querySelectorAll("#ctaMsg .l").forEach((l, i) => {
+      const x = easeOutCubic(prog(t, T + 1.4 + i * 0.18, T + 1.85 + i * 0.18));
+      set(l, x, `translateY(${lerp(40, 0, x)}px)`);
+    });
+    set($("#ctaFine"), prog(t, T + 2.2, T + 2.6));
+  }
+};
+
+window.render = t => renderT(t * SPEED);
+
+window.ready = Promise.all([
+  document.fonts.ready,
+  ...[...document.images].map(im => im.complete ? 0 : new Promise(r => { im.onload = im.onerror = r; })),
+]).then(() => Promise.all([document.fonts.load('900 100px "ID"'), document.fonts.load('italic 900 100px "ID"'), document.fonts.load('italic 800 100px "ID"')]))
+  .then(() => render(0));
+</script>
+</body>
+</html>
